@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 21:57:34 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/02/08 03:07:42 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/09 21:30:00 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include<fcntl.h>
 # include<stdlib.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000000
+#  define BUFFER_SIZE 1
 # endif
 
 char	*get_next_line(int fd);
