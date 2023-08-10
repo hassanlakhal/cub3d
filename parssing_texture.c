@@ -6,190 +6,11 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/09 21:32:29 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 03:53:27 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	form_of_file(int fd)
-{
-	int		cont;
-	int		a;
-	char	*str;
-
-	cont = 0;
-	fd = open("map/map.cub", O_RDWR);
-	str = get_next_line(fd);
-	while (str)
-	{
-		if (str && ft_strlen(str) > 1 && a)
-		{
-			a = 0;
-			cont++;
-		}
-		if (str && !ft_strncmp(str, "\n", 1) && str[0] == '\n')
-			a = 1;
-		free(str);
-		str = get_next_line(fd);
-	}
-	printf("%d\n",cont);
-	if (cont > 7)
-		(printf("0:ERROR\n"), close(fd), exit(0));
-	free(str);
-	close(fd);
-}
-
-void	init_list(t_general *info)
-{
-	info->map = NULL;
-	info->bloc = NULL;
-	info->number_of_line = 0;
-}
-
-char	*skip_line(int fd)
-{
-	char	*str;
-	char	*temp;
-
-	str = get_next_line(fd);
-	while (str)
-	{
-		if (str && ft_strlen(str) > 1)
-			break ;
-		free(str);
-		str = get_next_line(fd);
-	}
-	temp = NULL;
-	if (str)
-	{
-		temp = ft_strdup(str);
-		free(str);
-	}
-	return (temp);
-}
-
-void	read_lines_texter(t_general *info)
-{
-	int		i;
-	char	*str;
-	char	*file;
-	int		fd;
-
-	i = 0;
-	fd = open("map/map.cub", O_RDWR);
-	init_list(info);
-	str = skip_line(fd);
-	file = NULL;
-	info->bloc = NULL;
-	while (str)
-	{
-		file = ft_strjoin(file, str);
-		if(info->number_of_line >= 6)
-			break;
-		if (ft_strlen(str) > 1)
-			info->number_of_line++;
-		free(str);
-		str = get_next_line(fd);
-	}
-	i = 0;
-	if(ft_strlen(str) == 1)
-	{
-		str = skip_line(fd);
-		i++;
-	}
-	if(i == 0)
-		exit(1);
-	info->bloc = ft_substr(file,0,ft_strlen(file));
-	(free(file), close(fd));
-}
-
-char	*reaplace(char *text, int number)
-{
-	char	*result;
-	int		resultIndex;
-	int i;
-	int j;
-
-	result = malloc(ft_strlen(text) * number + 1);
-	resultIndex = 0;
-	i = 0;
-	while (i < (int)ft_strlen(text))
-	{
-		if (text[i] == '\t')
-		{
-			j = 0;
-			while (j < number)
-			{
-				result[resultIndex++] = ' ';
-				j++;
-			}
-		}
-		else
-			result[resultIndex++] = text[i];
-		i++;
-	}
-	result[resultIndex] = '\0';
-	if (text)
-	{
-		free(text);
-		text = NULL;
-	}
-	text = ft_strjoin(text,result);
-	free(result);
-	return text;
-}
-
-int	ft_strlen_2d(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return (0);
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-void	check_line(char **tab)
-{
-	int	i;
-
-	i = ft_strlen_2d(tab);
-	printf("%d\n", i);
-	if (i != 1)
-	{
-		free_2d(tab);
-		printf("1:ERROR\n");
-		exit(0);
-	}
-}
-
-void	check_direction(t_bloc *data_of_texture)
-{
-	int	i;
-
-	i = 0;
-	while (i < 6)
-	{
-		if (ft_strlen(data_of_texture[i].val_1) > 2)
-		{
-			printf("2:ERROR\n");
-			exit(0);
-		}
-		else
-		{
-			if (i < 5 && !ft_strncmp(data_of_texture[i].val_1, data_of_texture[i
-					+ 1].val_1, 2))
-			{
-				printf("3:ERROR\n");
-				exit(0);
-			}
-		}
-		i++;
-	}
-}
 
 void	type_of_bloc(t_bloc *lines)
 {
@@ -269,10 +90,10 @@ void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 	{
 		if (textures[i] && ft_strchr(textures[i], '\t'))
 			textures[i] = reaplace(textures[i], 4);
-		info = ft_split_pos(textures[i], ' ',1);
+		info = ft_split_pos(textures[i], ' ', 1);
 		data_of_texture[i].val_1 = ft_strdup(info[0]);
 		data_of_texture[i].val_2 = ft_strdup(info[1]);
-		printf("%s\n",info[0]);
+		printf("%s\n", info[0]);
 		free_2d(info);
 		i++;
 	}
@@ -306,7 +127,7 @@ void	ft_parssing(void)
 {
 	t_general	*info;
 	t_bloc		*data;
-	char	**valid_path;
+	char		**valid_path;
 	static int	cont;
 	int			i;
 
@@ -319,7 +140,7 @@ void	ft_parssing(void)
 	{
 		if (ft_block_texteurs(&info->info_texteur[i]) == 0)
 			cont++;
-		valid_path = ft_split(info->info_texteur[i].path,' ');
+		valid_path = ft_split(info->info_texteur[i].path, ' ');
 		check_line(valid_path);
 		if (info->info_texteur[i].path)
 			free(info->info_texteur[i].path);
@@ -332,6 +153,5 @@ void	ft_parssing(void)
 		printf("7:ERROR\n");
 		exit(0);
 	}
-
 	//clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
 }

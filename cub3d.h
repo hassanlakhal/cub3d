@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/09 20:49:37 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 03:53:02 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,10 @@ int				ft_strlen_2d(char **tab);
 void			ft_parssing(void);
 void			clear_all(t_general *data, int a, int b);
 char			**ft_split_pos(char *str, char c, int pos);
-char	*skip_line(int fd);
-void ft_bloc_map();
+char			*skip_line(int fd);
+void			ft_bloc_map(void);
+char			*reaplace(char *text, int number);
+void			check_direction(t_bloc *data_of_texture);
+void			check_line(char **tab);
+
 #endif
