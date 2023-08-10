@@ -6,13 +6,13 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 03:53:14 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:49:09 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*reaplace(char *text, int number)
+char	*reaplace(char *text, int number, char c)
 {
 	char	*result;
 	int		resultIndex;
@@ -24,7 +24,7 @@ char	*reaplace(char *text, int number)
 	i = 0;
 	while (i < (int)ft_strlen(text))
 	{
-		if (text[i] == '\t')
+		if (text[i] == c)
 		{
 			j = 0;
 			while (j < number)
@@ -83,13 +83,12 @@ int	ft_strlen_2d(char **tab)
 	return (i);
 }
 
-void	check_line(char **tab)
+void	check_line(char **tab,int a)
 {
 	int	i;
 
 	i = ft_strlen_2d(tab);
-	printf("%d\n", i);
-	if (i != 1)
+	if ((i != 1 && a == PATH) || (i != 3 && a == RGB))
 	{
 		free_2d(tab);
 		printf("1:ERROR\n");

@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/09 20:18:33 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 20:34:20 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**ft_split_pos(char *str, char c, int pos)
 	}
 	if (delimiter_pos == -1)
 	{
-		printf("ERROR\n");
+		printf("14:ERROR\n");
 		exit(1);
 	}
 	tab[0] = ft_substr(str, 0, delimiter_pos);

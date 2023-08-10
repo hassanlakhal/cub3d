@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 03:53:27 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:48:18 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,10 @@ void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 	while (i < data->number_of_line)
 	{
 		if (textures[i] && ft_strchr(textures[i], '\t'))
-			textures[i] = reaplace(textures[i], 4);
+			textures[i] = reaplace(textures[i], 4, '\t');
 		info = ft_split_pos(textures[i], ' ', 1);
 		data_of_texture[i].val_1 = ft_strdup(info[0]);
 		data_of_texture[i].val_2 = ft_strdup(info[1]);
-		printf("%s\n", info[0]);
 		free_2d(info);
 		i++;
 	}
@@ -123,11 +122,105 @@ int	ft_block_rgb(t_rgb_info *bloc_2)
 		return (1);
 }
 
-void	ft_parssing(void)
+bool	isValidFormat(const char *input)
+{
+	int		tokenCount;
+	int		digitCount;
+	bool	inToken;
+	int		i;
+
+	i = 0;
+	tokenCount = 0;
+	digitCount = 0;
+	inToken = false;
+	while (input[i] != '\0')
+	{
+		if (input[i] == ',')
+		{
+			if (!inToken)
+				return (false);
+			inToken = false;
+			tokenCount++;
+		}
+		else if (input[i] == ' ' || (input[i] >= '0' && input[i] <= '9'))
+		{
+			if (input[i] >= '0' && input[i] <= '9')
+			{
+				inToken = true;
+				digitCount++;
+			}
+		}
+		else
+			return (false);
+		i++;
+	}
+	if (inToken)
+	{
+		digitCount++;
+		tokenCount++;
+	}
+	return (tokenCount == 3 && digitCount >= 3);
+}
+
+void	cont_of_coma(char *rgb)
+{
+	int	i;
+	int	cont;
+
+	cont = 0;
+	i = 0;
+	while (rgb[i] && rgb[i] == 32)
+		i++;
+	while (rgb[i])
+	{
+		if (rgb[i] == ',')
+			cont++;
+		i++;
+	}
+	if (cont != 2)
+	{
+		printf("11:ERROR\n");
+		exit(1);
+	}
+	else
+	{
+		if (!isValidFormat(rgb))
+		{
+			printf("12:ERROR\n");
+			exit(0);
+		}
+	}
+}
+
+
+void fill_rgb_val(char **rgb_val, t_general	*info, int index)
+{
+	int i;
+
+	i = 0;
+	while(rgb_val[i])
+	{
+		if(ft_strlen(rgb_val[i]) > 3 || ft_atoi(rgb_val[i]) > 255)
+		{
+			printf("15:ERROR\n");
+			free_2d(rgb_val);
+			exit(0);
+		}
+		i++;
+	}
+	info->info_rgb[index]._R = ft_atoi(rgb_val[0]);
+	info->info_rgb[index]._G = ft_atoi(rgb_val[1]);
+	info->info_rgb[index]._B = ft_atoi(rgb_val[2]);
+	free_2d(rgb_val);
+}
+
+
+t_general	*ft_parssing(void)
 {
 	t_general	*info;
 	t_bloc		*data;
 	char		**valid_path;
+	char		**valid_value_rgb;
 	static int	cont;
 	int			i;
 
@@ -141,7 +234,7 @@ void	ft_parssing(void)
 		if (ft_block_texteurs(&info->info_texteur[i]) == 0)
 			cont++;
 		valid_path = ft_split(info->info_texteur[i].path, ' ');
-		check_line(valid_path);
+		check_line(valid_path, PATH);
 		if (info->info_texteur[i].path)
 			free(info->info_texteur[i].path);
 		info->info_texteur[i].path = ft_strdup(valid_path[0]);
@@ -153,5 +246,25 @@ void	ft_parssing(void)
 		printf("7:ERROR\n");
 		exit(0);
 	}
+	i = 0;
+	cont = 0;
+	while (i < data->bloc_size_rgb)
+	{
+		if (ft_block_rgb(&info->info_rgb[i]) == 0)
+			cont++;
+		cont_of_coma(info->info_rgb[i].rgb_value);
+		info->info_rgb[i].rgb_value = reaplace(info->info_rgb[i].rgb_value,1,',');
+		valid_value_rgb = ft_split(info->info_rgb[i].rgb_value, ' ');
+		check_line(valid_value_rgb,RGB);
+		fill_rgb_val(valid_value_rgb,info,i);
+		free(info->info_rgb[i].rgb_value);
+		i++;
+	}
+	if (cont != data->bloc_size_rgb)
+	{
+		printf("7:ERROR\n");
+		exit(0);
+	}
+	return info;
 	//clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
 }
