@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:15 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 21:54:42 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/10 22:57:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main()
 {
 	t_general *info;
 	info = ft_parssing();
-	ft_bloc_map();
+	ft_parssing_map(info);
 	//while(1){};
 	//system("leaks cub3D");
 }
