@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/11 02:42:50 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/11 21:57:21 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define PATH 1
 # define RGB 2
+# define PI 3.14
 
 typedef struct s_bloc
 {
@@ -53,10 +54,10 @@ typedef struct s_texteur
 
 typedef struct s_player
 {
-	int pos_x;
-	int pos_y;
-	double driction;
-}	t_player;
+	int			pos_x;
+	int			pos_y;
+	double		driction;
+}				t_player;
 
 typedef struct s_general
 {
@@ -64,6 +65,7 @@ typedef struct s_general
 	t_texteur	*info_texteur;
 	t_player	*info_player;
 	t_bloc		*bloc_s;
+	int			dimensions[2];
 	char		*bloc;
 	char		*map;
 	int			number_of_line;
@@ -73,8 +75,7 @@ typedef struct s_general
 void			free_2d(char **tab);
 void			get_map(t_general *info);
 
-
-t_general	*ft_parssing_map(t_general *data);
+t_general		*ft_parssing_map(t_general *data);
 void			read_lines_texter(t_general *info);
 void			ft_bloc(t_general *data, t_bloc *data_of_texture);
 int				ft_strlen_2d(char **tab);
@@ -85,5 +86,7 @@ char			*skip_line(int fd);
 char			*reaplace(char *text, int number, char c);
 void			check_direction(t_bloc *data_of_texture);
 void			check_line(char **tab, int a);
+void			framing_map(char **map, char **dup_map);
+void floodfile(char **map, t_general info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 03:48:01 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 00:48:52 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,14 @@ void	read_lines_texter(t_general *info)
 	i = 0;
 	if(ft_strlen(str) == 1)
 	{
+		if (str)
+			free(str);
 		str = skip_line(fd);
 		i++;
 	}
 	if(i == 0)
 		exit(1);
 	info->bloc = ft_substr(file,0,ft_strlen(file));
+	free(str);
 	(free(file), close(fd));
 }

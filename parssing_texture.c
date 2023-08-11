@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 21:48:18 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 00:43:57 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,7 @@ t_general	*ft_parssing(void)
 		printf("7:ERROR\n");
 		exit(0);
 	}
+	free(data);
 	return info;
 	//clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
 }

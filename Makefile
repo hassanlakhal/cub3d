@@ -6,18 +6,18 @@
 #    By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 16:31:00 by hlakhal-          #+#    #+#              #
-#    Updated: 2023/08/10 03:47:07 by hlakhal-         ###   ########.fr        #
+#    Updated: 2023/08/11 23:14:29 by hlakhal-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 SRCS = main.c parssing_texture.c  parssing_utils.c free_list.c get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
-		parssing_map.c parssing_utils1.c parssing_utils2.c
+		parssing_map.c parssing_utils1.c parssing_utils2.c path_of_player.c
 
 CC		= cc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 OBJ = $(SRCS:.c=.o)
 
