@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/11 04:14:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/11 05:13:15 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	check_wall(char **str, int y)
 		j = 0;
 		while (str[i][j])
 		{
-			if (str[i][ft_strlen(str[i]) - 1] != '1')
+			if (str[i][ft_strlen(str[i]) - 1] != '1' && str[i][ft_strlen(str[i])
+				- 1] != '\t' && str[i][ft_strlen(str[i]) - 1] != ' ')
 			{
 				printf("16:ERROR\n");
 				exit(0);
@@ -85,7 +86,7 @@ void	check_wall(char **str, int y)
 	}
 }
 
-void check_top_buttom_wall(char **map, int y)
+void	check_top_buttom_wall(char **map, int y)
 {
 	int	i;
 	int	cont_top;
@@ -96,7 +97,7 @@ void check_top_buttom_wall(char **map, int y)
 	cont_buttom = 0;
 	while (map[0][i])
 	{
-		if (map[0][i] == '1')
+		if (map[0][i] == '1' || map[0][i] == ' ' || map[0][i] == '\t')
 			cont_top++;
 		i++;
 	}
@@ -107,25 +108,26 @@ void check_top_buttom_wall(char **map, int y)
 			cont_buttom++;
 		i++;
 	}
-	if ((int)ft_strlen(map[y - 1])  != cont_buttom ||(int)ft_strlen(map[0]) != cont_top)
-		(printf("18:ERROR\n"),exit(0));
+	if ((int)ft_strlen(map[y - 1]) != cont_buttom
+		|| (int)ft_strlen(map[0]) != cont_top)
+		(printf("18:ERROR\n"), exit(0));
 }
 
-void check_side_wall(char **map, int y)
+void	check_side_wall(char **map, int y)
 {
-	int i;
-	int cont_side;
+	int	i;
+	int	cont_side;
 
 	i = 1;
 	cont_side = 0;
 	while (map[i])
 	{
-		if (map[i][0] == '1')
+		if (map[i][0] == '1' || map[i][0] == '\t' || map[i][0] == ' ')
 			cont_side++;
 		i++;
 	}
 	if (cont_side != y - 1)
-		(printf("18:ERROR\n"),exit(0));
+		(printf("18:ERROR\n"), exit(0));
 }
 
 void	postion_of_player(char **map, t_general *data)
