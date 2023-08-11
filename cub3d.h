@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 22:57:58 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/11 02:42:50 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,18 @@ typedef struct s_texteur
 	char		*direction;
 }				t_texteur;
 
+typedef struct s_player
+{
+	int pos_x;
+	int pos_y;
+	double driction;
+}	t_player;
+
 typedef struct s_general
 {
 	t_rgb_info	*info_rgb;
 	t_texteur	*info_texteur;
+	t_player	*info_player;
 	t_bloc		*bloc_s;
 	char		*bloc;
 	char		*map;
