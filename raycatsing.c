@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 04:51:40 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 05:17:18 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ void display_pixel(t_general *info)
 	// 	mlx_pixel_put(mlx,mlx_win,i,0, 0x00FF0000);
 	// 	i++;
 	// }
+	printf("|%s|\n",info->valid_map[0]);
+	printf("|%s|\n",info->valid_map[1]);
+	printf("|%s|\n",info->valid_map[2]);
+	printf("|%s|\n",info->valid_map[3]);
+	printf("|%s|\n",info->valid_map[4]);
+	printf("|%s|\n",info->valid_map[5]);
 	mlx_loop(mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 04:19:40 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 05:19:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ t_general	*ft_parssing_map(t_general *data)
 	free_2d(dup_map);
 	if (data->map)
 		free(data->map);
-	data->valid_map = map;
+	data->valid_map = dup_str_2d(map);
 	//printf("x:%d\ty:%d", data->info_player->pos_x, data->info_player->pos_y);
 	free_2d(map);
 	return (data);
