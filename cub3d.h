@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/11 21:57:21 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 04:26:24 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_general
 	t_texteur	*info_texteur;
 	t_player	*info_player;
 	t_bloc		*bloc_s;
+	char		**valid_map;
 	int			dimensions[2];
 	char		*bloc;
 	char		*map;
@@ -88,5 +89,8 @@ void			check_direction(t_bloc *data_of_texture);
 void			check_line(char **tab, int a);
 void			framing_map(char **map, char **dup_map);
 void floodfile(char **map, t_general info);
+
+/* raycasting */
+void display_pixel(t_general *info);
 
 #endif

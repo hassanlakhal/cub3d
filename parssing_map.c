@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 00:54:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 04:19:40 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,22 @@ void	postion_of_player(char **map, t_general *data)
 		(printf("17:ERROR pos\n"), exit(0));
 }
 
+char **dup_str_2d(char **tab)
+{
+	int i;
+	char **new_tab;
+
+	i = 0;
+	new_tab = malloc(ft_strlen_2d(tab) + 1);
+	while (tab[i])
+	{
+		new_tab[i] = ft_strdup(tab[i]);
+		i++;
+	}
+	new_tab[i] = NULL;
+	return new_tab;
+}
+
 t_general	*ft_parssing_map(t_general *data)
 {
 	int		i;
@@ -190,7 +206,8 @@ t_general	*ft_parssing_map(t_general *data)
 	free_2d(dup_map);
 	if (data->map)
 		free(data->map);
-	printf("x:%d\ty:%d", data->info_player->pos_x, data->info_player->pos_y);
+	data->valid_map = map;
+	//printf("x:%d\ty:%d", data->info_player->pos_x, data->info_player->pos_y);
 	free_2d(map);
 	return (data);
 }
