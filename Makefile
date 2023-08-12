@@ -6,7 +6,7 @@
 #    By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 16:31:00 by hlakhal-          #+#    #+#              #
-#    Updated: 2023/08/12 04:28:53 by hlakhal-         ###   ########.fr        #
+#    Updated: 2023/08/12 05:44:31 by hlakhal-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCS = main.c parssing_texture.c  parssing_utils.c free_list.c get_next_line/get
 
 CC		= cc
 
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 OBJ = $(SRCS:.c=.o)
 

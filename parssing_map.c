@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 05:19:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 05:49:42 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ char **dup_str_2d(char **tab)
 	char **new_tab;
 
 	i = 0;
-	new_tab = malloc(ft_strlen_2d(tab) + 1);
+	new_tab = malloc(sizeof(char *) * (ft_strlen_2d(tab) + 1));
 	while (tab[i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
