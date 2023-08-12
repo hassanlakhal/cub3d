@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 04:26:24 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:02:27 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ typedef struct s_player
 	double		driction;
 }				t_player;
 
+typedef struct s_data
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+}				t_data;
+
 typedef struct s_general
 {
 	t_rgb_info	*info_rgb;
@@ -88,9 +97,9 @@ char			*reaplace(char *text, int number, char c);
 void			check_direction(t_bloc *data_of_texture);
 void			check_line(char **tab, int a);
 void			framing_map(char **map, char **dup_map);
-void floodfile(char **map, t_general info);
+void			floodfile(char **map, t_general info);
 
 /* raycasting */
-void display_pixel(t_general *info);
+void			display_pixel(t_general *info);
 
 #endif
