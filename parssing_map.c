@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 00:50:38 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 00:54:48 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	get_map(t_general *info)
 		free(str);
 		str = get_next_line(fd);
 	}
-	if(str)
+	if (str)
 		free(str);
 	str = skip_line(fd);
 	while (str)
@@ -47,19 +47,19 @@ void	get_map(t_general *info)
 void	check_dobule_new_line(char *str)
 {
 	int	i;
-	int len;
+	int	len;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\n' && str[i + 1] == '\n')
-			break;
+			break ;
 		i++;
 	}
-	while(str[i] && str[i] == '\n')
+	while (str[i] && str[i] == '\n')
 		i++;
 	len = ft_strlen(str);
-	if(len != i)
+	if (len != i)
 	{
 		printf("19:ERROR\n");
 		exit(1);
@@ -167,7 +167,6 @@ void	postion_of_player(char **map, t_general *data)
 		(printf("17:ERROR pos\n"), exit(0));
 }
 
-
 t_general	*ft_parssing_map(t_general *data)
 {
 	int		i;
@@ -179,15 +178,15 @@ t_general	*ft_parssing_map(t_general *data)
 	get_map(data);
 	check_dobule_new_line(data->map);
 	map = ft_split(data->map, '\n');
-	dup_map = ft_split(data->map,'\n');
+	dup_map = ft_split(data->map, '\n');
 	check_top_buttom_wall(map, ft_strlen_2d(map));
 	check_wall(map, ft_strlen_2d(map));
 	check_side_wall(map, ft_strlen_2d(map));
-	framing_map(map,dup_map);
+	framing_map(map, dup_map);
 	postion_of_player(map, data);
 	data->dimensions[0] = ft_strlen(map[0]);
 	data->dimensions[1] = ft_strlen_2d(map);
-	floodfile(dup_map,*(data));
+	floodfile(dup_map, *(data));
 	free_2d(dup_map);
 	if (data->map)
 		free(data->map);

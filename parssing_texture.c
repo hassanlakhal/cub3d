@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 00:43:57 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 01:00:07 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,44 +122,44 @@ int	ft_block_rgb(t_rgb_info *bloc_2)
 		return (1);
 }
 
-bool	isValidFormat(const char *input)
+bool	valid_format(const char *input)
 {
-	int		tokenCount;
-	int		digitCount;
-	bool	inToken;
+	int		token;
+	int		digit;
+	bool	intoken;
 	int		i;
 
 	i = 0;
-	tokenCount = 0;
-	digitCount = 0;
-	inToken = false;
+	token = 0;
+	digit = 0;
+	intoken = false;
 	while (input[i] != '\0')
 	{
 		if (input[i] == ',')
 		{
-			if (!inToken)
+			if (!intoken)
 				return (false);
-			inToken = false;
-			tokenCount++;
+			intoken = false;
+			token++;
 		}
 		else if (input[i] == ' ' || (input[i] >= '0' && input[i] <= '9'))
 		{
 			if (input[i] >= '0' && input[i] <= '9')
 			{
-				inToken = true;
-				digitCount++;
+				intoken = true;
+				digit++;
 			}
 		}
 		else
 			return (false);
 		i++;
 	}
-	if (inToken)
+	if (intoken)
 	{
-		digitCount++;
-		tokenCount++;
+		digit++;
+		token++;
 	}
-	return (tokenCount == 3 && digitCount >= 3);
+	return (token == 3 && digit >= 3);
 }
 
 void	cont_of_coma(char *rgb)
@@ -184,7 +184,7 @@ void	cont_of_coma(char *rgb)
 	}
 	else
 	{
-		if (!isValidFormat(rgb))
+		if (!valid_format(rgb))
 		{
 			printf("12:ERROR\n");
 			exit(0);
@@ -192,15 +192,14 @@ void	cont_of_coma(char *rgb)
 	}
 }
 
-
-void fill_rgb_val(char **rgb_val, t_general	*info, int index)
+void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(rgb_val[i])
+	while (rgb_val[i])
 	{
-		if(ft_strlen(rgb_val[i]) > 3 || ft_atoi(rgb_val[i]) > 255)
+		if (ft_strlen(rgb_val[i]) > 3 || ft_atoi(rgb_val[i]) > 255)
 		{
 			printf("15:ERROR\n");
 			free_2d(rgb_val);
@@ -213,7 +212,6 @@ void fill_rgb_val(char **rgb_val, t_general	*info, int index)
 	info->info_rgb[index]._B = ft_atoi(rgb_val[2]);
 	free_2d(rgb_val);
 }
-
 
 t_general	*ft_parssing(void)
 {
@@ -253,10 +251,11 @@ t_general	*ft_parssing(void)
 		if (ft_block_rgb(&info->info_rgb[i]) == 0)
 			cont++;
 		cont_of_coma(info->info_rgb[i].rgb_value);
-		info->info_rgb[i].rgb_value = reaplace(info->info_rgb[i].rgb_value,1,',');
+		info->info_rgb[i].rgb_value = reaplace(info->info_rgb[i].rgb_value, 1,
+				',');
 		valid_value_rgb = ft_split(info->info_rgb[i].rgb_value, ' ');
-		check_line(valid_value_rgb,RGB);
-		fill_rgb_val(valid_value_rgb,info,i);
+		check_line(valid_value_rgb, RGB);
+		fill_rgb_val(valid_value_rgb, info, i);
 		free(info->info_rgb[i].rgb_value);
 		i++;
 	}
@@ -266,6 +265,6 @@ t_general	*ft_parssing(void)
 		exit(0);
 	}
 	free(data);
-	return info;
+	return (info);
 	//clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
 }

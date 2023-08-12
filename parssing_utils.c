@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 20:34:20 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 00:58:14 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,3 @@ char	**ft_split_pos(char *str, char c, int pos)
 	tab[2] = NULL;
 	return (tab);
 }
-
-// int	main(void)
-// {
-// 	char	*input;
-// 	char	**result;
-
-// 	input = "abcd,77777,dddd";
-// 	result = ft_split_pos(input, ',', 4);
-// 	for (int i = 0; result[i] != NULL; i++)
-// 	{
-// 		printf("tab[%d] = %s\n", i, result[i]);
-// 		free(result[i]);
-// 	}
-// 	free(result);
-// 	return (0);
-// }

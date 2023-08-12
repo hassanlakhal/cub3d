@@ -6,11 +6,11 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 00:48:52 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 01:02:26 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"cub3d.h"
+#include "cub3d.h"
 
 void	init_list(t_general *info)
 {
@@ -57,24 +57,24 @@ void	read_lines_texter(t_general *info)
 	while (str)
 	{
 		file = ft_strjoin(file, str);
-		if(info->number_of_line >= 6)
-			break;
+		if (info->number_of_line >= 6)
+			break ;
 		if (ft_strlen(str) > 1)
 			info->number_of_line++;
 		free(str);
 		str = get_next_line(fd);
 	}
 	i = 0;
-	if(ft_strlen(str) == 1)
+	if (ft_strlen(str) == 1)
 	{
 		if (str)
 			free(str);
 		str = skip_line(fd);
 		i++;
 	}
-	if(i == 0)
+	if (i == 0)
 		exit(1);
-	info->bloc = ft_substr(file,0,ft_strlen(file));
+	info->bloc = ft_substr(file, 0, ft_strlen(file));
 	free(str);
 	(free(file), close(fd));
 }

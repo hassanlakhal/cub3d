@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/10 21:49:09 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/12 01:01:19 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 char	*reaplace(char *text, int number, char c)
 {
 	char	*result;
-	int		resultIndex;
+	int		index;
 	int		i;
 	int		j;
 
 	result = malloc(ft_strlen(text) * number + 1);
-	resultIndex = 0;
+	index = 0;
 	i = 0;
 	while (i < (int)ft_strlen(text))
 	{
@@ -29,15 +29,15 @@ char	*reaplace(char *text, int number, char c)
 			j = 0;
 			while (j < number)
 			{
-				result[resultIndex++] = ' ';
+				result[index++] = ' ';
 				j++;
 			}
 		}
 		else
-			result[resultIndex++] = text[i];
+			result[index++] = text[i];
 		i++;
 	}
-	result[resultIndex] = '\0';
+	result[index] = '\0';
 	if (text)
 	{
 		free(text);
