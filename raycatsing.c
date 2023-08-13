@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 18:58:58 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/13 22:33:29 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,34 +104,92 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 
 void	move_up(t_general *info, t_data *img)
 {
-	// int	new_x;
-	// int	new_y;
 
 	double pos_x;
 	double pos_y;
+
+	pos_x = info->info_player->pos_x + cos((info->alpha*PI)/180) * 0.1;
+	pos_y = info->info_player->pos_y + sin((info->alpha*PI)/180) * 0.1;
 	
-	pos_x = info->info_player->pos_x + cos((300*PI)/180) * 0.05;
-	pos_y = info->info_player->pos_y + sin((300*PI)/180) * 0.05;
-	
-	// new_y = info->info_player->pos_y - 1;
-	// new_x = info->info_player->pos_x;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
-		printf("%f %f\n", pos_x, pos_y);
 		display_player(pos_x, pos_y, img, 0x00FF1FFF);
-		// display_player(new_x, new_y, img, 0x4500FFF);
+		display_player(info->info_player->pos_x, info->info_player->pos_y, img, 0x00FFFFFF);
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
 	mlx_put_image_to_window(info->mlx, info->mlx_win, img->img, 0, 0);
 }
 
+void	move_down(t_general *info, t_data *img)
+{
+
+	double pos_x;
+	double pos_y;
+
+	pos_x = info->info_player->pos_x - cos((info->alpha*PI)/180) * 0.1;
+	pos_y = info->info_player->pos_y - sin((info->alpha*PI)/180) * 0.1;
+	
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
+	{
+		display_player(pos_x, pos_y, img, 0x00FF1FFF);
+		display_player(info->info_player->pos_x, info->info_player->pos_y, img, 0x00FFFFFF);
+		info->info_player->pos_x = pos_x;
+		info->info_player->pos_y = pos_y;
+	}
+	mlx_put_image_to_window(info->mlx, info->mlx_win, img->img, 0, 0);
+}
+
+void	rotate_right(t_general *info)
+{
+	info->alpha += 10;
+}
+void	rotate_left(t_general *info)
+{
+	info->alpha -= 10;
+}
+
+int	draw_rays(t_general *info)
+{
+	int i;
+
+	double pos_x;
+	double pos_y;
+	double old_pos_x;
+	double old_pos_y;
+
+	pos_x = info->info_player->pos_x * 45 + cos((info->alpha * PI) / 180) * 0.1;
+	pos_y = info->info_player->pos_y * 45 + sin((info->alpha * PI) / 180) * 0.1;
+	printf("%f\t%f\t%f\n", info->alpha,pos_x, pos_y);
+	old_pos_x = pos_x;
+	old_pos_y = pos_y;
+	i = 0;
+	while(i < 700)
+	{
+		my_mlx_pixel_put(info->info_img, pos_x, pos_y, 0x001F11FF);
+		my_mlx_pixel_put(info->info_img, old_pos_x, old_pos_y, 0x00000000);
+		old_pos_x = pos_x;
+		old_pos_y = pos_y;
+		pos_x += 0.1;
+		pos_y += 0.1;
+		i++;
+	}
+	mlx_put_image_to_window(info->mlx, info->mlx_win, info->info_img->img, 0, 0);
+	return 0;
+}
+
 int	key_hook(int key, t_general *info)
 {
 	if (key == 53)
 		exit(0);
-	if (key == 126 || key == 13)
+	else if (key == 126 || key == 13)
 		move_up(info, info->info_img);
+	else if (key == 125 )
+		move_down(info, info->info_img);
+	else if (key == 124)
+		rotate_right(info);
+	else if (key == 123)
+		rotate_left(info);
 	return (0);
 }
 
@@ -139,11 +197,12 @@ void	display_pixel(t_general info)
 {
 	// void	*mlx;
 	// void	*mlx_win;
-
+	info.alpha = 0;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45
 			* info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_key_hook(info.mlx_win, key_hook, &info);
+	mlx_loop_hook(info.mlx, draw_rays, &info);
 	mlx_loop(info.mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 18:39:54 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/13 20:52:05 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_general
 	int			number_of_line;
 	void		*mlx;
 	void		*mlx_win;
+	double		alpha;
 }				t_general;
 
 void			free_2d(char **tab);
