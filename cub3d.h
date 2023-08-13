@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 20:02:27 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/13 04:35:09 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			width;
+	int			height;
 }				t_data;
 
 typedef struct s_general
@@ -74,6 +76,7 @@ typedef struct s_general
 	t_texteur	*info_texteur;
 	t_player	*info_player;
 	t_bloc		*bloc_s;
+	t_data		*info_img;
 	char		**valid_map;
 	int			dimensions[2];
 	char		*bloc;
@@ -100,6 +103,6 @@ void			framing_map(char **map, char **dup_map);
 void			floodfile(char **map, t_general info);
 
 /* raycasting */
-void			display_pixel(t_general *info);
+void			display_pixel(t_general info);
 
 #endif
