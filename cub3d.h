@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 16:51:52 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/13 18:39:54 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <math.h>
 
 # define PATH 1
 # define RGB 2
@@ -54,8 +55,8 @@ typedef struct s_texteur
 
 typedef struct s_player
 {
-	int			pos_x;
-	int			pos_y;
+	double			pos_x;
+	double			pos_y;
 	double		driction;
 }				t_player;
 

@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 16:57:20 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/13 18:58:58 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	//printf("a|h%d    y:%d|\n",data->height,y);
 		//printf("b|h:%d   y:%d|\n",data->height,y);
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel
-					/ 8));
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 		*(unsigned int *)dst = color;
 }
 
-void	display_player(int x, int y, t_data *img, int color)
+void	display_player(double x, double y, t_data *img, int color)
 {
 	int	i;
 	int	j;
@@ -36,10 +35,10 @@ void	display_player(int x, int y, t_data *img, int color)
 	i = 0;
 	x *= 45;
 	y *= 45;
-	while (i < 10)
+	while (i < 5)
 	{
 		j = 0;
-		while (j < 10)
+		while (j < 5)
 		{
 			my_mlx_pixel_put(img, x + j, y + i, color);
 			j++;
@@ -105,23 +104,24 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 
 void	move_up(t_general *info, t_data *img)
 {
-	int	new_x;
-	int	new_y;
+	// int	new_x;
+	// int	new_y;
 
-	new_y = info->info_player->pos_y - 1;
-	new_x = info->info_player->pos_x;
-	// img->height = 45 * new_y;
-	// img->width = 45 * new_x;
-	//mlx_pixel_put(info->mlx, info->mlx_win, new_x * 45, new_y * 45, 0x000000);
-	if (info->valid_map[(int)new_y][(int)new_x] != '1')
+	double pos_x;
+	double pos_y;
+	
+	pos_x = info->info_player->pos_x + cos((300*PI)/180) * 0.05;
+	pos_y = info->info_player->pos_y + sin((300*PI)/180) * 0.05;
+	
+	// new_y = info->info_player->pos_y - 1;
+	// new_x = info->info_player->pos_x;
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
-		printf("add %p\n", img->img);
-		printf("* %d %d\n",new_x, new_y);
-		display_player(info->info_player->pos_x, info->info_player->pos_y, img,
-				0x00FFFFFF);
-		display_player(new_x, new_y, img, 0x4500FFF);
-		info->info_player->pos_y = new_y;
-		info->info_player->pos_x = new_x;
+		printf("%f %f\n", pos_x, pos_y);
+		display_player(pos_x, pos_y, img, 0x00FF1FFF);
+		// display_player(new_x, new_y, img, 0x4500FFF);
+		info->info_player->pos_x = pos_x;
+		info->info_player->pos_y = pos_y;
 	}
 	mlx_put_image_to_window(info->mlx, info->mlx_win, img->img, 0, 0);
 }
