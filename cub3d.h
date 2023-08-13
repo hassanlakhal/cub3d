@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 04:35:09 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/13 16:51:52 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ typedef struct s_general
 	char		*bloc;
 	char		*map;
 	int			number_of_line;
-
+	void		*mlx;
+	void		*mlx_win;
 }				t_general;
 
 void			free_2d(char **tab);
