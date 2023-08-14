@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 02:58:22 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/14 03:37:46 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,15 +178,16 @@ int draw_line(t_general *info)
 
 int	key_hook(int key, t_general *info)
 {
-	if (key == 53)
+	printf("%d\n",key);
+	if (key == 65307)
 		exit(0);
-	else if (key == 126 || key == 13)
+	else if (key == 65362 || key == 13)
 		move_up(info, info->info_img);
-	else if (key == 125)
+	else if (key == 65364)
 		move_down(info, info->info_img);
-	else if (key == 124)
+	else if (key == 65361)
 		rotate_right(info);
-	else if (key == 123)
+	else if (key == 65363)
 		rotate_left(info);
 	return (0);
 }
@@ -200,7 +201,7 @@ void	display_pixel(t_general info)
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45
 			* info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
-	mlx_hook(info.mlx_win,2,0, key_hook, &info);
+	mlx_hook(info.mlx_win,2,3, key_hook, &info);
 	mlx_loop_hook(info.mlx, draw_line, &info);
 	mlx_loop(info.mlx);
 }

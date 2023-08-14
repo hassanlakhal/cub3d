@@ -6,7 +6,7 @@
 #    By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 16:31:00 by hlakhal-          #+#    #+#              #
-#    Updated: 2023/08/12 05:44:31 by hlakhal-         ###   ########.fr        #
+#    Updated: 2023/08/14 03:26:16 by hlakhal-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,14 @@ OBJ = $(SRCS:.c=.o)
 
 all:cub3D
 
+%.o: %.c
+	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+
+
 cub3D:$(OBJ)
 
 		@make -sC libft/
-		@$(CC) $(CFLAGS) $(OBJ) -lmlx -framework OpenGL -framework AppKit libft/libft.a  -o cub3D
+		@$(CC) $(CFLAGS) $(OBJ) -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 clean:
 		@make -sC libft/ clean
@@ -37,3 +41,4 @@ fclean:	clean
 		@rm -f $(NAME)
 
 re:		fclean all
+

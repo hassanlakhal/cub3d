@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 05:49:42 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/14 04:05:02 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,11 +185,11 @@ char **dup_str_2d(char **tab)
 
 t_general	*ft_parssing_map(t_general *data)
 {
-	int		i;
+	//int		i;
 	char	**map;
 	char	**dup_map;
 
-	i = 0;
+	//i = 0;
 	data->info_player = malloc(sizeof(t_player));
 	get_map(data);
 	check_dobule_new_line(data->map);
@@ -207,7 +207,6 @@ t_general	*ft_parssing_map(t_general *data)
 	if (data->map)
 		free(data->map);
 	data->valid_map = dup_str_2d(map);
-	//printf("x:%d\ty:%d", data->info_player->pos_x, data->info_player->pos_y);
 	free_2d(map);
 	return (data);
 }

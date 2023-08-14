@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:43:31 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/02/06 21:29:02 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/14 03:12:10 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+#include<stdint.h>
 
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
