@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 02:51:27 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/14 02:58:22 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,11 +165,13 @@ int draw_line(t_general *info)
 	y2 = y1 + fabs(sin((info->alpha * PI) / 180) * 50);
 	slope = (float)(y2 - y1) / (x2 - x1);
 	intercept = y1 - slope * x1;
-	for (double x = x1; x <= x2; x++)
+	double x = x1;
+	while ( x <= x2)
 	{
 		y = (double)(slope * x + intercept);
 		mlx_pixel_put(info->mlx, info->mlx_win, x, y, 0x0000000);
 		printf("%f\n",x);
+		x++;
 	}
 	return 0;
 }
