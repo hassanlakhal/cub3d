@@ -1,43 +1,37 @@
-#include"cub3d.h"
+#include "cub3d.h"
+#include <mlx.h>
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
-
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-int	main(void)
+typedef struct s_vars
 {
 	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-	int i;
-	int j;
+	void	*win;
+}			t_vars;
 
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 190, 180, "Hello world!");
-	img.img = mlx_new_image(mlx, 190, 180);
-	çç
-	i = 0;
-	while (i < 10)
+int	main(void)
+{
+	t_vars	vars;
+	double		x1;
+	double		x2;
+	double 	y2;
+	double 	y1;
+	float	slope;
+	float	intercept;
+	double		y;
+
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 45 * 26, 45 * 7, "Line Drawing");
+	x1 = 22 * 45;
+	y1 = 4 * 45;
+	x2 = x1 + 10.04;
+	y2 = y1 + 20.05;
+	printf("{x:%f}, {y:%f}\n",x2,y2);
+	slope = (double)(y2 - y1) / (x2 - x1);
+	intercept = y1 - slope * x1;
+	for (double x = x1; x <= x2; x++)
 	{
-		j = 0;
-		while (j < 10)
-		{
-			my_mlx_pixel_put(&img, 1 + j, 1 + i, 0x00FF0000);
-			mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-			j++;
-		}
-		i++;
+		y = (double)(slope * x + intercept);
+		mlx_pixel_put(vars.mlx, vars.win, x, y, 0xFFFFFF);
+			// Set pixel color (white in this case)
 	}
-	mlx_loop(mlx);
+	mlx_loop(vars.mlx);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 20:52:05 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/14 01:04:10 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void			floodfile(char **map, t_general info);
 
 /* raycasting */
 void			display_pixel(t_general info);
+int	draw_rays(t_general *info);
 
 #endif

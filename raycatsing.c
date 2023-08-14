@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/13 22:33:29 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/14 02:51:27 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	//printf("a|h%d    y:%d|\n",data->height,y);
-		//printf("b|h:%d   y:%d|\n",data->height,y);
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned int *)dst = color;
+	//printf("b|h:%d   y:%d|\n",data->height,y);
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }
 
 void	display_player(double x, double y, t_data *img, int color)
@@ -80,18 +80,18 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	t_data	*img;
 
 	img = malloc(sizeof(t_data));
-	i = 0;
+	i = 1;
 	// img->width = 45 * info->dimensions[0];
 	// img->height = 45 * info->dimensions[1];
 	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45
 			* info->dimensions[1]);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
-			&img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
 	info->info_img = img;
 	printf("add %p\n", img->img);
 	while (i < 45)
 	{
-		j = 0;
+		j = 1;
 		while (j < 45)
 		{
 			display_pxl(info, img, j, i);
@@ -104,17 +104,16 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 
 void	move_up(t_general *info, t_data *img)
 {
+	double	pos_x;
+	double	pos_y;
 
-	double pos_x;
-	double pos_y;
-
-	pos_x = info->info_player->pos_x + cos((info->alpha*PI)/180) * 0.1;
-	pos_y = info->info_player->pos_y + sin((info->alpha*PI)/180) * 0.1;
-	
+	pos_x = info->info_player->pos_x + cos((info->alpha * PI) / 180) * 0.1;
+	pos_y = info->info_player->pos_y + sin((info->alpha * PI) / 180) * 0.1;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
 		display_player(pos_x, pos_y, img, 0x00FF1FFF);
-		display_player(info->info_player->pos_x, info->info_player->pos_y, img, 0x00FFFFFF);
+		display_player(info->info_player->pos_x, info->info_player->pos_y, img,
+				0x00FFFFFF);
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
@@ -123,17 +122,16 @@ void	move_up(t_general *info, t_data *img)
 
 void	move_down(t_general *info, t_data *img)
 {
+	double	pos_x;
+	double	pos_y;
 
-	double pos_x;
-	double pos_y;
-
-	pos_x = info->info_player->pos_x - cos((info->alpha*PI)/180) * 0.1;
-	pos_y = info->info_player->pos_y - sin((info->alpha*PI)/180) * 0.1;
-	
+	pos_x = info->info_player->pos_x - cos((info->alpha * PI) / 180) * 0.1;
+	pos_y = info->info_player->pos_y - sin((info->alpha * PI) / 180) * 0.1;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
 		display_player(pos_x, pos_y, img, 0x00FF1FFF);
-		display_player(info->info_player->pos_x, info->info_player->pos_y, img, 0x00FFFFFF);
+		display_player(info->info_player->pos_x, info->info_player->pos_y, img,
+				0x00FFFFFF);
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
@@ -142,39 +140,37 @@ void	move_down(t_general *info, t_data *img)
 
 void	rotate_right(t_general *info)
 {
-	info->alpha += 10;
+	info->alpha += 1.5;
 }
 void	rotate_left(t_general *info)
 {
-	info->alpha -= 10;
+	info->alpha -= 1.5;
 }
 
-int	draw_rays(t_general *info)
+int draw_line(t_general *info)
 {
-	int i;
 
-	double pos_x;
-	double pos_y;
-	double old_pos_x;
-	double old_pos_y;
+	double		x1;
+	double		x2;
+	double 	y2;
+	double 	y1;
+	float	slope;
+	float	intercept;
+	double		y;
 
-	pos_x = info->info_player->pos_x * 45 + cos((info->alpha * PI) / 180) * 0.1;
-	pos_y = info->info_player->pos_y * 45 + sin((info->alpha * PI) / 180) * 0.1;
-	printf("%f\t%f\t%f\n", info->alpha,pos_x, pos_y);
-	old_pos_x = pos_x;
-	old_pos_y = pos_y;
-	i = 0;
-	while(i < 700)
+	x1 = (info->info_player->pos_x * 45);
+	y1 = (info->info_player->pos_y * 45);
+	printf("{x:%f}, {cos:%f}\n",x1,cos((info->alpha * PI) / 180) * 50);
+	x2 = x1 + fabs(cos((info->alpha * PI) / 180) * 50);
+	y2 = y1 + fabs(sin((info->alpha * PI) / 180) * 50);
+	slope = (float)(y2 - y1) / (x2 - x1);
+	intercept = y1 - slope * x1;
+	for (double x = x1; x <= x2; x++)
 	{
-		my_mlx_pixel_put(info->info_img, pos_x, pos_y, 0x001F11FF);
-		my_mlx_pixel_put(info->info_img, old_pos_x, old_pos_y, 0x00000000);
-		old_pos_x = pos_x;
-		old_pos_y = pos_y;
-		pos_x += 0.1;
-		pos_y += 0.1;
-		i++;
+		y = (double)(slope * x + intercept);
+		mlx_pixel_put(info->mlx, info->mlx_win, x, y, 0x0000000);
+		printf("%f\n",x);
 	}
-	mlx_put_image_to_window(info->mlx, info->mlx_win, info->info_img->img, 0, 0);
 	return 0;
 }
 
@@ -184,7 +180,7 @@ int	key_hook(int key, t_general *info)
 		exit(0);
 	else if (key == 126 || key == 13)
 		move_up(info, info->info_img);
-	else if (key == 125 )
+	else if (key == 125)
 		move_down(info, info->info_img);
 	else if (key == 124)
 		rotate_right(info);
@@ -202,7 +198,7 @@ void	display_pixel(t_general info)
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45
 			* info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
-	mlx_key_hook(info.mlx_win, key_hook, &info);
-	mlx_loop_hook(info.mlx, draw_rays, &info);
+	mlx_hook(info.mlx_win,2,0, key_hook, &info);
+	mlx_loop_hook(info.mlx, draw_line, &info);
 	mlx_loop(info.mlx);
 }
