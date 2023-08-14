@@ -152,32 +152,48 @@ void	rotate_left(t_general *info)
 		info->alpha = 360;
 }
 
+// double get_lenght_1(t_general *info)
+// {
+// 	double l;
+// 	// double len;
 
-void sub_draw_line(t_general *info , int beta)
+// 	l = ((int)info->info_player->pos_x*45 + 45) - info->info_player->pos_x*45;
+// 	// len = fabs(tan(info->alpha + 30) * l) / 45;
+// 	// printf("l : %f\tpos x :%f\tpos x + dx: %d\n", l, info->info_player->pos_x*45 , (int)info->info_player->pos_x*45 + 45);
+// 	// printf("len : %f\tpos y :%f\tpos y + dy: %d\n", len ,info->info_player->pos_y*45 , (int)info->info_player->pos_y*45 + 45);
+// 	return l;
+// }
+
+
+void sub_draw_line(t_general *info , int beta, int length)
 {
 	double		x1;
-	double		x2;
-	double		y2;
 	double		y1;
 	int			i = 0;
-	double		lenght;
+	// double		length;
 	x1 = (info->info_player->pos_x * 45);
 	y1 = (info->info_player->pos_y * 45);
-	x2 = x1 + cos(((info->alpha + beta)* PI) / 180) * 50;
-	y2 = y1 + sin(((info->alpha + beta)* PI) / 180) * 50;
-	lenght = get_lenght(info);
-	while (i <= 200)
+	while (i <= length)
 	{
+		// printf("lenght : %d\n", length);
 		mlx_pixel_put(info->mlx, info->mlx_win, x1 , y1, 0x0000000);
 		x1 += cos(((info->alpha + beta)* PI) / 180) ;
 		y1 += sin(((info->alpha + beta)* PI) / 180) ;
 		i++;
 	}
 }
+
 int draw_line(t_general *info)
 {
-	sub_draw_line(info , 30);
-	sub_draw_line(info , -30);
+	double next_x = (int)(info->info_player->pos_x*45) / 45  + 45;
+	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
+	double dy = fabs(tan(((info->alpha + 30)* PI) / 180) * dx);
+	double l = sqrt(dx*dx + dy*dy) * 45;
+	// double l = info->info_player->pos_x*45 - dy;
+	printf("next_x %f\tdx %f\tdy %f\tl %f\n", next_x, dx, dy, l);
+	sub_draw_line(info , 30, l);
+	// sub_draw_line(info , -30, l);
+
 
 	return 0;
 }
