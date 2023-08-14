@@ -88,7 +88,7 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	info->info_img = img;
-	printf("add %p\n", img->img);
+	// printf("add %p\n", img->img);
 	while (i < 45)
 	{
 		j = 1;
@@ -140,45 +140,51 @@ void	move_down(t_general *info, t_data *img)
 
 void	rotate_right(t_general *info)
 {
-	info->alpha += 1.5;
+	info->alpha += 10;
+	if (info->alpha > 360)
+		info->alpha = 0;
 }
+
 void	rotate_left(t_general *info)
 {
-	info->alpha -= 1.5;
+	info->alpha -= 10;
+	if (info->alpha < 0)
+		info->alpha = 360;
 }
 
-int draw_line(t_general *info)
-{
 
+void sub_draw_line(t_general *info , int beta)
+{
 	double		x1;
 	double		x2;
-	double 	y2;
-	double 	y1;
-	float	slope;
-	float	intercept;
-	double		y;
-
+	double		y2;
+	double		y1;
+	int			i = 0;
+	double		lenght;
 	x1 = (info->info_player->pos_x * 45);
 	y1 = (info->info_player->pos_y * 45);
-	printf("{x:%f}, {cos:%f}\n",x1,cos((info->alpha * PI) / 180) * 50);
-	x2 = x1 + fabs(cos((info->alpha * PI) / 180) * 50);
-	y2 = y1 + fabs(sin((info->alpha * PI) / 180) * 50);
-	slope = (float)(y2 - y1) / (x2 - x1);
-	intercept = y1 - slope * x1;
-	double x = x1;
-	while ( x <= x2)
+	x2 = x1 + cos(((info->alpha + beta)* PI) / 180) * 50;
+	y2 = y1 + sin(((info->alpha + beta)* PI) / 180) * 50;
+	lenght = get_lenght(info);
+	while (i <= 200)
 	{
-		y = (double)(slope * x + intercept);
-		mlx_pixel_put(info->mlx, info->mlx_win, x, y, 0x0000000);
-		printf("%f\n",x);
-		x++;
+		mlx_pixel_put(info->mlx, info->mlx_win, x1 , y1, 0x0000000);
+		x1 += cos(((info->alpha + beta)* PI) / 180) ;
+		y1 += sin(((info->alpha + beta)* PI) / 180) ;
+		i++;
 	}
+}
+int draw_line(t_general *info)
+{
+	sub_draw_line(info , 30);
+	sub_draw_line(info , -30);
+
 	return 0;
 }
 
 int	key_hook(int key, t_general *info)
 {
-	printf("%d\n",key);
+	// printf("%d\n",key);
 	if (key == 65307)
 		exit(0);
 	else if (key == 65362 || key == 13)
@@ -186,9 +192,9 @@ int	key_hook(int key, t_general *info)
 	else if (key == 65364)
 		move_down(info, info->info_img);
 	else if (key == 65361)
-		rotate_right(info);
-	else if (key == 65363)
 		rotate_left(info);
+	else if (key == 65363)
+		rotate_right(info);
 	return (0);
 }
 
@@ -205,3 +211,32 @@ void	display_pixel(t_general info)
 	mlx_loop_hook(info.mlx, draw_line, &info);
 	mlx_loop(info.mlx);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// [Event "?"]
+// [Site "?"]
+// [Date "????.??.??"]
+// [Round "?"]
+// [White "?"]
+// [Black "?"]
+// [Result "0-1"]
+
+// 1. e4 e5 {Right back atcha, buddy.} 2. Bc4 Nf6 3. d3 d5 4. exd5 Nxd5 5. Nf3 Bg4
+// 6. a3 Bc5 7. Ba2 Nc6 8. O-O f5 9. Re1 Qd7 10. b4 Bd4 11. Qd2 Bxa1 12. b5 Bxf3
+// 13. gxf3 Nd4 14. f4 Nf3+ {AHH $1 Get away from my king $1} 15. Kg2 Nxd2 16. Bxd2
+// O-O-O 17. fxe5 b6 18. Kh1 Rde8 19. Rd1 Rxe5 20. f4 Re2 21. Bb3 Qd6 22. h4 Nxf4
+// 23. Bc4 Nxd3 24. Bxd3 Qh2# {Aww $1 You played great, I loved your moves ^_^ Play
+// again $2} 0-1

@@ -30,7 +30,7 @@ ft_isascii.o ft_memmove.o ft_strdup.o ft_toupper.o ft_strnstr.o ft_islpha.o
 
 
 
-CC		= cc
+CC		= clang
 
 CFLAGS = -Wall -Wextra -Werror
 
