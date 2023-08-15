@@ -24,7 +24,7 @@
 # include <string.h>
 # include <unistd.h>
 #include <math.h>
-
+#include <limits.h>
 # define PATH 1
 # define RGB 2
 # define PI 3.141592653

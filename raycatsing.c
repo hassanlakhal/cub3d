@@ -152,18 +152,6 @@ void	rotate_left(t_general *info)
 		info->alpha = 360;
 }
 
-// double get_lenght_1(t_general *info)
-// {
-// 	double l;
-// 	// double len;
-
-// 	l = ((int)info->info_player->pos_x*45 + 45) - info->info_player->pos_x*45;
-// 	// len = fabs(tan(info->alpha + 30) * l) / 45;
-// 	// printf("l : %f\tpos x :%f\tpos x + dx: %d\n", l, info->info_player->pos_x*45 , (int)info->info_player->pos_x*45 + 45);
-// 	// printf("len : %f\tpos y :%f\tpos y + dy: %d\n", len ,info->info_player->pos_y*45 , (int)info->info_player->pos_y*45 + 45);
-// 	return l;
-// }
-
 
 void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end)
 {
@@ -182,7 +170,12 @@ void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end)
 	y2 = end->j;
 	slope = (double)(y2 - y1) / (x2 - x1);
 	intercept = y1 - slope * x1;
-	for (double x = x1; x <= x2; x++)
+	// if (x2 > info->dimensions[0] * 45)
+	// {
+	// 	printf("&*&*&*&*&*&*&*&*&*&*&*&*&*&*&*\n");
+	// 	exit(0);
+	// }
+	for (double x = x1; x < x2; x++)
 	{
 		y = (double)(slope * x + intercept);
 		mlx_pixel_put(info->mlx, info->mlx_win, x, y, 0x000000);
@@ -191,37 +184,40 @@ void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end)
 }
 
 
-double horizontal(t_general *info)
+double horizontal(t_general *info, int alpha)
 {
 	double next_y;
 	t_coordinates start;
 	t_coordinates end;
 	next_y = 0; 
+
 	if (cos(((info->alpha) * PI) * 180) > 0)
 		next_y = (int)(info->info_player->pos_y*45) / 45  + 1;
 	else if (cos(((info->alpha) * PI) * 180) < 0)
-	next_y = (int)(info->info_player->pos_y*45) / 45  - 1;
+		next_y = (int)(info->info_player->pos_y*45) / 45  - 1;
+
 	double dy = fabs(info->info_player->pos_y * 45 - next_y * 45);
-	double dx  = fabs(dy / (tan(((info->alpha + 30) * PI) / 180)));
+	double dx  = fabs(dy / (tan(((info->alpha + alpha) * PI) / 180)));
 
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+
+	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i + dx;
 		end.j = start.j - dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i - dx;
 		end.j = start.j - dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) > 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
 		end.i = start.i + dx;
 		end.j = start.j + dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i - dx;
 		end.j = start.j - dy;
@@ -230,13 +226,14 @@ double horizontal(t_general *info)
 //	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_y, dx, dy,info->alpha);
 //	sub_draw_line(info , 30, l);
 //	sub_draw_line(info , -30, l);
+	// sub_draw_line(info ,&start,&end);
 	return l;
 	// double l = info->info_player->pos_y*4
 }
 
 
 
-double vertecal(t_general *info)
+double vertecal(t_general *info, int alpha)
 {
 	double next_x;
 	t_coordinates start;
@@ -247,31 +244,36 @@ double vertecal(t_general *info)
 	else if (cos(((info->alpha) * PI) * 180) < 0)
 	next_x = (int)(info->info_player->pos_x*45) / 45  - 1;
 	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
-	double dy = fabs(tan(((info->alpha + 30) * PI) / 180) * dx);
+	double dy = fabs(tan(((info->alpha + alpha) * PI) / 180) * dx);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i + dx;
 		end.j = start.j - dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i - dx;
 		end.j = start.j - dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) > 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
 		end.i = start.i + dx;
 		end.j = start.j + dy;
 	}
-	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i - dx;
 		end.j = start.j - dy;
 	}
 	double l = sqrt(dx*dx + dy*dy);
 ///	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_x, dx, dy,info->alpha);
+	printf("end.i %f\tend.j %f\n", end.i, end.j);
+	if (end.i > INT_MAX)
+		end.i = INT_MAX;
+	if (end.j > INT_MAX)
+		end.j = INT_MAX;
 	sub_draw_line(info ,&start,&end);
 //	sub_draw_line(info , -30, l);
 	return l;
@@ -281,8 +283,24 @@ int draw_line(t_general *info)
 {
 	double lv;
 	double lh;
-	lv = vertecal(info);
-	lh = horizontal(info);
+	// int i = 0;
+	// while(i < 30)
+	// {
+	// 	lv = vertecal(info, i);
+	// 	// lv = vertecal(info, i);
+	// 	i++;
+	// }
+	// i = -30;
+	// while(i < 0)
+	// {
+	// 	lv = vertecal(info, i);
+	// 	// lv = vertecal(info, i);
+	// 	i++;
+	// }
+	lv = vertecal(info , 0);
+	lh = horizontal(info , 30);
+
+	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
 }
 
