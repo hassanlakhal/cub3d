@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 03:37:46 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/15 06:23:00 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	move_down(t_general *info, t_data *img)
 void	rotate_right(t_general *info)
 {
 	info->alpha += 10;
-	if (info->alpha > 360)
+	if (info->alpha >= 360)
 		info->alpha = 0;
 }
 
@@ -165,38 +165,127 @@ void	rotate_left(t_general *info)
 // }
 
 
-void sub_draw_line(t_general *info , int beta, int length)
+void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end)
 {
 	double		x1;
-	double		y1;
-	int			i = 0;
-	// double		length;
-	x1 = (info->info_player->pos_x * 45);
-	y1 = (info->info_player->pos_y * 45);
-	while (i <= length)
+	double		x2;
+	double 	y2;
+	double 	y1;
+	float	slope;
+	float	intercept;
+	double		y;
+	// double	angle = info->alpha;
+
+	x1 = start->i;
+	y1 = start->j;
+	x2 = end->i;
+	y2 = end->j;
+	slope = (double)(y2 - y1) / (x2 - x1);
+	intercept = y1 - slope * x1;
+	for (double x = x1; x <= x2; x++)
 	{
-		// printf("lenght : %d\n", length);
-		mlx_pixel_put(info->mlx, info->mlx_win, x1 , y1, 0x0000000);
-		x1 += cos(((info->alpha + beta)* PI) / 180) ;
-		y1 += sin(((info->alpha + beta)* PI) / 180) ;
-		i++;
+		y = (double)(slope * x + intercept);
+		mlx_pixel_put(info->mlx, info->mlx_win, x, y, 0x000000);
+			// Set pixel color (white in this case)
 	}
+}
+
+
+double horizontal(t_general *info)
+{
+	double next_y;
+	t_coordinates start;
+	t_coordinates end;
+	next_y = 0; 
+	if (cos(((info->alpha) * PI) * 180) > 0)
+		next_y = (int)(info->info_player->pos_y*45) / 45  + 1;
+	else if (cos(((info->alpha) * PI) * 180) < 0)
+	next_y = (int)(info->info_player->pos_y*45) / 45  - 1;
+	double dy = fabs(info->info_player->pos_y * 45 - next_y * 45);
+	double dx  = fabs(dy / (tan(((info->alpha + 30) * PI) / 180)));
+
+	start.i = info->info_player->pos_x * 45;
+	start.j = info->info_player->pos_y * 45;
+	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i + dx;
+		end.j = start.j - dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i - dx;
+		end.j = start.j - dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) > 0)
+	{
+		end.i = start.i + dx;
+		end.j = start.j + dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i - dx;
+		end.j = start.j - dy;
+	}
+	double l = sqrt(dx*dx + dy*dy);
+//	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_y, dx, dy,info->alpha);
+//	sub_draw_line(info , 30, l);
+//	sub_draw_line(info , -30, l);
+	return l;
+	// double l = info->info_player->pos_y*4
+}
+
+
+
+double vertecal(t_general *info)
+{
+	double next_x;
+	t_coordinates start;
+	t_coordinates end;
+	next_x = 0; 
+	if (cos(((info->alpha) * PI) * 180) > 0)
+		next_x = (int)(info->info_player->pos_x*45) / 45  + 1;
+	else if (cos(((info->alpha) * PI) * 180) < 0)
+	next_x = (int)(info->info_player->pos_x*45) / 45  - 1;
+	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
+	double dy = fabs(tan(((info->alpha + 30) * PI) / 180) * dx);
+	start.i = info->info_player->pos_x * 45;
+	start.j = info->info_player->pos_y * 45;
+	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i + dx;
+		end.j = start.j - dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i - dx;
+		end.j = start.j - dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) > 0 && sin(((info->alpha + 30) * PI) * 180) > 0)
+	{
+		end.i = start.i + dx;
+		end.j = start.j + dy;
+	}
+	if (cos(((info->alpha + 30) * PI) * 180) < 0 && sin(((info->alpha + 30) * PI) * 180) < 0)
+	{
+		end.i = start.i - dx;
+		end.j = start.j - dy;
+	}
+	double l = sqrt(dx*dx + dy*dy);
+///	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_x, dx, dy,info->alpha);
+	sub_draw_line(info ,&start,&end);
+//	sub_draw_line(info , -30, l);
+	return l;
 }
 
 int draw_line(t_general *info)
 {
-	double next_x = (int)(info->info_player->pos_x*45) / 45  + 45;
-	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
-	double dy = fabs(tan(((info->alpha + 30)* PI) / 180) * dx);
-	double l = sqrt(dx*dx + dy*dy) * 45;
-	// double l = info->info_player->pos_x*45 - dy;
-	printf("next_x %f\tdx %f\tdy %f\tl %f\n", next_x, dx, dy, l);
-	sub_draw_line(info , 30, l);
-	// sub_draw_line(info , -30, l);
-
-
+	double lv;
+	double lh;
+	lv = vertecal(info);
+	lh = horizontal(info);
 	return 0;
 }
+
 
 int	key_hook(int key, t_general *info)
 {
@@ -225,6 +314,7 @@ void	display_pixel(t_general info)
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win,2,3, key_hook, &info);
 	mlx_loop_hook(info.mlx, draw_line, &info);
+//	mlx_loop_hook(info.mlx, vertical, &info);
 	mlx_loop(info.mlx);
 }
 

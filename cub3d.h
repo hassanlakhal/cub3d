@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 03:27:43 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/15 05:43:28 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,14 @@
 
 # define PATH 1
 # define RGB 2
-# define PI 3.14
+# define PI 3.141592653
+
+typedef struct s_coordinates
+{
+	double i;
+	double j;
+	
+}	t_coordinates;
 
 typedef struct s_bloc
 {
