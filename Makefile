@@ -17,7 +17,7 @@ SRCS = main.c parssing_texture.c  parssing_utils.c free_list.c get_next_line/get
 
 CLANG		=  clang
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=address
 
 OBJ = $(SRCS:.c=.o)
 

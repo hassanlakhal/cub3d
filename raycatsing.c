@@ -172,133 +172,152 @@ void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end)
 }
 
 
-double horizontal(t_general *info, int alpha)
+double horizontal(t_general *info, int alpha, int layer, t_coordinates *start, t_coordinates *end)
 {
 	double next_y;
-	t_coordinates start;
-	t_coordinates end;
+	// t_coordinates start;
+	// t_coordinates end;
 	next_y = 0; 
+	
 	if (sin(((info->alpha + alpha) * PI) * 180) > 0)
-		next_y = (int)(info->info_player->pos_y*45) / 45  + 1;
-	else if (sin(((info->alpha + alpha) * PI) * 180) < 0)
-		next_y = (int)(info->info_player->pos_y*45) / 45;
+	{
+		printf("*********");
+		next_y = (int)(info->info_player->pos_y*45) / 45 + layer;
+	}
+	else if (sin(((info->alpha + alpha) * PI) * 180) <= 0)
+	{
+		printf("////////");
+		next_y = (int)(info->info_player->pos_y*45) / 45 ;
+	}
+	end->i = 0;
+	end->j = 0;
 	double dy = fabs(info->info_player->pos_y * 45 - next_y * 45);
 	double dx  = fabs(dy / (tan(((info->alpha + alpha) * PI) / 180)));
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
+	if (dx == 0)
+		dx = 45;
+	start->i = info->info_player->pos_x * 45;
+	start->j = info->info_player->pos_y * 45;
+	
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
-		end.i = start.i + dx;
-		end.j = fabs(start.j - dy);
+		end->i = start->i + dx;
+		end->j = fabs(start->j - dy);
 	}
 	else if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
-		end.i = fabs(start.i - dx);
-		end.j = fabs(start.j - dy);
+		end->i = fabs(start->i - dx);
+		end->j = fabs(start->j - dy);
 	}
 	else if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
-		end.i = start.i + dx;
-		end.j = start.j + dy;
+		end->i = start->i + dx;
+		end->j = start->j + dy;
 	}
 	else if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
-		end.i = fabs(start.i - dx);
-		end.j = start.j + dy;
+		end->i = fabs(start->i - dx);
+		end->j = start->j + dy;
 	}	
+	
+
+	if (info->valid_map[(int)end->j/45][(int)end->i/45] == '0')
+		horizontal(info, alpha, layer + 1, start, end);
+
 	double l = sqrt(dx*dx + dy*dy);
-	double x_steps;
-	double y_steps;
-	y_steps = 45;
-	if(sin((((info->alpha + alpha) * PI) * 180) + alpha) < 0)
-		y_steps = -45;
-	x_steps = 45 / fabs(tan((((info->alpha + alpha) * PI) * 180) + alpha));
-	if (cos((((info->alpha + alpha) * PI) * 180)+ alpha) < 0)
-		x_steps *= -1;
-	if(isinf(end.i))
-		end.i = 0;
-	while(1)
-	{
-		if (end.i < 0)
-			end.i = 0;
-		if(info->valid_map[(int)end.j/45 - 1][(int)end.i/45 - 1] == '1')
-			break;
-		end.i += x_steps;
-		end.j += y_steps;
-	}
-	sub_draw_line(info ,&start,&end);
+	printf("dx %f\tdy %f\n", dx, dy);
+	// if (info->valid_map[(int)end->j/45][(int)end->i/45] == '1')
+	// 	sub_draw_line(info ,&start,&end);
+	
+	// printf("pos %c\tend i %f\tend j %f\n",info->valid_map[(int)end.j/45][(int)end.i/45],end.i/45, end.j/45);
+
+
 	return l;
 }
 
 
 
-double vertecal(t_general *info, int alpha)
+double vertecal(t_general *info, int alpha, int layer, t_coordinates *start, t_coordinates *end)
 {
 	double next_x;
-	t_coordinates start;
-	t_coordinates end;
+	// t_coordinates start;
+	// t_coordinates end;
 	next_x = 0; 
+
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0)
-		next_x = (int)(info->info_player->pos_x*45) / 45  + 1;
+		next_x = (int)(info->info_player->pos_x*45) / 45  + layer;
 	else if (cos(((info->alpha + alpha) * PI) * 180) < 0)
-	next_x = (int)(info->info_player->pos_x*45) / 45;
+		next_x = (int)(info->info_player->pos_x*45) / 45 - layer;
+
 	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
 	double dy = fabs(tan(((info->alpha + alpha) * PI) / 180) * dx);
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
+	
+	start->i = info->info_player->pos_x * 45;
+	start->j = info->info_player->pos_y * 45;
+	
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
-		end.i = start.i + dx;
-		end.j = fabs(start.j - dy);
+		end->i = start->i + dx;
+		end->j = fabs(start->j - dy);
 	}
 	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
-		end.i = fabs(start.i - dx);
-		end.j = fabs(start.j - dy);
+		end->i = fabs(start->i - dx);
+		end->j = fabs(start->j - dy);
 	}
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
-		end.i = start.i + dx;
-		end.j = start.j + dy;
+		end->i = start->i + dx;
+		end->j = start->j + dy;
 	}
 	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
-		end.i = fabs(start.j - dx);
-		end.j = start.j + dy;
+		end->i = fabs(start->j - dx);
+		end->j = start->j + dy;
 	}
+
+	if (info->valid_map[(int)end->j/45][(int)end->i/45] == '0')
+		vertecal(info, alpha, layer + 1, start, end);
+
 	double l = sqrt(dx*dx + dy*dy);
-	double x_steps;
-	double y_steps;
-	x_steps = 45;
-	if(cos((((info->alpha + alpha) * PI) * 180) + alpha) < 0)
-		x_steps = -45;
-	y_steps = 45 * fabs(tan((((info->alpha + alpha) * PI) * 180) + alpha));
-	if (sin((((info->alpha + alpha) * PI) * 180)+ alpha) < 0)
-		y_steps *= -1;
-	if(isinf(end.j))
-		end.j = 0;
-	while(1)
-	{	
-		if (end.j < 0)
-			end.j = 0;
-		//printf("y:%d\tx:%d\n",(int)end.j/45,(int)end.i/45);
-		if(info->valid_map[(int)end.j/45][(int)end.i/45 - 1] == '1')
-			break;
-		end.i += x_steps;
-		end.j += y_steps;
-	}
-	sub_draw_line(info ,&start,&end);
-//	sub_draw_line(info , -30, l);
+
+	// printf("pos %c\tend i %f\tend j%f\n",info->valid_map[(int)end->j/45][(int)end->i/45],end->i/45, end->j/45);
+
+	// if (info->valid_map[(int)end->j/45][(int)end->i/45] == '1')
+	// 	sub_draw_line(info ,&start,&end);
+	
 	return l;
 }
-
+double get_lenght_between_points(t_coordinates p1, t_coordinates p2)
+{
+    double dx = p2.i - p1.i;
+    double dy = p2.j - p1.j;
+    
+    return sqrt(dx * dx + dy * dy);
+}
 int draw_line(t_general *info)
 {
-	double lv;
-	double lh;
-	lv = vertecal(info , 30);
-	lh = horizontal(info , -30);
+	t_coordinates start;
+	t_coordinates end;
 
+	// t_coordinates start_1;
+	// t_coordinates end_1;
+
+	vertecal(info , 30, 1, &start, &end);
+	// horizontal(info , 30, 1, &start, &end_1);
+
+	// printf("V : %f\n", lv);
+	// printf("start_1 : %f\tend_1 : %f\tstart_2 : %f\tend_2 : %f\n", start.i, end.j, start_1.i, end_1.j);
+
+	// printf("V : %f\n", lv);
+	// double lenght = get_lenght_between_points(start, end);
+	// double lenght_1 = get_lenght_between_points(start, end_1);
+
+	// printf("lenght V : %f\tlenght H : %f\n", lenght, lenght_1);
+	sub_draw_line(info ,&start,&end);
+	// if (lenght < lenght_1)
+	// else
+	// 	sub_draw_line(info ,&start,&end_1);
+	// printf()
 	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
 }
