@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/15 06:23:00 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:49:43 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void	display_player(double x, double y, t_data *img, int color)
 {
-	int	i;
-	int	j;
-
-	i = 0;
 	x *= 45;
 	y *= 45;
-	while (i < 5)
-	{
-		j = 0;
-		while (j < 5)
-		{
-			my_mlx_pixel_put(img, x + j, y + i, color);
-			j++;
-		}
-		i++;
-	}
+	
+	my_mlx_pixel_put(img, (int)x, (int)y, color);
 }
 
 void	display_pxl(t_general *info, t_data *img, int j, int i)
@@ -190,19 +178,14 @@ double horizontal(t_general *info, int alpha)
 	t_coordinates start;
 	t_coordinates end;
 	next_y = 0; 
-
 	if (sin(((info->alpha + alpha) * PI) * 180) > 0)
 		next_y = (int)(info->info_player->pos_y*45) / 45  + 1;
 	else if (sin(((info->alpha + alpha) * PI) * 180) < 0)
 		next_y = (int)(info->info_player->pos_y*45) / 45;
-
 	double dy = fabs(info->info_player->pos_y * 45 - next_y * 45);
 	double dx  = fabs(dy / (tan(((info->alpha + alpha) * PI) / 180)));
-
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-
-
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i + dx;
@@ -222,22 +205,29 @@ double horizontal(t_general *info, int alpha)
 	{
 		end.i = fabs(start.i - dx);
 		end.j = start.j + dy;
-	}
+	}	
 	double l = sqrt(dx*dx + dy*dy);
-	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_y, dx, dy,info->alpha);
-//	sub_draw_line(info , 30, l);
-//	sub_draw_line(info , -30, l);
-	if (end.i > INT_MAX)
-		end.i = 200;
-	if (end.j > INT_MAX)
-		end.j = 200;
-	if (end.i < INT_MIN)
-		end.i = 200;
-	if (end.j < INT_MIN)
-		end.j = 0;
+	double x_steps;
+	double y_steps;
+	y_steps = 45;
+	if(sin((((info->alpha + alpha) * PI) * 180) + alpha) < 0)
+		y_steps = -45;
+	x_steps = 45 / fabs(tan((((info->alpha + alpha) * PI) * 180) + alpha));
+	if (cos((((info->alpha + alpha) * PI) * 180)+ alpha) < 0)
+		x_steps *= -1;
+	if(isinf(end.i))
+		end.i = 0;
+	while(1)
+	{
+		if (end.i < 0)
+			end.i = 0;
+		if(info->valid_map[(int)end.j/45 - 1][(int)end.i/45 - 1] == '1')
+			break;
+		end.i += x_steps;
+		end.j += y_steps;
+	}
 	sub_draw_line(info ,&start,&end);
 	return l;
-	// double l = info->info_player->pos_y*4
 }
 
 
@@ -251,7 +241,7 @@ double vertecal(t_general *info, int alpha)
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0)
 		next_x = (int)(info->info_player->pos_x*45) / 45  + 1;
 	else if (cos(((info->alpha + alpha) * PI) * 180) < 0)
-	next_x = (int)(info->info_player->pos_x*45) / 45  - 1;
+	next_x = (int)(info->info_player->pos_x*45) / 45;
 	double dx = fabs(info->info_player->pos_x * 45 - next_x * 45);
 	double dy = fabs(tan(((info->alpha + alpha) * PI) / 180) * dx);
 	start.i = info->info_player->pos_x * 45;
@@ -259,30 +249,44 @@ double vertecal(t_general *info, int alpha)
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
 		end.i = start.i + dx;
-		end.j = start.j - dy;
+		end.j = fabs(start.j - dy);
 	}
 	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
 	{
-		end.i = start.i - dx;
-		end.j = start.j - dy;
+		end.i = fabs(start.i - dx);
+		end.j = fabs(start.j - dy);
 	}
 	if (cos(((info->alpha + alpha) * PI) * 180) > 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
 		end.i = start.i + dx;
 		end.j = start.j + dy;
 	}
-	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) < 0)
+	if (cos(((info->alpha + alpha) * PI) * 180) < 0 && sin(((info->alpha + alpha) * PI) * 180) > 0)
 	{
-		end.i = start.i - dx;
-		end.j = start.j - dy;
+		end.i = fabs(start.j - dx);
+		end.j = start.j + dy;
 	}
 	double l = sqrt(dx*dx + dy*dy);
-///	printf("next_x %f\tdx %f\tdy %f\t \t%f\n", next_x, dx, dy,info->alpha);
-	// printf("end.i %f\tend.j %f\n", end.i, end.j);
-	if (end.i > INT_MAX)
-		end.i = INT_MAX;
-	if (end.j > INT_MAX)
-		end.j = INT_MAX;
+	double x_steps;
+	double y_steps;
+	x_steps = 45;
+	if(cos((((info->alpha + alpha) * PI) * 180) + alpha) < 0)
+		x_steps = -45;
+	y_steps = 45 * fabs(tan((((info->alpha + alpha) * PI) * 180) + alpha));
+	if (sin((((info->alpha + alpha) * PI) * 180)+ alpha) < 0)
+		y_steps *= -1;
+	if(isinf(end.j))
+		end.j = 0;
+	while(1)
+	{	
+		if (end.j < 0)
+			end.j = 0;
+		//printf("y:%d\tx:%d\n",(int)end.j/45,(int)end.i/45);
+		if(info->valid_map[(int)end.j/45][(int)end.i/45 - 1] == '1')
+			break;
+		end.i += x_steps;
+		end.j += y_steps;
+	}
 	sub_draw_line(info ,&start,&end);
 //	sub_draw_line(info , -30, l);
 	return l;
