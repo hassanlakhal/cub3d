@@ -290,7 +290,7 @@ double vertecal(t_general *info, int alpha)
 	// 	y_steps *= -1;
 	while(1)
 	{
-		// rah zedt f had break wall
+		// rah zedt break_wall des condition bach 7ta nchouf il akan xi error 3ad nbedel f end i o j
 		if(!break_wall(info,(int)end.i/45 + x_steps,(int)end.j/45 + y_steps, alpha))
 			break;
 		end.i += x_steps;
