@@ -88,14 +88,11 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 
 	img = malloc(sizeof(t_data));
 	i = 1;
-	// img->width = 45 * info->dimensions[0];
-	// img->height = 45 * info->dimensions[1];
 	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45
 			* info->dimensions[1]);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_length, &img->endian);
 	info->info_img = img;
-	// printf("add %p\n", img->img);
 	while (i < 45)
 	{
 		j = 1;
@@ -149,31 +146,36 @@ void	rotate_right(t_general *info)
 {
 	info->alpha += 1;
 	if (info->alpha >= 360)
-		info->alpha = 0;
+		info->alpha = 1;
 }
 
 void	rotate_left(t_general *info)
 {
 	info->alpha -= 1;
 	if (info->alpha < 0)
-		info->alpha = 360;
+		info->alpha = 359;
 }
 
-bool break_wall(t_general *info,int x, int y)
+bool break_wall(t_general *info,int x, int y, int alpha)
 {
+	if (info->alpha + alpha == 270 || info->alpha + alpha == 90)
+	{
+		printf("alpha %f\n", info->alpha + alpha);
+		return false;
+	}
 	if (x < 0 || x >= info->dimensions[0])
 	{
-		printf("x : %d****************************", x);
+		// printf("x : %d %d****************************\n", x, info->dimensions[0]);
 		return false;
 	}
 	if ( y < 0 || y >= info->dimensions[1])
 	{
-		printf("/////////////////////////////");
+		printf("y %d %d/////////////////////////////\n", y, info->dimensions[1]);
 		return false;
 	}
 	if (info->valid_map[y][x] == '1')
 	{
-		printf("----------------------------------");
+		printf("----------------------------------\n");
 		return false;
 	}
 	return true;
@@ -183,34 +185,55 @@ double horizontal(t_general *info, int alpha)
 {
 	t_coordinates start;
 	t_coordinates end; 
-	
+	// static int i;
 
 	double x_steps;
 	double y_steps;
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha > 0 && info->alpha <=  180)
+	if (info->alpha + alpha > 0 && info->alpha + alpha <=  180)
 		end.j = (round(start.j / 45) * 45 ) + 45;
 	else
-		end.j = (round(start.j / 45) * 45 ) - 1;
-	if (info->alpha > 90 && info->alpha <= 270)
-		end.i = start.i - (start.j - end.j) / tan(((info->alpha + alpha) * PI) / 180); 
-	else
-		end.i = start.i + (start.j - end.j) / tan(((info->alpha + alpha) * PI) / 180); 
+		end.j = (round(start.j / 45) * 45 ) + 1;
+
+	if (info->alpha + alpha > 90 && info->alpha+ alpha < 270)
+		end.i = fabs(start.i - (start.j - end.j) / tan(((info->alpha + alpha) * PI) / 180)); 
+	else if (info->alpha  + alpha < 90 || info->alpha+ alpha > 270)
+		end.i = start.i + fabs((start.j - end.j) / tan(((info->alpha + alpha) * PI) / 180)); 
+
 	y_steps = 45;
-	if (info->alpha > 180 && info->alpha <= 360)
+	if (info->alpha  + alpha > 180 && info->alpha + alpha <= 360)
 		y_steps = -45;
-	x_steps = (45 / fabs(tan((((info->alpha + alpha) * PI) / 180))));
-	if (info->alpha > 90 && info->alpha <= 270)
-		x_steps *= -1;
-	while(break_wall(info,(int)end.i/45,(int)end.j/45))
-	{
-		end.i += x_steps;
-		end.j += y_steps;
-	}	
+
 	double l = 0;
-	printf("E:[ y:%f\tx:%f\t%f ]\n",end.j,end.i,info->alpha);
-	sub_draw_line(info ,&start,&end);
+	x_steps = (45 / fabs(tan((((info->alpha + alpha) * PI) / 180))));
+	if (info->alpha + alpha > 90 && info->alpha + alpha <= 270)
+		x_steps *= -1;
+	printf("alpha : %f\n", info->alpha + alpha);
+	printf("map %d\tend.i %f\tend.j %f\n", info->valid_map[(int)end.j/45][(int)end.i/45],end.i, end.j);
+
+	if (isinf((tan((info->alpha + alpha)* PI / 180))))
+		exit(2);
+	// if(isinf((tan((info->alpha + alpha)* PI / 180))))
+	// 	return INT_MAX;
+	// else
+	// {
+	// 	x_steps = (45 / fabs(tan((((info->alpha + alpha) * PI) / 180))));
+	// 	if (info->alpha > 90 && info->alpha <= 270)
+	// 		x_steps *= -1;
+	// 	while(break_wall(info,(int)end.i/45,(int)end.j/45))
+	// 	{
+	// 		printf("end.i %f\tend.j %f\n", end.i, end.j);
+	// 		// if (info->valid_map[(int)end.i/45][(int)end.j/45] == '1')
+	// 		// 	break;
+	// 		// exit(0);
+	// 		end.i += x_steps;
+	// 		end.j += y_steps;
+	// 	}	
+	// 	// printf("E:[ y:%f\tx:%f\t%f ]\n",end.j,end.i,info->alpha);
+	// 	sub_draw_line(info ,&start,&end);
+
+	// }
 	return l;
 }
 
@@ -220,25 +243,62 @@ double vertecal(t_general *info, int alpha)
 	t_coordinates end;
 	double x_steps;
 	double y_steps;
-	
+	// ghir zid kemmel f had les condition 
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha > 90 && info->alpha <= 270)
-		end.i = (round(start.i / 45) * 45) - 1.00000; 
+	if (info->alpha  + alpha >= 0 && info->alpha + alpha <= 180)
+		end.i = (round(start.i / 45) * 45) + 45;
 	else
-		end.i = (round(start.i / 45) * 45) + 45; 
-	end.j = start.j + (start.i - end.i) * tan(((info->alpha + alpha) * PI) / 180);
+		end.i = (round(start.i / 45) * 45) - 1.00000; 
+
+	if (info->alpha + alpha == 270)
+	{
+		printf("1111111\n");
+		end.j = info->dimensions[1]*45 - 45;
+	}
+	else if (info->alpha + alpha == 90)
+	{
+		printf("222222222\n");
+
+		end.j = info->dimensions[1]*45 - 45;
+		end.i = start.i;
+	}
+	else if (info->alpha + alpha == 0 || info->alpha + alpha == 360)
+	{
+		printf("33333333\n");
+		end.j = start.j;
+	}
+	else if (info->alpha + alpha >= 0 && info->alpha + alpha <= 180)
+	{
+		printf("444444444\n");
+
+		end.j = start.j - (start.i - end.i) * tan(((info->alpha + alpha) * PI) / 180);
+	}
+	else if (info->alpha + alpha >= 180 && info->alpha + alpha <= 360)
+	{
+		printf("555555555\n");
+		end.j = start.j + (start.i - end.i) * tan(((info->alpha + alpha) * PI) / 180);
+	}
+
+	// 3awd t2aked f had x_steps o y_steps
 	x_steps = 45;
 	if(info->alpha > 90 && info->alpha <= 270)
 		x_steps = -45;
-	y_steps = 45 * fabs(tan((((info->alpha + alpha) * PI) / 180)));
-	if (info->alpha > 0 && info->alpha <= 180)
-		y_steps *= -1;
-	while(break_wall(info,(int)end.i/45,(int)end.j/45))
-	{	
+	y_steps = 45;
+	// y_steps = 45 * fabs(tan((((info->alpha + alpha) * PI) / 180)));
+	// if (info->alpha > 0 && info->alpha <= 180)
+	// 	y_steps *= -1;
+	while(1)
+	{
+		// rah zedt f had break wall
+		if(!break_wall(info,(int)end.i/45 + x_steps,(int)end.j/45 + y_steps, alpha))
+			break;
 		end.i += x_steps;
 		end.j += y_steps;
-	}	
+	
+	}
+	if (end.j < 0)
+		end.j = start.j;
 	printf("alpha %f\ty:%d\tx:%d\n",info->alpha, (int)end.j/45,(int)end.i/45);
 	sub_draw_line(info ,&start,&end);
 	double l = 0;
@@ -260,10 +320,10 @@ int draw_line(t_general *info)
 	// end.i = ray_end_x;
 	// end.j = ray_end_y;
     // sub_draw_line(info,&start,&end);
-	//double lv;
-	double lh;
-	//lv = vertecal(info , 0);
-	lh = horizontal(info , 30);
+	double lv;
+	// double lh;
+	lv = vertecal(info , 0);
+	// lh = horizontal(info , 45);
 
 	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
@@ -280,9 +340,9 @@ int	key_hook(int key, t_general *info)
 	else if (key == 65364)
 		move_down(info, info->info_img);
 	else if (key == 65361)
-		rotate_left(info);
-	else if (key == 65363)
 		rotate_right(info);
+	else if (key == 65363)
+		rotate_left(info);
 	return (0);
 }
 
@@ -321,11 +381,19 @@ void	display_pixel(t_general info)
 // [Round "?"]
 // [White "?"]
 // [Black "?"]
-// [Result "0-1"]
+// [Result "1-0"]
 
-// 1. e4 e5 {Right back atcha, buddy.} 2. Bc4 Nf6 3. d3 d5 4. exd5 Nxd5 5. Nf3 Bg4
-// 6. a3 Bc5 7. Ba2 Nc6 8. O-O f5 9. Re1 Qd7 10. b4 Bd4 11. Qd2 Bxa1 12. b5 Bxf3
-// 13. gxf3 Nd4 14. f4 Nf3+ {AHH $1 Get away from my king $1} 15. Kg2 Nxd2 16. Bxd2
-// O-O-O 17. fxe5 b6 18. Kh1 Rde8 19. Rd1 Rxe5 20. f4 Re2 21. Bb3 Qd6 22. h4 Nxf4
-// 23. Bc4 Nxd3 24. Bxd3 Qh2# {Aww $1 You played great, I loved your moves ^_^ Play
-// again $2} 0-1
+// 1. e4 {There are lots of great defenses after 1.e4 $1} 1... e5 {There are lots of
+// positional options for me here.} 2. Nf3 {Are you trying to break through my
+// fortress $2} 2... Nc6 3. Bc4 Nf6 {Can you break through my fortress $2} 4. Ng5 d5 5.
+// exd5 {I don't mind captures, as long as I can still defend.} 5... Na5 6. d3 Nxc4
+// 7. dxc4 Qd6 8. Nc3 a6 9. b3 Be7 10. Nce4 O-O 11. Nxd6 {I can defend without my
+// queen.} 11... cxd6 12. Nh3 {It looks like my positional style hasn't paid off in
+// this game $1} 12... a5 13. Bg5 Bf5 14. Qf3 Bd7 15. O-O-O Bg4 16. Qe3 Rfd8 17. f3
+// h5 18. fxg4 hxg4 19. Nf2 Rac8 20. Bxf6 Bxf6 21. Nxg4 Rc7 22. Qg3 Bg5+ {I only
+// attack if it works.} 23. Kb1 Ra8 24. h4 Bf4 25. Nf6+ {Check $2 That's ok, I'll
+// just defend $1} 25... Kh8 26. Qg4 gxf6 27. h5 Be3 28. h6 Rg8 29. Qf3 Bf4 30. g3
+// Kh7 31. gxf4 Rg6 32. f5 Rg5 33. Rdg1 Re7 34. Rxg5 fxg5 35. Qg4 f6 36. Qh5 e4 37.
+// Qg6+ {You have broken through my fortress $1} 37... Kh8 38. Qxf6+ Kg8 39. Qxe7 e3
+// 40. Re1 Kh8 41. Rxe3 b5 42. Re6 b4 43. Rf6 Kg8 44. Rf8# {Hmmm. You know
+// something I don't. Can I have a rematch $2} 1-0
