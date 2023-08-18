@@ -12,10 +12,14 @@
 
 #include "cub3d.h"
 
-// void dispaly(void *mlx, void *mlx_win, t_general *info)
-// {
-// 	mlx_pixel_put();
-// }
+
+void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char *dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
 
 void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, int color)
 {
@@ -36,15 +40,6 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, in
 	}
 }
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char *dst;
-
-	// printf("a|h%d     y:%d|\n",data->height,y);
-	// printf("b|h:%d   y:%d|\n",data->height,y);
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
 
 void display_player(double x, double y, t_data *img, int color)
 {
@@ -88,13 +83,10 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 
 	img = malloc(sizeof(t_data));
 	i = 0;
-	// img->width = 45 * info->dimensions[0];
-	// img->height = 45 * info->dimensions[1];
 	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45 * info->dimensions[1]);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
 								  &img->line_length, &img->endian);
 	info->info_img = img;
-	// printf("add %p\n", img->img);
 	while (i < 45)
 	{
 		j = 0;
@@ -148,7 +140,7 @@ void rotate_right(t_general *info)
 {
 	info->alpha += 1;
 	if (info->alpha >= 360)
-		info->alpha = 0;	
+		info->alpha = 0;
 }
 
 void rotate_left(t_general *info)
@@ -174,24 +166,25 @@ double horizontal(t_general *info, double alpha, t_coordinates *end)
 	t_coordinates start;
 	double x_steps;
 	double y_steps;
-	double atan = -1 / tan(((info->alpha + alpha) * PI) / 180);
+	double beta = alpha;
+	double atan = -1 / tan((( beta) * PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha + alpha > 180)
+	if ( beta > 180)
 	{
 		end->j = ((int)(start.j / 45) * 45) - 0.0001;
 		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = -45;
 		x_steps = -y_steps * atan;
 	}
-	if (info->alpha + alpha < 180)
+	if ( beta < 180)
 	{
 		end->j = ((int)(start.j / 45) * 45) + 45;
 		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = 45;
 		x_steps = -y_steps * atan;
 	}
-	if (info->alpha + alpha == 0 || info->alpha + alpha == 180)
+	if ( beta == 0 ||  beta == 180)
 		return INT_MAX;
 	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
@@ -202,8 +195,6 @@ double horizontal(t_general *info, double alpha, t_coordinates *end)
 		return INT_MAX;
 	if (end->j < INT_MIN || end->i < INT_MIN)
 		return INT_MAX;
-	printf("h:[%f]\t[%f]\t[%f]-[%f]\n", end->i, end->j,info->alpha , alpha);
-	//sub_draw_line(info, &start, &end, 0x00000000);
 	double l = sqrt(pow(end->i - start.i,2) + pow(end->j - start.j,2));
 	return l;
 }
@@ -213,24 +204,25 @@ double vertecal(t_general *info, double alpha, t_coordinates *end)
 	t_coordinates start;
 	double x_steps;
 	double y_steps;
-	double atan = -tan(((info->alpha + alpha) * PI) / 180);
+	double beta = alpha;
+	double atan = -tan(((beta) * PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha + alpha > 90 && info->alpha + alpha < 270)
+	if (beta > 90 && beta < 270)
 	{
 		end->i = ((int)(start.i / 45) * 45) - 0.0001;
 		end->j = start.j + (start.i - end->i) * atan;
 		x_steps = -45;
 		y_steps = -x_steps * atan;
 	}
-	if (info->alpha + alpha < 90 || info->alpha + alpha > 270)
+	if (beta < 90 || beta > 270)
 	{
 		end->i = ((int)(start.i / 45) * 45) + 45;
 		end->j = start.j + (start.i - end->i) * atan;
 		x_steps = 45;
 		y_steps = -x_steps * atan;
 	}
-	if (info->alpha + alpha == 90 || info->alpha + alpha == 270)
+	if (beta == 90 || beta == 270)
 		return INT_MAX;
 	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
@@ -245,46 +237,48 @@ double vertecal(t_general *info, double alpha, t_coordinates *end)
 	return l;
 }
 
-int draw_line(t_general *info)
+int draw_line(t_general *info, int color1, int color2)
 {
 	t_coordinates start;
 	t_coordinates end;
 	t_coordinates end1;
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	// double ray_end_x = (info->info_player->pos_x * 45) + 1000 * cos(angle);
-	// double ray_end_y = (info->info_player->pos_y * 45) + 1000 * sin(angle);
-	// end.i = ray_end_x;
-	// end.j = ray_end_y;
-	// sub_draw_line(info,&start,&end);
 	double lv;
 	double lh;
 	int i;
 	i = 0;
-	info->bita_ray = 0;
-	while (i < 100)
+	double temp = 60 / ((double)info->dimensions[0] * 45);
+	printf("2 thta: %f\n", info->bita_ray);
+	while (i < info->dimensions[0] * 45)
 	{ 	
 		lv = vertecal(info, info->bita_ray,&end);
-		lh = horizontal(info,info->bita_ray, &end1);
+		lh = horizontal(info, info->bita_ray, &end1);
 		if (lh > lv)
-			sub_draw_line(info, &start, &end, 0x00800080);	
+			sub_draw_line(info, &start, &end, color1);	
 		else
-			sub_draw_line(info, &start, &end1, 0x00000000);
-		info->bita_ray += 0.1;
-		if (info->bita_ray + info->alpha >= 360)
+			sub_draw_line(info, &start, &end1, color2);
+		info->bita_ray += temp;
+		if (info->bita_ray >= 360)
 			info->bita_ray = 0;
 		i++;
 	}
-	
-	
-	// rad += 0.5;
-	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
 }
 
 int key_hook(int key, t_general *info)
 {
-	// printf("%d\n",key);
+	draw_line(info, 0xFFFFFF, 0xFFFFFF);
+	info->bita_ray = info->alpha;
+	int i = 0;
+	double temp = 60 / ((double)info->dimensions[0] * 45);
+	while(i < (info->dimensions[0] * 45) / 2)
+	{
+		if (info->bita_ray <= 0)
+			info->bita_ray = 360;
+		info->bita_ray -= temp;
+		i++;
+	}
 	if (key == 65307)
 		exit(0);
 	else if (key == 65362 || key == 13)
@@ -295,35 +289,18 @@ int key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
+	draw_line(info, 0x00800080, 0x0000000);
 	return (0);
 }
 
 void display_pixel(t_general info)
 {
-	// void	*mlx;
-	// void	*mlx_win;
 	info.alpha = 90;
-	info.bita_ray = 0;
+	info.bita_ray = 90;
+	printf("theta: %f \n", info.bita_ray);
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
-	mlx_loop_hook(info.mlx, draw_line, &info);
-	//	mlx_loop_hook(info.mlx, vertical, &info);
 	mlx_loop(info.mlx);
 }
-
-// [Event "?"]
-// [Site "?"]
-// [Date "????.??.??"]
-// [Round "?"]
-// [White "?"]
-// [Black "?"]
-// [Result "0-1"]
-
-// 1. e4 e5 {Right back atcha, buddy.} 2. Bc4 Nf6 3. d3 d5 4. exd5 Nxd5 5. Nf3 Bg4
-// 6. a3 Bc5 7. Ba2 Nc6 8. O-O f5 9. Re1 Qd7 10. b4 Bd4 11. Qd2 Bxa1 12. b5 Bxf3
-// 13. gxf3 Nd4 14. f4 Nf3+ {AHH $1 Get away from my king $1} 15. Kg2 Nxd2 16. Bxd2
-// O-O-O 17. fxe5 b6 18. Kh1 Rde8 19. Rd1 Rxe5 20. f4 Re2 21. Bb3 Qd6 22. h4 Nxf4
-// 23. Bc4 Nxd3 24. Bxd3 Qh2# {Aww $1 You played great, I loved your moves ^_^ Play
-// again $2} 0-1
