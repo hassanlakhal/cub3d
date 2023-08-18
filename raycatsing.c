@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 05:57:35 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/18 07:22:39 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, in
 	float yIncrement = (float)dy / (float)steps;
 	float x = start->i;
 	float y = start->j;
-
+	
 	for (int i = 0; i <= steps; i++)
 	{
 		mlx_pixel_put(info->mlx, info->mlx_win, round(x), round(y), color);
@@ -169,10 +169,9 @@ bool break_wall(t_general *info, int x, int y)
 	return true;
 }
 
-double horizontal(t_general *info, double alpha)
+double horizontal(t_general *info, double alpha, t_coordinates *end)
 {
 	t_coordinates start;
-	t_coordinates end;
 	double x_steps;
 	double y_steps;
 	double atan = -1 / tan(((info->alpha + alpha) * PI) / 180);
@@ -180,42 +179,41 @@ double horizontal(t_general *info, double alpha)
 	start.j = info->info_player->pos_y * 45;
 	if (info->alpha + alpha > 180)
 	{
-		end.j = ((int)(start.j / 45) * 45) - 0.0001;
-		end.i = start.i + (start.j - end.j) * atan;
+		end->j = ((int)(start.j / 45) * 45) - 0.0001;
+		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = -45;
 		x_steps = -y_steps * atan;
 	}
 	if (info->alpha + alpha < 180)
 	{
-		end.j = ((int)(start.j / 45) * 45) + 45;
-		end.i = start.i + (start.j - end.j) * atan;
+		end->j = ((int)(start.j / 45) * 45) + 45;
+		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = 45;
 		x_steps = -y_steps * atan;
 	}
 	if (info->alpha + alpha == 0 || info->alpha + alpha == 180)
 	{
-		end.i = start.i;
-		end.j = start.j;
+		end->i = start.i;
+		end->j = start.j;
 	}
-	while (break_wall(info, (int)end.i / 45, (int)end.j / 45))
+	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
-		end.i += x_steps;
-		end.j += y_steps;
+		end->i += x_steps;
+		end->j += y_steps;
 	}
-	double l = 0;
-	if (end.i > INT_MAX)
+	if (end->i > INT_MAX)
 		return INT_MAX;
-	if (end.i < INT_MIN)
+	if (end->i < INT_MIN)
 		return INT_MIN;
-	printf("h:[%f]\t[%f]\t[%f]\n", end.i, end.j,info->alpha + alpha);
-	sub_draw_line(info, &start, &end, 0x00000000);
+	printf("h:[%f]\t[%f]\t[%f]\n", end->i, end->j,info->alpha + alpha);
+	//sub_draw_line(info, &start, &end, 0x00000000);
+	double l = sqrt(pow(end->i - start.i,2) + pow(end->j - start.j,2));
 	return l;
 }
 
-double vertecal(t_general *info, double alpha)
+double vertecal(t_general *info, double alpha, t_coordinates *end)
 {
 	t_coordinates start;
-	t_coordinates end;
 	double x_steps;
 	double y_steps;
 	double atan = -tan(((info->alpha + alpha) * PI) / 180);
@@ -223,48 +221,48 @@ double vertecal(t_general *info, double alpha)
 	start.j = info->info_player->pos_y * 45;
 	if (info->alpha + alpha > 90 && info->alpha + alpha < 270)
 	{
-		end.i = ((int)(start.i / 45) * 45) - 0.0001;
-		end.j = start.j + (start.i - end.i) * atan;
+		end->i = ((int)(start.i / 45) * 45) - 0.0001;
+		end->j = start.j + (start.i - end->i) * atan;
 		x_steps = -45;
 		y_steps = -x_steps * atan;
 	}
 	if (info->alpha + alpha < 90 || info->alpha + alpha > 270)
 	{
-		end.i = ((int)(start.i / 45) * 45) + 45;
-		end.j = start.j + (start.i - end.i) * atan;
+		end->i = ((int)(start.i / 45) * 45) + 45;
+		end->j = start.j + (start.i - end->i) * atan;
 		x_steps = 45;
 		y_steps = -x_steps * atan;
 	}
 	if (info->alpha + alpha == 90 || info->alpha + alpha == 270)
 	{
-		end.i = start.i;
-		end.j = start.j;
+		end->i = start.i;
+		end->j = start.j;
 	}
-	while (break_wall(info, (int)end.i / 45, (int)end.j / 45))
+	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
-		end.i += x_steps;
-		end.j += y_steps;
+		end->i += x_steps;
+		end->j += y_steps;
 	}
-	printf("v:[%f]\t[%f]\t[%f]\n", end.i, end.j,info->alpha + alpha);
-	if (end.j > INT_MAX)
+	printf("v:[%f]\t[%f]\t[%f]\n", end->i, end->j,info->alpha + alpha);
+	if (end->j > INT_MAX)
 		return INT_MAX;
-	if (end.j < INT_MIN)
-		return INT_MIN;
-	sub_draw_line(info, &start, &end, 0x00800080);
-	double l = 0;
+	if (end->j < INT_MIN)
+		return abs(INT_MIN);
+	//sub_draw_line(info, &start, &end, 0x00800080);
+	double l = sqrt(pow(end->i - start.i,2) + pow(end->j - start.j,2));
 	return l;
 }
 
 int draw_line(t_general *info)
 {
 	(void)info;
-	// t_coordinates start;
-	// t_coordinates end;
-
+	t_coordinates start;
+	t_coordinates end;
+	t_coordinates end1;
 	// printf("alngl\t %f\n",info->alpha);
 	// float angle = (info->alpha * PI) / 180;
-	// start.i = info->info_player->pos_x * 45;
-	// start.j = info->info_player->pos_y * 45;
+	start.i = info->info_player->pos_x * 45;
+	start.j = info->info_player->pos_y * 45;
 	// double ray_end_x = (info->info_player->pos_x * 45) + 1000 * cos(angle);
 	// double ray_end_y = (info->info_player->pos_y * 45) + 1000 * sin(angle);
 	// end.i = ray_end_x;
@@ -274,9 +272,20 @@ int draw_line(t_general *info)
 	double lh;
 	int i;
 	i = 0;
-	// double rad = 1;
-	lv = vertecal(info, 0);
-	lh = horizontal(info, 0);
+	double rad = 1;
+	while (i < 50)
+	{ 	
+		lv = vertecal(info, rad,&end);
+		lh = horizontal(info,rad, &end1);
+		if (lh > lv)
+			sub_draw_line(info, &start, &end, 0x00800080);	
+		else
+			sub_draw_line(info, &start, &end1, 0x00000000);
+		rad += 0.5;
+		i++;
+	}
+	
+	
 	// rad += 0.5;
 	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
@@ -302,7 +311,7 @@ void display_pixel(t_general info)
 {
 	// void	*mlx;
 	// void	*mlx_win;
-	info.alpha = 0;
+	info.alpha = 90;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
