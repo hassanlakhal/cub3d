@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 05:37:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/18 08:28:48 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_general
 	void		*mlx;
 	void		*mlx_win;
 	double		alpha;
+	double		bita_ray;
 }				t_general;
 
 void			free_2d(char **tab);
