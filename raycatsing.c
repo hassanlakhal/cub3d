@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 05:30:44 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/18 05:57:35 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,47 +17,47 @@
 // 	mlx_pixel_put();
 // }
 
-void sub_draw_line(t_general *info,t_coordinates *start,t_coordinates *end, int color)
+void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, int color)
 {
 
 	int dx = (end->i - start->i);
-    int dy = (end->j - start->j);
-    int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-    float xIncrement = (float)dx / (float)steps;
-    float yIncrement = (float)dy / (float)steps;
-    float x = start->i;
-    float y = start->j;
+	int dy = (end->j - start->j);
+	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+	float xIncrement = (float)dx / (float)steps;
+	float yIncrement = (float)dy / (float)steps;
+	float x = start->i;
+	float y = start->j;
 
-    for (int i = 0; i <= steps; i++)
-    {
-        mlx_pixel_put(info->mlx, info->mlx_win, round(x), round(y),color);
-        x += xIncrement;
-        y += yIncrement;
-    }
+	for (int i = 0; i <= steps; i++)
+	{
+		mlx_pixel_put(info->mlx, info->mlx_win, round(x), round(y), color);
+		x += xIncrement;
+		y += yIncrement;
+	}
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	char	*dst;
+	char *dst;
 
-	//printf("a|h%d     y:%d|\n",data->height,y);
-	//printf("b|h:%d   y:%d|\n",data->height,y);
+	// printf("a|h%d     y:%d|\n",data->height,y);
+	// printf("b|h:%d   y:%d|\n",data->height,y);
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-void	display_player(double x, double y, t_data *img, int color)
+void display_player(double x, double y, t_data *img, int color)
 {
 	x *= 45;
 	y *= 45;
-	
+
 	my_mlx_pixel_put(img, (int)x, (int)y, color);
 }
 
-void	display_pxl(t_general *info, t_data *img, int j, int i)
+void display_pxl(t_general *info, t_data *img, int j, int i)
 {
-	int	y;
-	int	x;
+	int y;
+	int x;
 
 	y = 0;
 	while (y < info->dimensions[1])
@@ -80,20 +80,19 @@ void	display_pxl(t_general *info, t_data *img, int j, int i)
 	}
 }
 
-void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
+void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 {
-	int		i;
-	int		j;
-	t_data	*img;
+	int i;
+	int j;
+	t_data *img;
 
 	img = malloc(sizeof(t_data));
 	i = 1;
 	// img->width = 45 * info->dimensions[0];
 	// img->height = 45 * info->dimensions[1];
-	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45
-			* info->dimensions[1]);
+	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45 * info->dimensions[1]);
 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
+								  &img->line_length, &img->endian);
 	info->info_img = img;
 	// printf("add %p\n", img->img);
 	while (i < 45)
@@ -109,10 +108,10 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	mlx_put_image_to_window(mlx, mlx_win, img->img, 0, 0);
 }
 
-void	move_up(t_general *info, t_data *img)
+void move_up(t_general *info, t_data *img)
 {
-	double	pos_x;
-	double	pos_y;
+	double pos_x;
+	double pos_y;
 
 	pos_x = info->info_player->pos_x + cos((info->alpha * PI) / 180) * 0.1;
 	pos_y = info->info_player->pos_y + sin((info->alpha * PI) / 180) * 0.1;
@@ -120,17 +119,17 @@ void	move_up(t_general *info, t_data *img)
 	{
 		display_player(pos_x, pos_y, img, 0x00FF1FFF);
 		display_player(info->info_player->pos_x, info->info_player->pos_y, img,
-				0x00FFFFFF);
+					   0x00FFFFFF);
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
 	mlx_put_image_to_window(info->mlx, info->mlx_win, img->img, 0, 0);
 }
 
-void	move_down(t_general *info, t_data *img)
+void move_down(t_general *info, t_data *img)
 {
-	double	pos_x;
-	double	pos_y;
+	double pos_x;
+	double pos_y;
 
 	pos_x = info->info_player->pos_x - cos((info->alpha * PI) / 180) * 0.1;
 	pos_y = info->info_player->pos_y - sin((info->alpha * PI) / 180) * 0.1;
@@ -138,32 +137,32 @@ void	move_down(t_general *info, t_data *img)
 	{
 		display_player(pos_x, pos_y, img, 0x00FF1FFF);
 		display_player(info->info_player->pos_x, info->info_player->pos_y, img,
-				0x00FFFFFF);
+					   0x00FFFFFF);
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
 	mlx_put_image_to_window(info->mlx, info->mlx_win, img->img, 0, 0);
 }
 
-void	rotate_right(t_general *info)
+void rotate_right(t_general *info)
 {
 	info->alpha += 1;
 	if (info->alpha >= 360)
 		info->alpha = 0;
 }
 
-void	rotate_left(t_general *info)
+void rotate_left(t_general *info)
 {
 	info->alpha -= 1;
 	if (info->alpha < 0)
 		info->alpha = 359;
 }
 
-bool break_wall(t_general *info,int x, int y)
+bool break_wall(t_general *info, int x, int y)
 {
 	if (x < 0 || x >= info->dimensions[0])
 		return false;
-	if ( y < 0 || y >= info->dimensions[1])
+	if (y < 0 || y >= info->dimensions[1])
 		return false;
 	if (info->valid_map[y][x] == '1')
 		return false;
@@ -173,23 +172,23 @@ bool break_wall(t_general *info,int x, int y)
 double horizontal(t_general *info, double alpha)
 {
 	t_coordinates start;
-	t_coordinates end; 
+	t_coordinates end;
 	double x_steps;
 	double y_steps;
-	double atan = -1/tan(((info->alpha + alpha) * PI) / 180);
+	double atan = -1 / tan(((info->alpha + alpha) * PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha + alpha >  180)
+	if (info->alpha + alpha > 180)
 	{
-		end.j = ((int)(start.j / 45) * 45 )   - 0.0001;
-		end.i = start.i + (start.j - end.j) * atan; 
+		end.j = ((int)(start.j / 45) * 45) - 0.0001;
+		end.i = start.i + (start.j - end.j) * atan;
 		y_steps = -45;
 		x_steps = -y_steps * atan;
 	}
-	if (info->alpha + alpha <  180)
+	if (info->alpha + alpha < 180)
 	{
-		end.j = ((int)(start.j / 45) * 45 ) + 45;
-		end.i = start.i + (start.j - end.j) * atan; 
+		end.j = ((int)(start.j / 45) * 45) + 45;
+		end.i = start.i + (start.j - end.j) * atan;
 		y_steps = 45;
 		x_steps = -y_steps * atan;
 	}
@@ -198,17 +197,18 @@ double horizontal(t_general *info, double alpha)
 		end.i = start.i;
 		end.j = start.j;
 	}
-	while(break_wall(info,(int)end.i/45,(int)end.j/45))
+	while (break_wall(info, (int)end.i / 45, (int)end.j / 45))
 	{
 		end.i += x_steps;
 		end.j += y_steps;
-	}	
+	}
 	double l = 0;
 	if (end.i > INT_MAX)
 		return INT_MAX;
 	if (end.i < INT_MIN)
 		return INT_MIN;
-	sub_draw_line(info ,&start,&end,0x00000000);
+	printf("h:[%f]\t[%f]\t[%f]\n", end.i, end.j,info->alpha + alpha);
+	sub_draw_line(info, &start, &end, 0x00000000);
 	return l;
 }
 
@@ -221,17 +221,17 @@ double vertecal(t_general *info, double alpha)
 	double atan = -tan(((info->alpha + alpha) * PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if (info->alpha + alpha >  90 && info->alpha + alpha < 270)
+	if (info->alpha + alpha > 90 && info->alpha + alpha < 270)
 	{
-		end.i = ((int)(start.i / 45) * 45 )  - 0.0001;
-		end.j = start.j + (start.i - end.i) * atan; 
+		end.i = ((int)(start.i / 45) * 45) - 0.0001;
+		end.j = start.j + (start.i - end.i) * atan;
 		x_steps = -45;
 		y_steps = -x_steps * atan;
 	}
-	if (info->alpha + alpha <  90 || info->alpha + alpha >  270)
+	if (info->alpha + alpha < 90 || info->alpha + alpha > 270)
 	{
-		end.i = ((int)(start.i / 45) * 45)  + 45;
-		end.j = start.j + (start.i - end.i) * atan; 
+		end.i = ((int)(start.i / 45) * 45) + 45;
+		end.j = start.j + (start.i - end.i) * atan;
 		x_steps = 45;
 		y_steps = -x_steps * atan;
 	}
@@ -240,21 +240,21 @@ double vertecal(t_general *info, double alpha)
 		end.i = start.i;
 		end.j = start.j;
 	}
-	while(break_wall(info,(int)end.i/45,(int)end.j/45))
-	{	
+	while (break_wall(info, (int)end.i / 45, (int)end.j / 45))
+	{
 		end.i += x_steps;
 		end.j += y_steps;
 	}
-	printf("v:[%f]\t[%f]\n",end.i,end.j);
+	printf("v:[%f]\t[%f]\t[%f]\n", end.i, end.j,info->alpha + alpha);
 	if (end.j > INT_MAX)
 		return INT_MAX;
 	if (end.j < INT_MIN)
-		return INT_MIN;	
-	sub_draw_line(info ,&start,&end,0x00800080);
+		return INT_MIN;
+	sub_draw_line(info, &start, &end, 0x00800080);
 	double l = 0;
 	return l;
 }
-    
+
 int draw_line(t_general *info)
 {
 	(void)info;
@@ -265,22 +265,24 @@ int draw_line(t_general *info)
 	// float angle = (info->alpha * PI) / 180;
 	// start.i = info->info_player->pos_x * 45;
 	// start.j = info->info_player->pos_y * 45;
-    // double ray_end_x = (info->info_player->pos_x * 45) + 1000 * cos(angle);
-    // double ray_end_y = (info->info_player->pos_y * 45) + 1000 * sin(angle);
+	// double ray_end_x = (info->info_player->pos_x * 45) + 1000 * cos(angle);
+	// double ray_end_y = (info->info_player->pos_y * 45) + 1000 * sin(angle);
 	// end.i = ray_end_x;
 	// end.j = ray_end_y;
-    // sub_draw_line(info,&start,&end);
+	// sub_draw_line(info,&start,&end);
 	double lv;
 	double lh;
-	lv = vertecal(info , 0);
-	lh = horizontal(info , 0);
-
+	int i;
+	i = 0;
+	// double rad = 1;
+	lv = vertecal(info, 0);
+	lh = horizontal(info, 0);
+	// rad += 0.5;
 	// printf("V : %f\tH : %f\n", lv, lh);
 	return 0;
 }
 
-
-int	key_hook(int key, t_general *info)
+int key_hook(int key, t_general *info)
 {
 	// printf("%d\n",key);
 	if (key == 65307)
@@ -296,34 +298,19 @@ int	key_hook(int key, t_general *info)
 	return (0);
 }
 
-void	display_pixel(t_general info)
+void display_pixel(t_general info)
 {
 	// void	*mlx;
 	// void	*mlx_win;
 	info.alpha = 0;
 	info.mlx = mlx_init();
-	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45
-			* info.dimensions[1], "cub3d");
+	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
 	ft_dislay(&info, info.mlx, info.mlx_win);
-	mlx_hook(info.mlx_win,2,3, key_hook, &info);
+	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop_hook(info.mlx, draw_line, &info);
-//	mlx_loop_hook(info.mlx, vertical, &info);
+	//	mlx_loop_hook(info.mlx, vertical, &info);
 	mlx_loop(info.mlx);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // [Event "?"]
 // [Site "?"]

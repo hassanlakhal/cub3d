@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/15 05:43:28 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/18 05:37:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define PATH 1
 # define RGB 2
 # define PI 3.141592653
+# define RAD 0.0174533
 
 typedef struct s_coordinates
 {
