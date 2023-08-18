@@ -29,6 +29,10 @@
 # define RGB 2
 # define PI 3.141592653
 # define RAD 0.0174533
+# define HEIGHT 1920
+# define WIDTH 1080
+# define SPEED 0.1
+# define SPEEDALPHA 2
 
 typedef struct s_coordinates
 {
@@ -65,7 +69,7 @@ typedef struct s_player
 {
 	double			pos_x;
 	double			pos_y;
-	double		driction;
+	char		direction;
 }				t_player;
 
 typedef struct s_data

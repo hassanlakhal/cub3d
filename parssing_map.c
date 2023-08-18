@@ -157,6 +157,7 @@ void	postion_of_player(char **map, t_general *data)
 			{
 				data->info_player->pos_x = j;
 				data->info_player->pos_y = i;
+				data->info_player->direction = map[i][j];
 				cont++;
 			}
 			j++;
