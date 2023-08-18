@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 09:10:10 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/18 10:04:33 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	t_data *img;
 
 	img = malloc(sizeof(t_data));
-	i = 1;
+	i = 0;
 	// img->width = 45 * info->dimensions[0];
 	// img->height = 45 * info->dimensions[1];
 	img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45 * info->dimensions[1]);
@@ -97,7 +97,7 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	// printf("add %p\n", img->img);
 	while (i < 45)
 	{
-		j = 1;
+		j = 0;
 		while (j < 45)
 		{
 			display_pxl(info, img, j, i);
@@ -262,7 +262,7 @@ int draw_line(t_general *info)
 	int i;
 	i = 0;
 	info->bita_ray = 0;
-	while (i < 60)
+	while (i < 100)
 	{ 	
 		lv = vertecal(info, info->bita_ray,&end);
 		lh = horizontal(info,info->bita_ray, &end1);
@@ -270,7 +270,7 @@ int draw_line(t_general *info)
 			sub_draw_line(info, &start, &end, 0x00800080);	
 		else
 			sub_draw_line(info, &start, &end1, 0x00000000);
-		info->bita_ray += 0.5;
+		info->bita_ray += 0.1;
 		if (info->bita_ray + info->alpha >= 360)
 			info->bita_ray = 0;
 		i++;
