@@ -13,12 +13,12 @@
 #include "cub3d.h"
 
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void my_mlx_pixel_put(t_general *info, int x, int y, int color)
 {
 	char *dst;
-	printf("********333333333333333***********%p\n",data->img);
+	// printf("********333333333333333***********%p\n",info->info_img->img);
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
@@ -42,13 +42,13 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, in
 }
 
 
-void display_player(double x, double y, t_data *img, int color)
-{
-	x *= 45;
-	y *= 45;
+// void display_player(double x, double y, t_data *img, int color)
+// {
+// 	x *= 45;
+// 	y *= 45;
 
-	my_mlx_pixel_put(img, (int)x, (int)y, color);
-}
+// 	my_mlx_pixel_put(img, (int)x, (int)y, color);
+// }
 
 void display_pxl(t_general *info, t_data *img, int j, int i)
 {
@@ -56,13 +56,14 @@ void display_pxl(t_general *info, t_data *img, int j, int i)
 	int x;
 
 	y = 0;
+	(void)img;
 	while (y < info->dimensions[1] / 2)
 	{
 		x = 0;
 		while (x < info->dimensions[0])
 		{
 			// if (info->valid_map[y][x] == '1')
-				my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x00FF0000);
+				my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x00FF0000);
 			// if (info->valid_map[y][x] == '0')
 			// 	my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x00FFFFFF);
 			// if (ft_strchr("NEWS", info->valid_map[y][x]))
@@ -83,19 +84,21 @@ void	display_floor(t_general *info, t_data *img, int j, int i)
 
 	x = 0;
 	y = 0;
-(void)img;
+	(void)img;
 	while(x < info->dimensions[0])
 	{
-		y = info->dimensions[1] / 2;
+		y = (int)info->dimensions[1] / 2;
+		// printf("y : %d\n", y);
 		while (y < info->dimensions[1])
 		{
-	printf("^^^^^^^^^^^^^^^%p\n", info->info_img->img);
-			my_mlx_pixel_put(info->info_img->img, (x * 45) + j, (y * 45) + i, 0x808080);
+			// printf("^^^^^%d %d %d^^^^^^^^^^%p %p\n", info->dimensions[1] , x, y,info->info_img->img, img->img);
+			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x808080);
 			y++;
 		}
 		x++;
 	}
 }
+
 void	display_sky(t_general *info, t_data *img, int j, int i)
 {
 	int x;
@@ -103,13 +106,14 @@ void	display_sky(t_general *info, t_data *img, int j, int i)
 
 	x = 0;
 	y = 0;
+	(void)img;
 
 	while(x < info->dimensions[0])
 	{
 		y = 0;
 		while (y < info->dimensions[1] / 2)
 		{
-			my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x77B5FE);
+			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x77B5FE);
 			y++;
 		}
 		x++;
@@ -375,7 +379,7 @@ void	calcule_bite_ray(t_general *info)
 int key_hook(int key, t_general *info)
 {
 	// draw_line(info, 0xFFFFFF, 0xFFFFFF);
-	// ft_dislay(info, info->mlx, info->mlx_win, info->info_img->img);
+	ft_dislay(info, info->mlx, info->mlx_win);
 	// printf("key : %d\n", key);
 	calcule_bite_ray(info);
 	if (key == 65307)
