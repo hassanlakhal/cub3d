@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/19 03:17:16 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/19 14:34:08 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,21 @@ void display_pxl(t_general *info, t_data *img, int j, int i)
 	}
 	mlx_put_image_to_window(info->mlx, info->mlx_win, info->info_img->img, 0, 0);
 }
+
+int get_color(t_general *info, char c)
+{
+	int i;
+
+	i = 0;
+	while(i < 2)
+	{
+		if (info->info_rgb[i].type_color[0] == c)
+			return rgbToHex(info->info_rgb[i]._R, info->info_rgb[i]._G, info->info_rgb[i]._B);
+		i++;
+	}
+	return 0;
+}
+
 void display_floor(t_general *info, t_data *img, int j, int i)
 {
 
@@ -86,7 +101,7 @@ void display_floor(t_general *info, t_data *img, int j, int i)
 		y = (int)info->dimensions[1] / 2;
 		while (y < info->dimensions[1])
 		{
-			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x808080);
+			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, get_color(info, 'F'));
 			y++;
 		}
 		x++;
@@ -107,7 +122,7 @@ void display_sky(t_general *info, t_data *img, int j, int i)
 		y = 0;
 		while (y < info->dimensions[1] / 2)
 		{
-			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x77B5FE);
+			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, get_color(info, 'C'));
 			y++;
 		}
 		x++;
@@ -345,7 +360,6 @@ int draw_line(t_general *info, int color1, int color2)
 				end.j = info->dimensions[1] * 45;
 			sub_draw_line(info, &start, &end, color2);
 		}
-		// printf("projec %f %f\n", projec, wall_hight);
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
 			info->bita_ray = 0;
@@ -370,9 +384,7 @@ void calcule_bite_ray(t_general *info)
 
 int key_hook(int key, t_general *info)
 {
-	// draw_line(info, 0xFFFFFF, 0xFFFFFF);
 	ft_dislay(info, info->mlx, info->mlx_win);
-	// printf("key : %d\n", key);
 	calcule_bite_ray(info);
 	if (key == 65307)
 		exit(0);
@@ -388,7 +400,8 @@ int key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-	draw_line(info, 0x00800080, 0x0880000);
+	
+	draw_line(info, 0x999900, 0x0880000);
 	return (0);
 }
 double get_alpha_player(t_general info)

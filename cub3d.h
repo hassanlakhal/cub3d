@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 08:28:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/19 13:17:29 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void			check_direction(t_bloc *data_of_texture);
 void			check_line(char **tab, int a);
 void			framing_map(char **map, char **dup_map);
 void			floodfile(char **map, t_general info);
-
+int				rgbToHex(int red, int green, int blue);
 /* raycasting */
 void			display_pixel(t_general info);
 int	draw_rays(t_general *info);

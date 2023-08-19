@@ -1,37 +1,35 @@
-#include "cub3d.h"
-#include <mlx.h>
+#include <stdio.h>
 
-typedef struct s_vars
-{
-	void	*mlx;
-	void	*win;
-}			t_vars;
+// Function to convert a hexadecimal character to its decimal value
+int hexToDec(char hex) {
+    if (hex >= '0' && hex <= '9') {
+        return hex - '0';
+    } else if (hex >= 'A' && hex <= 'F') {
+        return 10 + (hex - 'A');
+    } else if (hex >= 'a' && hex <= 'f') {
+        return 10 + (hex - 'a');
+    }
+    return -1; // Invalid hexadecimal character
+}
 
-int	main(void)
-{
-	t_vars	vars;
-	double		x1;
-	double		x2;
-	double 	y2;
-	double 	y1;
-	float	slope;
-	float	intercept;
-	double		y;
+// Function to convert RGB to hex color code as an integer
+int rgbToHexInt(int red, int green, int blue) {
+    int hexInt = 0;
 
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 45 * 26, 45 * 7, "Line Drawing");
-	x1 = 22 * 45;
-	y1 = 4 * 45;
-	x2 = x1 + 10.04;
-	y2 = y1 + 20.05;
-	printf("{x:%f}, {y:%f}\n",x2,y2);
-	slope = (double)(y2 - y1) / (x2 - x1);
-	intercept = y1 - slope * x1;
-	for (double x = x1; x <= x2; x++)
-	{
-		y = (double)(slope * x + intercept);
-		mlx_pixel_put(vars.mlx, vars.win, x, y, 0xFFFFFF);
-			// Set pixel color (white in this case)
-	}
-	mlx_loop(vars.mlx);
+    // Combine red, green, and blue components into an integer
+    hexInt = (red << 16) | (green << 8) | blue;
+
+    return hexInt;
+}
+
+int main() {
+    int red = 135;
+    int green = 206;
+    int blue = 250;
+
+    int hexColorInt = rgbToHexInt(red, green, blue);
+
+    printf("Hex Color as Integer: %06X\n", hexColorInt);
+
+    return 0;
 }
