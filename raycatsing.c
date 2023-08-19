@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/19 14:34:08 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/19 17:59:40 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,7 +348,11 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			sub_draw_line(info, &start, &end, color1);
+			printf("[%f]---[%f]\n",cos(info->bita_ray),sin(info->bita_ray));
+			if (cos((info->bita_ray * PI)/180) > 0)
+				sub_draw_line(info, &start, &end, color1);
+			else if(cos((info->bita_ray * PI)/180) < 0)
+				sub_draw_line(info, &start, &end, 0x0045855);
 		}
 		else
 		{
@@ -358,7 +362,10 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			sub_draw_line(info, &start, &end, color2);
+			if (sin(((info->bita_ray * PI)/180)) > 0)
+				sub_draw_line(info, &start, &end, color2);
+			else if (sin(((info->bita_ray * PI)/180)) < 0)
+				sub_draw_line(info, &start, &end, 0x45454545);
 		}
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
