@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 04:05:02 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/19 01:34:20 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	check_wall(char **str, int y)
 			}
 			else if (!ft_strchr("NEWS10 ", str[i][j]))
 			{
-				printf("17:ERROR\n");
+				printf("17:ERROR invalid c\n");
 				exit(0);
 			}
 			j++;

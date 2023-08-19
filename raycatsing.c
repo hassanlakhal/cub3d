@@ -6,18 +6,15 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/18 10:04:33 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/19 03:17:16 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 void my_mlx_pixel_put(t_general *info, int x, int y, int color)
 {
 	char *dst;
-	// printf("********333333333333333***********%p\n",info->info_img->img);
-
 	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
@@ -32,15 +29,13 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, in
 	float yIncrement = (float)dy / (float)steps;
 	float x = start->i;
 	float y = start->j;
-	
 	for (int i = 0; i <= steps; i++)
 	{
-		mlx_pixel_put(info->mlx, info->mlx_win, round(x), round(y), color);
+		my_mlx_pixel_put(info, (int)x, (int)y, color);
 		x += xIncrement;
 		y += yIncrement;
 	}
 }
-
 
 // void display_player(double x, double y, t_data *img, int color)
 // {
@@ -63,7 +58,7 @@ void display_pxl(t_general *info, t_data *img, int j, int i)
 		while (x < info->dimensions[0])
 		{
 			// if (info->valid_map[y][x] == '1')
-				my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x00FF0000);
+			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x00FF0000);
 			// if (info->valid_map[y][x] == '0')
 			// 	my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x00FFFFFF);
 			// if (ft_strchr("NEWS", info->valid_map[y][x]))
@@ -75,8 +70,9 @@ void display_pxl(t_general *info, t_data *img, int j, int i)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(info->mlx, info->mlx_win, info->info_img->img, 0, 0);
 }
-void	display_floor(t_general *info, t_data *img, int j, int i)
+void display_floor(t_general *info, t_data *img, int j, int i)
 {
 
 	int x;
@@ -85,13 +81,11 @@ void	display_floor(t_general *info, t_data *img, int j, int i)
 	x = 0;
 	y = 0;
 	(void)img;
-	while(x < info->dimensions[0])
+	while (x < info->dimensions[0])
 	{
 		y = (int)info->dimensions[1] / 2;
-		// printf("y : %d\n", y);
 		while (y < info->dimensions[1])
 		{
-			// printf("^^^^^%d %d %d^^^^^^^^^^%p %p\n", info->dimensions[1] , x, y,info->info_img->img, img->img);
 			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x808080);
 			y++;
 		}
@@ -99,7 +93,7 @@ void	display_floor(t_general *info, t_data *img, int j, int i)
 	}
 }
 
-void	display_sky(t_general *info, t_data *img, int j, int i)
+void display_sky(t_general *info, t_data *img, int j, int i)
 {
 	int x;
 	int y;
@@ -108,7 +102,7 @@ void	display_sky(t_general *info, t_data *img, int j, int i)
 	y = 0;
 	(void)img;
 
-	while(x < info->dimensions[0])
+	while (x < info->dimensions[0])
 	{
 		y = 0;
 		while (y < info->dimensions[1] / 2)
@@ -123,14 +117,6 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 {
 	int i;
 	int j;
-	// t_data *img;
-
-	// img = malloc(sizeof(t_data));
-	// i = 0;
-	// img->img = mlx_new_image(mlx, 45 * info->dimensions[0], 45 * info->dimensions[1]);
-	// img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-	// 							  &img->line_length, &img->endian);
-	// info->info_img = img;
 	i = 0;
 	while (i < 45)
 	{
@@ -138,12 +124,12 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 		while (j < 45)
 		{
 			display_floor(info, info->info_img->img, j, i);
-			display_sky(info,  info->info_img->img, j, i);
+			display_sky(info, info->info_img->img, j, i);
 			j++;
 		}
 		i++;
 	}
-	mlx_put_image_to_window(mlx, mlx_win,  info->info_img->img, 0, 0);
+	mlx_put_image_to_window(mlx, mlx_win, info->info_img->img, 0, 0);
 }
 
 void move_up(t_general *info, t_data *img)
@@ -197,8 +183,8 @@ void move_right(t_general *info, t_data *img)
 	double pos_y;
 	(void)img;
 
-	pos_x = info->info_player->pos_x - cos(((info->alpha + 90)* PI) / 180) * (SPEED - 0.05);
-	pos_y = info->info_player->pos_y - sin(((info->alpha + 90)* PI) / 180) * (SPEED - 0.05);
+	pos_x = info->info_player->pos_x - cos(((info->alpha + 90) * PI) / 180) * (SPEED - 0.05);
+	pos_y = info->info_player->pos_y - sin(((info->alpha + 90) * PI) / 180) * (SPEED - 0.05);
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
 		info->info_player->pos_x = pos_x;
@@ -239,24 +225,24 @@ double horizontal(t_general *info, double alpha, t_coordinates *end)
 	double x_steps;
 	double y_steps;
 	double beta = alpha;
-	double atan = -1 / tan((( beta) * PI) / 180);
+	double atan = -1 / tan(((beta)*PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
-	if ( beta > 180)
+	if (beta > 180)
 	{
 		end->j = ((int)(start.j / 45) * 45) - 0.0001;
 		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = -45;
 		x_steps = -y_steps * atan;
 	}
-	if ( beta < 180)
+	if (beta < 180)
 	{
 		end->j = ((int)(start.j / 45) * 45) + 45;
 		end->i = start.i + (start.j - end->j) * atan;
 		y_steps = 45;
 		x_steps = -y_steps * atan;
 	}
-	if ( beta == 0 ||  beta == 180)
+	if (beta == 0 || beta == 180)
 		return INT_MAX;
 	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
@@ -267,7 +253,7 @@ double horizontal(t_general *info, double alpha, t_coordinates *end)
 		return INT_MAX;
 	if (end->j < INT_MIN || end->i < INT_MIN)
 		return INT_MAX;
-	double l = sqrt(pow(end->i - start.i,2) + pow(end->j - start.j,2));
+	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
 	return l;
 }
 
@@ -279,7 +265,7 @@ double vertecal(t_general *info, double alpha, t_coordinates *end)
 	double x_steps;
 	double y_steps;
 	double beta = alpha;
-	double atan = -tan(((beta) * PI) / 180);
+	double atan = -tan(((beta)*PI) / 180);
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
 	if (beta > 90 && beta < 270)
@@ -307,7 +293,7 @@ double vertecal(t_general *info, double alpha, t_coordinates *end)
 		return INT_MAX;
 	if (end->j < INT_MIN || end->i < INT_MIN)
 		return INT_MAX;
-	double l = sqrt(pow(end->i - start.i,2) + pow(end->j - start.j,2));
+	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
 	return l;
 }
 
@@ -333,24 +319,30 @@ int draw_line(t_general *info, int color1, int color2)
 	i = 0;
 	double temp = 60 / ((double)info->dimensions[0] * 45);
 	while (i < info->dimensions[0] * 45)
-	{ 	
-		lv = vertecal(info, info->bita_ray,&end);
+	{
+		lv = vertecal(info, info->bita_ray, &end);
 		lh = horizontal(info, info->bita_ray, &end1);
 		projec = calcule_projection(info);
 		start.i = i;
 		end.i = i;
 		if (lh > lv)
 		{
-			wall_hight = (projec * 45) / lv;
-			start.j = ((info->dimensions[1] * 45) / 2 ) - wall_hight / 2;
-			end.j = ((info->dimensions[1] * 45) / 2 ) + wall_hight / 2;
+			wall_hight = ((projec * 45) / (lv * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
+			start.j *= start.j > 0;
+			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
+			if (end.j > info->dimensions[1] * 45)
+				end.j = info->dimensions[1] * 45;
 			sub_draw_line(info, &start, &end, color1);
 		}
 		else
 		{
-			wall_hight = (projec * 45) / lh;
-			start.j = ((info->dimensions[1] * 45) / 2 ) - wall_hight / 2;
-			end.j = ((info->dimensions[1] * 45) / 2 ) + wall_hight / 2;
+			wall_hight = ((projec * 45) / (lh * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
+			start.j *= start.j > 0;
+			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
+			if (end.j > info->dimensions[1] * 45)
+				end.j = info->dimensions[1] * 45;
 			sub_draw_line(info, &start, &end, color2);
 		}
 		// printf("projec %f %f\n", projec, wall_hight);
@@ -362,12 +354,12 @@ int draw_line(t_general *info, int color1, int color2)
 	return 0;
 }
 
-void	calcule_bite_ray(t_general *info)
+void calcule_bite_ray(t_general *info)
 {
 	info->bita_ray = info->alpha;
 	int i = 0;
 	double temp = 60 / ((double)info->dimensions[0] * 45);
-	while(i < (info->dimensions[0] * 45) / 2)
+	while (i < (info->dimensions[0] * 45) / 2)
 	{
 		if (info->bita_ray <= 0)
 			info->bita_ray = 360;
@@ -417,16 +409,9 @@ void display_pixel(t_general info)
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
-	
-	
-	// t_data *img;
-
 	info.info_img = malloc(sizeof(t_data));
 	info.info_img->img = mlx_new_image(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1]);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
-	// info.info_img = img;
-	printf("*******************%p\n",info.info_img->img);
-	
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);
