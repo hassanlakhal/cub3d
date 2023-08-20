@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/20 17:23:21 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/20 18:44:13 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 		k = i / wall_hight * info->texteur->height;
 		x += xIncrement;
 		y += yIncrement;
-		if (k >= info->texteur->height)
+		if (i >= steps || k >= info->texteur->height)
 			break;
 	}
 }
@@ -423,19 +423,11 @@ int draw_line(t_general *info, int color1, int color2)
 			// printf("v img_x %f %f %d\n", img_x, img_y, my_mlx_get_pixel(info, (int)img_x, (int)1));
 			if (cos((info->bita_ray * PI)/180) > 0)
 			{
-				// p = 0;
-				// k = 0;
-				// while(p < info->texteur->height)
-				// {
-					// sub_draw_line(info, &start, &end, color1);
-				// 	k += img_y;
-				// 	if (k >= info->texteur->height)
-				// 		break;
-				// 	p++;
-				// }
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
 			}
-			// else if(cos((info->bita_ray * PI)/180) < 0)
-				// sub_draw_line(info, &start, &end, 0x0045855);
+			else if(cos((info->bita_ray * PI)/180) < 0)
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+
 		}
 		else
 		{
@@ -445,47 +437,13 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			obj_x = h.end.i / 45 - floor(h.end.i / 45);
-			img_x = ((int)info->texteur->width  * obj_x);
-			// obj_y = wall_hight;
-			img_y = wall_hight / info->texteur->height;
-			// printf("v img_x %f %f %d %d\n", img_x, img_y, my_mlx_get_pixel(info, (int)img_x,(int) 1), info->texteur->height);
+			// obj_x = h.end.i / 45 - floor(h.end.i / 45);
+			// img_x = ((int)info->texteur->width  * obj_x);
+			// img_y = wall_hight / info->texteur->height;
 			if (sin(((info->bita_ray * PI)/180)) > 0)
-			{
-			// 	p = 0;
-			// 	k = 0;
-			// 	printf("wall %f\n", wall_hight);
-			// printf("y %f\n", img_y);
-			// 	while(p < wall_hight)
-			// 	{
-					sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
-					// my_mlx_pixel_put(info, x, y,  );
-			// 		k = p / wall_hight * info->texteur->height;
-			// 		x += xIncrement;
-			// 		y += yIncrement;
-			// 		if (k >= info->texteur->height)
-			// 			break;
-			// 		p++;
-			// 	}
-			// 	printf("p : %d\n", p);
-			}
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
 			else if (sin(((info->bita_ray * PI)/180)) < 0)
-			{
-					sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
-
-			// 	p = 0;
-			// 	k = 0;
-			// 	while(p < wall_hight * 2)
-			// 	{
-			// 		my_mlx_pixel_put(info, x, y,  my_mlx_get_pixel(info, (int)img_x, (int)k));
-			// 		k += img_y;
-			// 		x += xIncrement;
-			// 		y += yIncrement;
-			// 		if (k >= info->texteur->height)
-			// 			break;
-			// 		p++;
-			// 	}
-			}
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
 		}
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
