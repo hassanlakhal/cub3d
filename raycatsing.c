@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/19 17:59:40 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/20 11:26:02 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void my_mlx_pixel_put(t_general *info, int x, int y, int color)
 	char *dst;
 	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
+}
+
+int my_mlx_get_pixel(t_general *info, int x, int y)
+{
+	char *dst;
+	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
+	return *(unsigned int *)dst;
 }
 
 void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, int color)
@@ -348,7 +355,6 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			printf("[%f]---[%f]\n",cos(info->bita_ray),sin(info->bita_ray));
 			if (cos((info->bita_ray * PI)/180) > 0)
 				sub_draw_line(info, &start, &end, color1);
 			else if(cos((info->bita_ray * PI)/180) < 0)
@@ -425,6 +431,10 @@ double get_alpha_player(t_general info)
 }
 void display_pixel(t_general info)
 {
+	// unsigned int *data;
+	// void *img;
+    // int img_width, img_height;
+    // int bpp, size_l, endian;
 	info.alpha = get_alpha_player(info);
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
@@ -432,7 +442,10 @@ void display_pixel(t_general info)
 	info.info_img = malloc(sizeof(t_data));
 	info.info_img->img = mlx_new_image(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1]);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
+	// img = mlx_xpm_file_to_image(info.mlx, "./texture/wall.xpm", &img_width, &img_height);
+	// data = (unsigned int *)mlx_get_data_addr(img, &bpp, &size_l, &endian);
 	ft_dislay(&info, info.mlx, info.mlx_win);
+	// mlx_put_image_to_window(info.mlx, info.mlx_win, img, 200, 200);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);
 }

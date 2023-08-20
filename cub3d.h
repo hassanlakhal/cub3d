@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/19 13:17:29 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/20 05:18:09 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,19 @@ typedef struct s_data
 	int			height;
 }				t_data;
 
+typedef struct s_data_texteur
+{
+	void		*img;
+	char		*addr;
+	int			bits_per_pixel;
+	int			line_length;
+	int			endian;
+	int			width;
+	int			height;
+	int			width_1;
+	int			height_1;
+}				t_data_texteur;
+
 typedef struct s_general
 {
 	t_rgb_info	*info_rgb;
@@ -90,6 +103,7 @@ typedef struct s_general
 	t_player	*info_player;
 	t_bloc		*bloc_s;
 	t_data		*info_img;
+	t_data_texteur *texteur;
 	char		**valid_map;
 	int			dimensions[2];
 	char		*bloc;
