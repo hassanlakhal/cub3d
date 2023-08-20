@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/20 18:44:13 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/20 19:12:32 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 	float y = start->j;
 	double obj_x = endi / 45 - floor(endi / 45);
 	double img_x = ((int)info->texteur->width  * obj_x);
-	// obj_y = wall_hight;
 	int k = 0;
-	// double img_y = wall_hight / info->texteur->height;
 	for (int i = 0; i < wall_hight; i++)
 	{
 		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(info, (int)img_x, (int)k));
@@ -381,18 +379,11 @@ int draw_line(t_general *info, int color1, int color2)
 	t_casted_ray v;
 	t_casted_ray h;
 
-
-	double obj_x;
-	// double obj_y;
-	double img_x;
-	double img_y;
 	(void)color1;
 	(void)color2;
 	double projec;
 	double wall_hight;
 	int i;
-	// int p;
-	// int k;
 	i = 0;
 	double temp = 60 / ((double)info->dimensions[0] * 45);
 	while (i < info->dimensions[0] * 45)
@@ -402,12 +393,6 @@ int draw_line(t_general *info, int color1, int color2)
 		projec = calcule_projection(info);
 		start.i = i;
 		end.i = i;
-		// int x = start.i, y = start.j;
-		// int dx = (end.i - start.i);
-		// int dy = (end.j - start.j);
-		// int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-		// float xIncrement = (float)dx / (float)steps;
-		//  float yIncrement = (float)dy / (float)steps;
 		if (h.lenght > v.lenght)
 		{
 			wall_hight = ((projec * 45) / (v.lenght * cos(((info->bita_ray - info->alpha) * PI) / 180)));
@@ -416,17 +401,12 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			obj_x = i / 45 - floor(i / 45);
-			img_x = ((int)info->texteur->width  * obj_x);
-			// obj_y = wall_hight;
-			img_y = wall_hight / info->texteur->height;
-			// printf("v img_x %f %f %d\n", img_x, img_y, my_mlx_get_pixel(info, (int)img_x, (int)1));
 			if (cos((info->bita_ray * PI)/180) > 0)
 			{
-				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+				sub_draw_line(info, &start, &end, v.end.j ,wall_hight);
 			}
 			else if(cos((info->bita_ray * PI)/180) < 0)
-				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+				sub_draw_line(info, &start, &end, v.end.j ,wall_hight);
 
 		}
 		else
@@ -437,9 +417,6 @@ int draw_line(t_general *info, int color1, int color2)
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
-			// obj_x = h.end.i / 45 - floor(h.end.i / 45);
-			// img_x = ((int)info->texteur->width  * obj_x);
-			// img_y = wall_hight / info->texteur->height;
 			if (sin(((info->bita_ray * PI)/180)) > 0)
 				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
 			else if (sin(((info->bita_ray * PI)/180)) < 0)
@@ -503,10 +480,7 @@ double get_alpha_player(t_general info)
 }
 void display_pixel(t_general info)
 {
-	// unsigned int *data;
-	// void *img;
-    // int img_width, img_height;
-    // int bpp, size_l, endian;
+
 	info.alpha = get_alpha_player(info);
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
@@ -520,12 +494,7 @@ void display_pixel(t_general info)
 	info.texteur->img = mlx_xpm_file_to_image(info.mlx, "texture/wall.xpm", &info.texteur->width, &info.texteur->height);
 	info.texteur->addr = mlx_get_data_addr(info.texteur->img, &info.texteur->bits_per_pixel, &info.texteur->line_length, &info.texteur->endian);
 	
-	
-	
-	// img = mlx_xpm_file_to_image(info.mlx, "./texture/wall.xpm", &img_width, &img_height);
-	// data = (unsigned int *)mlx_get_data_addr(img, &bpp, &size_l, &endian);
 	ft_dislay(&info, info.mlx, info.mlx_win);
-	// mlx_put_image_to_window(info.mlx, info.mlx_win, img, 200, 200);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);
 }
