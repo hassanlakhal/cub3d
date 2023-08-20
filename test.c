@@ -77,7 +77,7 @@ int main(void)
      
     info.clo =(unsigned int *) mlx_get_data_addr(info.img, &info.bpp, &info.size_l, &info.endian);
     
-    int a = my_mlx_get_pixel(&info,180,2);
+    int a = my_mlx_get_pixel(&info,1,1);
    
     int i;
     int j;

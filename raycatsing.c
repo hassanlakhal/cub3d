@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/20 11:26:02 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:23:21 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void my_mlx_pixel_put(t_general *info, int x, int y, int color)
 int my_mlx_get_pixel(t_general *info, int x, int y)
 {
 	char *dst;
-	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
+	dst = info->texteur->addr + (y * info->texteur->line_length + x * (info->texteur->bits_per_pixel / 8));
 	return *(unsigned int *)dst;
 }
 
-void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, int color)
+void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,double endi,double wall_hight)
 {
 
 	int dx = (end->i - start->i);
@@ -36,11 +36,19 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end, in
 	float yIncrement = (float)dy / (float)steps;
 	float x = start->i;
 	float y = start->j;
-	for (int i = 0; i <= steps; i++)
+	double obj_x = endi / 45 - floor(endi / 45);
+	double img_x = ((int)info->texteur->width  * obj_x);
+	// obj_y = wall_hight;
+	int k = 0;
+	// double img_y = wall_hight / info->texteur->height;
+	for (int i = 0; i < wall_hight; i++)
 	{
-		my_mlx_pixel_put(info, (int)x, (int)y, color);
+		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(info, (int)img_x, (int)k));
+		k = i / wall_hight * info->texteur->height;
 		x += xIncrement;
 		y += yIncrement;
+		if (k >= info->texteur->height)
+			break;
 	}
 }
 
@@ -239,9 +247,10 @@ bool break_wall(t_general *info, int x, int y)
 	return true;
 }
 
-double horizontal(t_general *info, double alpha, t_coordinates *end)
+t_casted_ray  horizontal(t_general *info, double alpha, t_coordinates *end)
 {
 	t_coordinates start;
+	t_casted_ray h;
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
 	double x_steps;
@@ -265,23 +274,42 @@ double horizontal(t_general *info, double alpha, t_coordinates *end)
 		x_steps = -y_steps * atan;
 	}
 	if (beta == 0 || beta == 180)
-		return INT_MAX;
+	{
+		h.lenght = INT_MAX;
+		return h;
+	}
 	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
 		end->i += x_steps;
 		end->j += y_steps;
 	}
 	if (end->j > INT_MAX || end->i > INT_MAX)
-		return INT_MAX;
+	{
+		h.lenght = INT_MAX;
+		h.end.i = end->i;
+	h.end.j = end->j;
+		return h;
+	}
 	if (end->j < INT_MIN || end->i < INT_MIN)
-		return INT_MAX;
+	{
+		h.lenght = INT_MAX;
+		h.end.i = end->i;
+	h.end.j = end->j;
+		return h;
+	}
 	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
-	return l;
+	
+	h.lenght = l;
+	h.end.i = end->i;
+	h.end.j = end->j;
+	
+	return h;
 }
 
-double vertecal(t_general *info, double alpha, t_coordinates *end)
+t_casted_ray vertecal(t_general *info, double alpha, t_coordinates *end)
 {
 	t_coordinates start;
+	t_casted_ray v;
 	start.i = info->info_player->pos_x * 45;
 	start.j = info->info_player->pos_y * 45;
 	double x_steps;
@@ -305,18 +333,36 @@ double vertecal(t_general *info, double alpha, t_coordinates *end)
 		y_steps = -x_steps * atan;
 	}
 	if (beta == 90 || beta == 270)
-		return INT_MAX;
+	{
+		v.lenght = INT_MAX;
+		v.end.i = end->i;
+	v.end.j = end->j;
+		return v;
+	}
 	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
 	{
 		end->i += x_steps;
 		end->j += y_steps;
 	}
 	if (end->j > INT_MAX || end->i > INT_MAX)
-		return INT_MAX;
+	{
+		v.lenght = INT_MAX;
+		v.end.i = end->i;
+	v.end.j = end->j;
+		return v;
+	}
 	if (end->j < INT_MIN || end->i < INT_MIN)
-		return INT_MAX;
+	{
+		v.lenght = INT_MAX;
+		v.end.i = end->i;
+	v.end.j = end->j;
+		return v;
+	}
 	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
-	return l;
+	v.lenght = l;
+	v.end.i = end->i;
+	v.end.j = end->j;
+	return v;
 }
 
 double calcule_projection(t_general *info)
@@ -325,53 +371,121 @@ double calcule_projection(t_general *info)
 	int half_width = WIDTH / 2;
 	return (half_width / tan((30 * PI) / 180));
 }
+
 int draw_line(t_general *info, int color1, int color2)
 {
 	t_coordinates start;
 	t_coordinates end;
 	t_coordinates end1;
 
-	double lv;
-	double lh;
+	t_casted_ray v;
+	t_casted_ray h;
+
+
+	double obj_x;
+	// double obj_y;
+	double img_x;
+	double img_y;
 	(void)color1;
 	(void)color2;
 	double projec;
 	double wall_hight;
 	int i;
+	// int p;
+	// int k;
 	i = 0;
 	double temp = 60 / ((double)info->dimensions[0] * 45);
 	while (i < info->dimensions[0] * 45)
 	{
-		lv = vertecal(info, info->bita_ray, &end);
-		lh = horizontal(info, info->bita_ray, &end1);
+		v = vertecal(info, info->bita_ray, &end);
+		h = horizontal(info, info->bita_ray, &end1);
 		projec = calcule_projection(info);
 		start.i = i;
 		end.i = i;
-		if (lh > lv)
+		// int x = start.i, y = start.j;
+		// int dx = (end.i - start.i);
+		// int dy = (end.j - start.j);
+		// int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
+		// float xIncrement = (float)dx / (float)steps;
+		//  float yIncrement = (float)dy / (float)steps;
+		if (h.lenght > v.lenght)
 		{
-			wall_hight = ((projec * 45) / (lv * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+			wall_hight = ((projec * 45) / (v.lenght * cos(((info->bita_ray - info->alpha) * PI) / 180)));
 			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
 			start.j *= start.j > 0;
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
+			obj_x = i / 45 - floor(i / 45);
+			img_x = ((int)info->texteur->width  * obj_x);
+			// obj_y = wall_hight;
+			img_y = wall_hight / info->texteur->height;
+			// printf("v img_x %f %f %d\n", img_x, img_y, my_mlx_get_pixel(info, (int)img_x, (int)1));
 			if (cos((info->bita_ray * PI)/180) > 0)
-				sub_draw_line(info, &start, &end, color1);
-			else if(cos((info->bita_ray * PI)/180) < 0)
-				sub_draw_line(info, &start, &end, 0x0045855);
+			{
+				// p = 0;
+				// k = 0;
+				// while(p < info->texteur->height)
+				// {
+					// sub_draw_line(info, &start, &end, color1);
+				// 	k += img_y;
+				// 	if (k >= info->texteur->height)
+				// 		break;
+				// 	p++;
+				// }
+			}
+			// else if(cos((info->bita_ray * PI)/180) < 0)
+				// sub_draw_line(info, &start, &end, 0x0045855);
 		}
 		else
 		{
-			wall_hight = ((projec * 45) / (lh * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+			wall_hight = ((projec * 45) / (h.lenght * cos(((info->bita_ray - info->alpha) * PI) / 180)));
 			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
 			start.j *= start.j > 0;
 			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
 			if (end.j > info->dimensions[1] * 45)
 				end.j = info->dimensions[1] * 45;
+			obj_x = h.end.i / 45 - floor(h.end.i / 45);
+			img_x = ((int)info->texteur->width  * obj_x);
+			// obj_y = wall_hight;
+			img_y = wall_hight / info->texteur->height;
+			// printf("v img_x %f %f %d %d\n", img_x, img_y, my_mlx_get_pixel(info, (int)img_x,(int) 1), info->texteur->height);
 			if (sin(((info->bita_ray * PI)/180)) > 0)
-				sub_draw_line(info, &start, &end, color2);
+			{
+			// 	p = 0;
+			// 	k = 0;
+			// 	printf("wall %f\n", wall_hight);
+			// printf("y %f\n", img_y);
+			// 	while(p < wall_hight)
+			// 	{
+					sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+					// my_mlx_pixel_put(info, x, y,  );
+			// 		k = p / wall_hight * info->texteur->height;
+			// 		x += xIncrement;
+			// 		y += yIncrement;
+			// 		if (k >= info->texteur->height)
+			// 			break;
+			// 		p++;
+			// 	}
+			// 	printf("p : %d\n", p);
+			}
 			else if (sin(((info->bita_ray * PI)/180)) < 0)
-				sub_draw_line(info, &start, &end, 0x45454545);
+			{
+					sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+
+			// 	p = 0;
+			// 	k = 0;
+			// 	while(p < wall_hight * 2)
+			// 	{
+			// 		my_mlx_pixel_put(info, x, y,  my_mlx_get_pixel(info, (int)img_x, (int)k));
+			// 		k += img_y;
+			// 		x += xIncrement;
+			// 		y += yIncrement;
+			// 		if (k >= info->texteur->height)
+			// 			break;
+			// 		p++;
+			// 	}
+			}
 		}
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
@@ -439,9 +553,17 @@ void display_pixel(t_general info)
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
+	
 	info.info_img = malloc(sizeof(t_data));
 	info.info_img->img = mlx_new_image(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1]);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
+	
+	info.texteur = malloc(sizeof(t_data));
+	info.texteur->img = mlx_xpm_file_to_image(info.mlx, "texture/wall.xpm", &info.texteur->width, &info.texteur->height);
+	info.texteur->addr = mlx_get_data_addr(info.texteur->img, &info.texteur->bits_per_pixel, &info.texteur->line_length, &info.texteur->endian);
+	
+	
+	
 	// img = mlx_xpm_file_to_image(info.mlx, "./texture/wall.xpm", &img_width, &img_height);
 	// data = (unsigned int *)mlx_get_data_addr(img, &bpp, &size_l, &endian);
 	ft_dislay(&info, info.mlx, info.mlx_win);
