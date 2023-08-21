@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/20 12:55:49 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/21 11:52:32 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 # define RGB 2
 # define PI 3.141592653
 # define RAD 0.0174533
-# define HEIGHT 1920
-# define WIDTH 1080
+# define HEIGHT 700
+# define WIDTH 1500
 # define SPEED 0.1
 # define SPEEDALPHA 2
 

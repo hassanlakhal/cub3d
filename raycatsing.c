@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/20 19:12:32 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:04:18 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,15 @@ void display_floor(t_general *info, t_data *img, int j, int i)
 
 	x = 0;
 	y = 0;
+	(void)i;
+	(void)j;
 	(void)img;
-	while (x < info->dimensions[0])
+	while (x < WIDTH)
 	{
-		y = (int)info->dimensions[1] / 2;
-		while (y < info->dimensions[1])
+		y = (int)HEIGHT / 2;
+		while (y < HEIGHT)
 		{
-			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, get_color(info, 'F'));
+			my_mlx_pixel_put(info, x, y, get_color(info, 'F'));
 			y++;
 		}
 		x++;
@@ -129,13 +131,15 @@ void display_sky(t_general *info, t_data *img, int j, int i)
 	x = 0;
 	y = 0;
 	(void)img;
+	(void)i;
+	(void)j;
 
-	while (x < info->dimensions[0])
+	while (x < WIDTH)
 	{
 		y = 0;
-		while (y < info->dimensions[1] / 2)
+		while (y < HEIGHT / 2)
 		{
-			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, get_color(info, 'C'));
+			my_mlx_pixel_put(info, x, y, get_color(info, 'C'));
 			y++;
 		}
 		x++;
@@ -144,19 +148,19 @@ void display_sky(t_general *info, t_data *img, int j, int i)
 void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 {
 	int i;
-	int j;
+	int j = 0;
 	i = 0;
-	while (i < 45)
-	{
-		j = 0;
-		while (j < 45)
-		{
+	// while (i < 45)
+	// {
+	// 	j = 0;
+	// 	while (j < 45)
+	// 	{
 			display_floor(info, info->info_img->img, j, i);
 			display_sky(info, info->info_img->img, j, i);
-			j++;
-		}
-		i++;
-	}
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	mlx_put_image_to_window(mlx, mlx_win, info->info_img->img, 0, 0);
 }
 
@@ -385,8 +389,8 @@ int draw_line(t_general *info, int color1, int color2)
 	double wall_hight;
 	int i;
 	i = 0;
-	double temp = 60 / ((double)info->dimensions[0] * 45);
-	while (i < info->dimensions[0] * 45)
+	double temp = 60 / ((double)WIDTH);
+	while (i < WIDTH)
 	{
 		v = vertecal(info, info->bita_ray, &end);
 		h = horizontal(info, info->bita_ray, &end1);
@@ -396,11 +400,11 @@ int draw_line(t_general *info, int color1, int color2)
 		if (h.lenght > v.lenght)
 		{
 			wall_hight = ((projec * 45) / (v.lenght * cos(((info->bita_ray - info->alpha) * PI) / 180)));
-			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
+			start.j = (HEIGHT / 2) - wall_hight / 2;
 			start.j *= start.j > 0;
-			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
-			if (end.j > info->dimensions[1] * 45)
-				end.j = info->dimensions[1] * 45;
+			end.j = (HEIGHT / 2) + wall_hight / 2;
+			if (end.j > HEIGHT)
+				end.j = HEIGHT;
 			if (cos((info->bita_ray * PI)/180) > 0)
 			{
 				sub_draw_line(info, &start, &end, v.end.j ,wall_hight);
@@ -412,11 +416,11 @@ int draw_line(t_general *info, int color1, int color2)
 		else
 		{
 			wall_hight = ((projec * 45) / (h.lenght * cos(((info->bita_ray - info->alpha) * PI) / 180)));
-			start.j = ((info->dimensions[1] * 45) / 2) - wall_hight / 2;
+			start.j = (HEIGHT/ 2) - wall_hight / 2;
 			start.j *= start.j > 0;
-			end.j = ((info->dimensions[1] * 45) / 2) + wall_hight / 2;
-			if (end.j > info->dimensions[1] * 45)
-				end.j = info->dimensions[1] * 45;
+			end.j = (HEIGHT/ 2) + wall_hight / 2;
+			if (end.j > HEIGHT)
+				end.j = HEIGHT;
 			if (sin(((info->bita_ray * PI)/180)) > 0)
 				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
 			else if (sin(((info->bita_ray * PI)/180)) < 0)
@@ -434,8 +438,8 @@ void calcule_bite_ray(t_general *info)
 {
 	info->bita_ray = info->alpha;
 	int i = 0;
-	double temp = 60 / ((double)info->dimensions[0] * 45);
-	while (i < (info->dimensions[0] * 45) / 2)
+	double temp = 60 / ((double)WIDTH );
+	while (i < (WIDTH) / 2)
 	{
 		if (info->bita_ray <= 0)
 			info->bita_ray = 360;
@@ -484,16 +488,16 @@ void display_pixel(t_general info)
 	info.alpha = get_alpha_player(info);
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
-	info.mlx_win = mlx_new_window(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1], "cub3d");
+	info.mlx_win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "cub3d");
 	
 	info.info_img = malloc(sizeof(t_data));
-	info.info_img->img = mlx_new_image(info.mlx, 45 * info.dimensions[0], 45 * info.dimensions[1]);
+	info.info_img->img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
 	
 	info.texteur = malloc(sizeof(t_data));
 	info.texteur->img = mlx_xpm_file_to_image(info.mlx, "texture/wall.xpm", &info.texteur->width, &info.texteur->height);
 	info.texteur->addr = mlx_get_data_addr(info.texteur->img, &info.texteur->bits_per_pixel, &info.texteur->line_length, &info.texteur->endian);
-	
+	 
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);
