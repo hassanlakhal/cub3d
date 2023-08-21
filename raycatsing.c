@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/21 15:08:08 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:18:57 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void my_mlx_pixel_put(t_general *info, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int my_mlx_get_pixel(t_general *info, int x, int y)
+int my_mlx_get_pixel(t_data *texteur, int x, int y)
 {
 	char *dst;
-	dst = info->texteur->addr + (y * info->texteur->line_length + x * (info->texteur->bits_per_pixel / 8));
+	dst = texteur->addr + (y * texteur->line_length + x * (texteur->bits_per_pixel / 8));
 	return *(unsigned int *)dst;
 }
 
-void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,double endi,double wall_hight)
+void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,double endi,double wall_hight, t_data *texteur)
 {
 
 	int dx = (end->i - start->i);
@@ -38,7 +38,7 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 	float x = start->i;
 	float y = start->j;
 	double obj_x = endi / 45 - floor(endi / 45);
-	double img_x = ((int)info->texteur->width  * obj_x);
+	double img_x = ((int)texteur->width  * obj_x);
 	double k = 0;
 	double  i = 0;
 	if (wall_hight > (double)HEIGHT)
@@ -53,51 +53,16 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 	}
 	while(i < d)
 	{
-		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(info, (int)img_x, (int)k));
-		k = i / wall_hight * info->texteur->height;
+		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(texteur, (int)img_x, (int)k));
+		k = i / wall_hight * texteur->height;
 		x += xIncrement;
 		y += yIncrement;
-		if ( x > WIDTH || y > HEIGHT || k > info->texteur->height)
+		if ( x > WIDTH || y > HEIGHT || k > texteur->height)
 			break;
 		i++;
 	}
 }
 
-// void display_player(double x, double y, t_data *img, int color)
-// {
-// 	x *= 45;
-// 	y *= 45;
-
-// 	my_mlx_pixel_put(img, (int)x, (int)y, color);
-// }
-
-void display_pxl(t_general *info, t_data *img, int j, int i)
-{
-	int y;
-	int x;
-
-	y = 0;
-	(void)img;
-	while (y < info->dimensions[1] / 2)
-	{
-		x = 0;
-		while (x < info->dimensions[0])
-		{
-			// if (info->valid_map[y][x] == '1')
-			my_mlx_pixel_put(info, (x * 45) + j, (y * 45) + i, 0x00FF0000);
-			// if (info->valid_map[y][x] == '0')
-			// 	my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x00FFFFFF);
-			// if (ft_strchr("NEWS", info->valid_map[y][x]))
-			// {
-			// 	display_player(x, y, img, 0x4500FF);
-			// 	my_mlx_pixel_put(img, (x * 45) + j, (y * 45) + i, 0x00FFFFFF);
-			// }
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(info->mlx, info->mlx_win, info->info_img->img, 0, 0);
-}
 
 int get_color(t_general *info, char c)
 {
@@ -163,17 +128,8 @@ void ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	int i;
 	int j = 0;
 	i = 0;
-	// while (i < 45)
-	// {
-	// 	j = 0;
-	// 	while (j < 45)
-	// 	{
-			display_floor(info, info->info_img->img, j, i);
-			display_sky(info, info->info_img->img, j, i);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
+	display_floor(info, info->info_img->img, j, i);
+	display_sky(info, info->info_img->img, j, i);
 	mlx_put_image_to_window(mlx, mlx_win, info->info_img->img, 0, 0);
 }
 
@@ -386,7 +342,18 @@ double calcule_projection(t_general *info)
 	int half_width = WIDTH / 2;
 	return (half_width / tan((30 * PI) / 180));
 }
+t_data *get_side_texteur(t_general *info, char *str)
+{
+	int i = 0;
 
+	while(i < 4)
+	{
+		if (!ft_strncmp(str, info->info_texteur[i].direction, 2))
+			return info->info_texteur[i].texteur;
+		i++;
+	}
+	return info->info_texteur[0].texteur;
+}
 int draw_line(t_general *info, int color1, int color2)
 {
 	t_coordinates start;
@@ -420,10 +387,10 @@ int draw_line(t_general *info, int color1, int color2)
 				end.j = HEIGHT;
 			if (cos((info->bita_ray * PI)/180) > 0)
 			{
-				sub_draw_line(info, &start, &end, v.end.j ,wall_hight);
+				sub_draw_line(info, &start, &end, v.end.j ,wall_hight, get_side_texteur(info, "EA"));
 			}
 			else if(cos((info->bita_ray * PI)/180) < 0)
-				sub_draw_line(info, &start, &end, v.end.j ,wall_hight);
+				sub_draw_line(info, &start, &end, v.end.j ,wall_hight, get_side_texteur(info, "WE"));
 
 		}
 		else
@@ -435,9 +402,9 @@ int draw_line(t_general *info, int color1, int color2)
 			if (end.j > HEIGHT)
 				end.j = HEIGHT;
 			if (sin(((info->bita_ray * PI)/180)) > 0)
-				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight, get_side_texteur(info, "SO"));
 			else if (sin(((info->bita_ray * PI)/180)) < 0)
-				sub_draw_line(info, &start, &end, h.end.i ,wall_hight);
+				sub_draw_line(info, &start, &end, h.end.i ,wall_hight, get_side_texteur(info, "NO"));
 		}
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
@@ -495,6 +462,22 @@ double get_alpha_player(t_general info)
 		return 180;
 	return 0;
 }
+void		get_texters(t_general *info)
+{
+	int i = 0;
+	while(i < 4)
+	{
+		info->info_texteur[i].texteur = malloc(sizeof(t_data));
+		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx,info->info_texteur[i].path , &info->info_texteur[i].texteur->width, &info->info_texteur[i].texteur->height);
+		if (!info->info_texteur[i].texteur->img)
+		{
+			printf("image not found!");
+			exit(2);
+		}
+		info->info_texteur[i].texteur->addr = mlx_get_data_addr(info->info_texteur[i].texteur->img, &info->info_texteur[i].texteur->bits_per_pixel, &info->info_texteur[i].texteur->line_length, &info->info_texteur[i].texteur->endian);
+		i++;
+	}
+}
 void display_pixel(t_general info)
 {
 
@@ -510,7 +493,7 @@ void display_pixel(t_general info)
 	info.texteur = malloc(sizeof(t_data));
 	info.texteur->img = mlx_xpm_file_to_image(info.mlx, "texture/wall.xpm", &info.texteur->width, &info.texteur->height);
 	info.texteur->addr = mlx_get_data_addr(info.texteur->img, &info.texteur->bits_per_pixel, &info.texteur->line_length, &info.texteur->endian);
-	 
+	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);

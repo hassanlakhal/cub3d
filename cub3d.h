@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/21 11:52:32 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:29:18 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,6 @@ typedef struct s_rgb_info
 	int			_B;
 }				t_rgb_info;
 
-typedef struct s_texteur
-{
-	char		*path;
-	char		*direction;
-}				t_texteur;
 
 typedef struct s_player
 {
@@ -82,6 +77,13 @@ typedef struct s_data
 	int			width;
 	int			height;
 }				t_data;
+
+typedef struct s_texteur
+{
+	char		*path;
+	char		*direction;
+	t_data		*texteur;
+}				t_texteur;
 
 typedef struct s_casted_ray
 {

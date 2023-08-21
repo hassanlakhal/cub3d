@@ -1,11 +1,8 @@
 
-NO ./texture/wall.xpm
-
-
-
-SO ./path_to_the_south_texture
-WE 			./path_to_the_west_texture
-EA				./path_to_the_east_texture
+SO              ./texture/wall3.xpm
+NO              ./texture/wall.xpm
+WE              ./texture/hlakhal.xpm
+EA              ./texture/1214059.xpm
 
 C                       102,178,255
 F			192,192,192
