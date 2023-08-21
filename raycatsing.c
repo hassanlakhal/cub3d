@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/21 12:04:18 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:08:08 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 
 	int dx = (end->i - start->i);
 	int dy = (end->j - start->j);
+	double d;
 	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
 	float xIncrement = (float)dx / (float)steps;
 	float yIncrement = (float)dy / (float)steps;
@@ -38,15 +39,27 @@ void sub_draw_line(t_general *info, t_coordinates *start, t_coordinates *end,dou
 	float y = start->j;
 	double obj_x = endi / 45 - floor(endi / 45);
 	double img_x = ((int)info->texteur->width  * obj_x);
-	int k = 0;
-	for (int i = 0; i < wall_hight; i++)
+	double k = 0;
+	double  i = 0;
+	if (wall_hight > (double)HEIGHT)
+	{
+		i = fabs((wall_hight / 2) - ((double)HEIGHT / 2));
+		d = wall_hight;
+	}	
+	else
+	{
+		i = 0;
+		d = HEIGHT;	
+	}
+	while(i < d)
 	{
 		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(info, (int)img_x, (int)k));
 		k = i / wall_hight * info->texteur->height;
 		x += xIncrement;
 		y += yIncrement;
-		if (i >= steps || k >= info->texteur->height)
+		if ( x > WIDTH || y > HEIGHT || k > info->texteur->height)
 			break;
+		i++;
 	}
 }
 
