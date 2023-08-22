@@ -6,22 +6,17 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/19 01:34:20 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:02:09 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	get_map(t_general *info)
-{
-	int		fd;
-	int		i;
-	char	*str;
-	char	*map;
 
-	fd = open("map/map.cub", O_RDWR);
-	str = get_next_line(fd);
-	map = NULL;
+void utils_get_map(char *str, int fd)
+{
+	int i;
+	
 	i = 0;
 	while (str && i < 6)
 	{
@@ -32,6 +27,19 @@ void	get_map(t_general *info)
 	}
 	if (str)
 		free(str);
+}
+
+void	get_map(t_general *info)
+{
+	int		fd;
+	// int		i;
+	char	*str;
+	char	*map;
+
+	fd = open("map/map.cub", O_RDWR);
+	str = get_next_line(fd);
+	map = NULL;
+	utils_get_map(str,fd);
 	str = skip_line(fd);
 	while (str)
 	{

@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 01:02:26 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 21:29:47 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,11 @@ char	*skip_line(int fd)
 	return (temp);
 }
 
-void	read_lines_texter(t_general *info)
+void ft_utils_read_lines_texter(t_general *info, char *str, char *file, int fd)
 {
-	int		i;
-	char	*str;
-	char	*file;
-	int		fd;
+	int i;
 
 	i = 0;
-	fd = open("map/map.cub", O_RDWR);
-	init_list(info);
-	str = skip_line(fd);
-	file = NULL;
-	info->bloc = NULL;
 	while (str)
 	{
 		file = ft_strjoin(file, str);
@@ -75,6 +67,22 @@ void	read_lines_texter(t_general *info)
 	if (i == 0)
 		exit(1);
 	info->bloc = ft_substr(file, 0, ft_strlen(file));
-	free(str);
-	(free(file), close(fd));
+	(free(file), free(str));
+}
+
+void	read_lines_texter(t_general *info)
+{
+	int		i;
+	char	*str;
+	char	*file;
+	int		fd;
+
+	i = 0;
+	fd = open("map/map.cub", O_RDWR);
+	init_list(info);
+	str = skip_line(fd);
+	file = NULL;
+	info->bloc = NULL;
+	ft_utils_read_lines_texter(info,str,file,fd); 
+	close(fd);
 }

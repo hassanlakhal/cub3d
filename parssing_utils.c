@@ -6,23 +6,19 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/12 00:58:14 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 21:01:26 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	**ft_split_pos(char *str, char c, int pos)
+void ft_utils(char *str, int pos, int *delimiter_pos, char c)
 {
-	char	**tab;
-	int		delimiter_pos;
 	int		current_pos;
-	int		i;
-
+	int 	i;
+	
+	
 	i = 0;
-	ft_strlen(str);
-	tab = (char **)malloc(3 * sizeof(char *));
-	delimiter_pos = -1;
 	current_pos = 0;
 	while (i < (int)ft_strlen(str))
 	{
@@ -31,12 +27,23 @@ char	**ft_split_pos(char *str, char c, int pos)
 			current_pos++;
 			if (current_pos == pos)
 			{
-				delimiter_pos = i;
+				(*delimiter_pos) = i;
 				break ;
 			}
 		}
 		i++;
 	}
+}
+
+char	**ft_split_pos(char *str, char c, int pos)
+{
+	char	**tab;
+	int		delimiter_pos;
+	
+	ft_strlen(str);
+	tab = (char **)malloc(3 * sizeof(char *));
+	delimiter_pos = -1;
+	ft_utils(str,pos,&delimiter_pos,c);
 	if (delimiter_pos == -1)
 	{
 		printf("14:ERROR\n");
