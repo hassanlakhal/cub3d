@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 03:01:43 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:43:23 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,41 +26,53 @@ int my_mlx_get_pixel(t_data *texteur, int x, int y)
 	return *(unsigned int *)dst;
 }
 
-void sub_draw_line(t_general *info,double endi, t_data *texteur)
+void draw_help_1(t_general *info, double *i,double *d)
 {
-
-	int dx = (info->end->i - info->start->i);
-	int dy = (info->end->j - info->start->j);
-	double d;
-	int steps = abs(dx) > abs(dy) ? abs(dx) : abs(dy);
-	float xIncrement = (float)dx / (float)steps;
-	float yIncrement = (float)dy / (float)steps;
-	float x = info->start->i;
-	float y = info->start->j;
-	double obj_x = endi / 45 - floor(endi / 45);
-	double img_x = ((int)texteur->width  * obj_x);
-	double k = 0;
-	double  i = 0;
+	
 	if (info->wall_hight > (double)HEIGHT)
 	{
-		i = fabs((info->wall_hight / 2) - ((double)HEIGHT / 2));
-		d = info->wall_hight;
+		(*i) = fabs((info->wall_hight / 2) - ((double)HEIGHT / 2));
+		(*d) = info->wall_hight;
 	}	
 	else
 	{
-		i = 0;
-		d = HEIGHT;	
+		(*i) = 0;
+		(*d) = HEIGHT;	
 	}
-	while(i < d)
+}
+
+void draw_help(t_general *info,t_data *texteur, int steps, double img_x)
+{	 
+	t_drawing draw;
+	 
+	draw.k = 0;
+	draw.i = 0;
+	draw.x_crement = (float)(int)(info->end->i - info->start->i) / (float)steps;
+	draw.y_crement = (float)(int)(info->end->j - info->start->j) / (float)steps;
+	draw.x = info->start->i;
+	draw.y = info->start->j;
+	draw_help_1(info,&draw.i,&draw.d);
+	while(draw.i < draw.d)
 	{
-		my_mlx_pixel_put(info, (int)x, (int)y, my_mlx_get_pixel(texteur, (int)img_x, (int)k));
-		k = i / info->wall_hight * texteur->height;
-		x += xIncrement;
-		y += yIncrement;
-		if ( x > WIDTH || y > HEIGHT || k > texteur->height)
+		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y, my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
+		draw.k = draw.i / info->wall_hight * texteur->height;
+		draw.x += draw.x_crement;
+		draw.y += draw.y_crement;
+		if ( draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
 			break;
-		i++;
+		draw.i++;
 	}
+}
+
+void sub_draw_line(t_general *info,double endi, t_data *texteur)
+{
+	int steps;
+	if (abs((int)(info->end->i - info->start->i)) > abs((int)(info->end->j - info->start->j)))
+		steps = abs((int)(info->end->i - info->start->i));
+	else
+		steps = abs((int)(info->end->j - info->start->j));
+	double img_x = ((int)texteur->width  * (endi / 45 - floor(endi / 45)));
+	draw_help(info,texteur,steps,img_x);
 }
 
 

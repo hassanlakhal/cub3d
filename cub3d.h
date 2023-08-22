@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 00:37:43 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:26:31 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,18 @@ typedef struct s_casted_ray
 	t_coordinates end;
 	double			lenght;
 }				t_casted_ray;
+
+typedef struct s_drawing
+{
+	float x;
+	float y;
+	double k;
+	double  i;
+	double d;
+	float x_crement ;
+	float y_crement;
+	
+}		t_drawing;
 
 typedef struct s_general
 {
