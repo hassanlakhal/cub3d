@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 01:00:42 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 02:23:11 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,63 +218,60 @@ bool break_wall(t_general *info, int x, int y)
 	return true;
 }
 
-t_casted_ray  *horizontal(t_general *info, double alpha, t_coordinates *end)
+void step_rays(t_general *info, double *x_steps, double *y_steps, double beta)
 {
-	t_coordinates start;
-	t_casted_ray *h;
-	h = malloc(sizeof(t_casted_ray));
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
-	double x_steps;
-	double y_steps;
-	double beta = alpha;
 	double atan = -1 / tan(((beta)*PI) / 180);
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
+	info->start->i = info->info_player->pos_x * 45;
+	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 180)
 	{
-		end->j = ((int)(start.j / 45) * 45) - 0.0001;
-		end->i = start.i + (start.j - end->j) * atan;
-		y_steps = -45;
-		x_steps = -y_steps * atan;
+		info->end->j = ((int)(info->start->j / 45) * 45) - 0.0001;
+		info->end->i = info->start->i + (info->start->j - info->end->j) * atan;
+		(*y_steps) = -45;
+		(*x_steps) = -(*y_steps) * atan;
 	}
 	if (beta < 180)
 	{
-		end->j = ((int)(start.j / 45) * 45) + 45;
-		end->i = start.i + (start.j - end->j) * atan;
-		y_steps = 45;
-		x_steps = -y_steps * atan;
+		info->end->j = ((int)(info->start->j / 45) * 45) + 45;
+		info->end->i = info->start->i + (info->start->j - info->end->j) * atan;
+		(*y_steps) = 45;
+		(*x_steps) = -(*y_steps) * atan;
 	}
+}
+
+void set_len(t_general *info ,t_casted_ray *h)
+{
+	double l = sqrt(pow(info->end->i - info->start->i, 2) + pow(info->end->j - info->start->j, 2));
+	h->lenght = l;
+	h->end.i = info->end->i;
+	h->end.j = info->end->j;
+}
+
+
+t_casted_ray  *horizontal(t_general *info, double beta)
+{
+	t_casted_ray *h;
+	h = malloc(sizeof(t_casted_ray));
+	double x_steps;
+	double y_steps;
+	step_rays(info,&x_steps,&y_steps,beta);
 	if (beta == 0 || beta == 180)
 	{
 		h->lenght = INT_MAX;
 		return h;
 	}
-	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
+	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
 	{
-		end->i += x_steps;
-		end->j += y_steps;
+		info->end->i += x_steps;
+		info->end->j += y_steps;
 	}
-	if (end->j > INT_MAX || end->i > INT_MAX)
-	{
-		h->lenght = INT_MAX;
-		h->end.i = end->i;
-	h->end.j = end->j;
-		return h;
-	}
-	if (end->j < INT_MIN || end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX 
+	|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		h->lenght = INT_MAX;
-		h->end.i = end->i;
-	h->end.j = end->j;
 		return h;
 	}
-	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
-	
-	h->lenght = l;
-	h->end.i = end->i;
-	h->end.j = end->j;
-	
+	set_len(info,h);
 	return h;
 }
 
@@ -356,21 +353,21 @@ t_data *get_side_texteur(t_general *info, char *str)
 	return info->info_texteur[0].texteur;
 }
 
-void calcule_of_wall(t_general *info,int i,t_coordinates *start, t_coordinates *end)
+void calcule_of_wall(t_general *info,int i,t_coordinates *start)
 {
 	double projec;
-	t_coordinates end1;
-	info->v = vertecal(info, info->bita_ray, end);
-	info->h = horizontal(info, info->bita_ray, &end1);
+	t_coordinates end;
+	info->v = vertecal(info, info->bita_ray, &end);
+	info->h = horizontal(info, info->bita_ray);
 	projec = calcule_projection(info);
 	start->i = i;
-	end->i = i;
+	info->end->i = i;
 	info->wall_hight = ((projec * 45) / (fmin(info->v->lenght,info->h->lenght) * cos(((info->bita_ray - info->alpha) * PI) / 180)));
 	start->j = (HEIGHT / 2) - info->wall_hight / 2;
 	start->j *= start->j > 0;
-	end->j = (HEIGHT / 2) + info->wall_hight / 2;
-	if (end->j > HEIGHT)
-		end->j = HEIGHT;
+	info->end->j = (HEIGHT / 2) + info->wall_hight / 2;
+	if (info->end->j > HEIGHT)
+		info->end->j = HEIGHT;
 }
 
 void draw_texteur(t_general *info)
@@ -400,7 +397,7 @@ int draw_line(t_general *info)
 	double temp = 60 / ((double)WIDTH);
 	while (i < WIDTH)
 	{
-		calcule_of_wall(info,i,info->start,info->end);
+		calcule_of_wall(info,i,info->start);
 		draw_texteur(info);
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
