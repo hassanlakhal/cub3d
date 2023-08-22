@@ -6,17 +6,16 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 00:02:09 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:42:05 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 void utils_get_map(char *str, int fd)
 {
 	int i;
-	
+
 	i = 0;
 	while (str && i < 6)
 	{
@@ -29,17 +28,17 @@ void utils_get_map(char *str, int fd)
 		free(str);
 }
 
-void	get_map(t_general *info)
+void get_map(t_general *info)
 {
-	int		fd;
+	int fd;
 	// int		i;
-	char	*str;
-	char	*map;
+	char *str;
+	char *map;
 
 	fd = open("map/map.cub", O_RDWR);
 	str = get_next_line(fd);
 	map = NULL;
-	utils_get_map(str,fd);
+	utils_get_map(str, fd);
 	str = skip_line(fd);
 	while (str)
 	{
@@ -52,16 +51,16 @@ void	get_map(t_general *info)
 	close(fd);
 }
 
-void	check_dobule_new_line(char *str)
+void check_dobule_new_line(char *str)
 {
-	int	i;
-	int	len;
+	int i;
+	int len;
 
 	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '\n' && str[i + 1] == '\n')
-			break ;
+			break;
 		i++;
 	}
 	while (str[i] && str[i] == '\n')
@@ -74,10 +73,10 @@ void	check_dobule_new_line(char *str)
 	}
 }
 
-void	check_wall(char **str, int y)
+void check_wall(char **str, int y)
 {
-	int	i;
-	int	j;
+	int i;
+	int j;
 
 	j = 0;
 	i = 0;
@@ -86,8 +85,7 @@ void	check_wall(char **str, int y)
 		j = 0;
 		while (str[i][j])
 		{
-			if (str[i][ft_strlen(str[i]) - 1] != '1' && str[i][ft_strlen(str[i])
-				- 1] != '\t' && str[i][ft_strlen(str[i]) - 1] != ' ')
+			if (str[i][ft_strlen(str[i]) - 1] != '1' && str[i][ft_strlen(str[i]) - 1] != '\t' && str[i][ft_strlen(str[i]) - 1] != ' ')
 			{
 				printf("16:ERROR\n");
 				exit(0);
@@ -103,11 +101,11 @@ void	check_wall(char **str, int y)
 	}
 }
 
-void	check_top_buttom_wall(char **map, int y)
+void check_top_buttom_wall(char **map, int y)
 {
-	int	i;
-	int	cont_top;
-	int	cont_buttom;
+	int i;
+	int cont_top;
+	int cont_buttom;
 
 	i = 0;
 	cont_top = 0;
@@ -125,15 +123,14 @@ void	check_top_buttom_wall(char **map, int y)
 			cont_buttom++;
 		i++;
 	}
-	if ((int)ft_strlen(map[y - 1]) != cont_buttom
-		|| (int)ft_strlen(map[0]) != cont_top)
+	if ((int)ft_strlen(map[y - 1]) != cont_buttom || (int)ft_strlen(map[0]) != cont_top)
 		(printf("18:ERROR wall\n"), exit(0));
 }
 
-void	check_side_wall(char **map, int y)
+void check_side_wall(char **map, int y)
 {
-	int	i;
-	int	cont_side;
+	int i;
+	int cont_side;
 
 	i = 1;
 	cont_side = 0;
@@ -147,11 +144,11 @@ void	check_side_wall(char **map, int y)
 		(printf("20:ERROR\n"), exit(0));
 }
 
-void	postion_of_player(char **map, t_general *data)
+void postion_of_player(char **map, t_general *data)
 {
-	int	i;
-	int	j;
-	int	cont;
+	int i;
+	int j;
+	int cont;
 
 	j = 0;
 	i = 0;
@@ -192,13 +189,13 @@ char **dup_str_2d(char **tab)
 	return new_tab;
 }
 
-t_general	*ft_parssing_map(t_general *data)
+t_general *ft_parssing_map(t_general *data)
 {
-	//int		i;
-	char	**map;
-	char	**dup_map;
+	// int		i;
+	char **map;
+	char **dup_map;
 
-	//i = 0;
+	// i = 0;
 	data->info_player = malloc(sizeof(t_player));
 	get_map(data);
 	check_dobule_new_line(data->map);

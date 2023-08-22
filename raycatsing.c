@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 17:43:23 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:43:03 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,62 +26,61 @@ int my_mlx_get_pixel(t_data *texteur, int x, int y)
 	return *(unsigned int *)dst;
 }
 
-void draw_help_1(t_general *info, double *i,double *d)
+void draw_help_1(t_general *info, double *i, double *d)
 {
-	
+
 	if (info->wall_hight > (double)HEIGHT)
 	{
 		(*i) = fabs((info->wall_hight / 2) - ((double)HEIGHT / 2));
 		(*d) = info->wall_hight;
-	}	
+	}
 	else
 	{
 		(*i) = 0;
-		(*d) = HEIGHT;	
+		(*d) = HEIGHT;
 	}
 }
 
-void draw_help(t_general *info,t_data *texteur, int steps, double img_x)
-{	 
+void draw_help(t_general *info, t_data *texteur, int steps, double img_x)
+{
 	t_drawing draw;
-	 
+
 	draw.k = 0;
 	draw.i = 0;
 	draw.x_crement = (float)(int)(info->end->i - info->start->i) / (float)steps;
 	draw.y_crement = (float)(int)(info->end->j - info->start->j) / (float)steps;
 	draw.x = info->start->i;
 	draw.y = info->start->j;
-	draw_help_1(info,&draw.i,&draw.d);
-	while(draw.i < draw.d)
+	draw_help_1(info, &draw.i, &draw.d);
+	while (draw.i < draw.d)
 	{
 		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y, my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
 		draw.k = draw.i / info->wall_hight * texteur->height;
 		draw.x += draw.x_crement;
 		draw.y += draw.y_crement;
-		if ( draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
+		if (draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
 			break;
 		draw.i++;
 	}
 }
 
-void sub_draw_line(t_general *info,double endi, t_data *texteur)
+void sub_draw_line(t_general *info, double endi, t_data *texteur)
 {
 	int steps;
 	if (abs((int)(info->end->i - info->start->i)) > abs((int)(info->end->j - info->start->j)))
 		steps = abs((int)(info->end->i - info->start->i));
 	else
 		steps = abs((int)(info->end->j - info->start->j));
-	double img_x = ((int)texteur->width  * (endi / 45 - floor(endi / 45)));
-	draw_help(info,texteur,steps,img_x);
+	double img_x = ((int)texteur->width * (endi / 45 - floor(endi / 45)));
+	draw_help(info, texteur, steps, img_x);
 }
-
 
 int get_color(t_general *info, char c)
 {
 	int i;
 
 	i = 0;
-	while(i < 2)
+	while (i < 2)
 	{
 		if (info->info_rgb[i].type_color[0] == c)
 			return rgbToHex(info->info_rgb[i]._R, info->info_rgb[i]._G, info->info_rgb[i]._B);
@@ -251,7 +250,7 @@ void step_rays(t_general *info, double *x_steps, double *y_steps, double beta)
 	}
 }
 
-void set_len(t_general *info ,t_casted_ray *h)
+void set_len(t_general *info, t_casted_ray *h)
 {
 	double l = sqrt(pow(info->end->i - info->start->i, 2) + pow(info->end->j - info->start->j, 2));
 	h->lenght = l;
@@ -259,14 +258,13 @@ void set_len(t_general *info ,t_casted_ray *h)
 	h->end.j = info->end->j;
 }
 
-
-t_casted_ray  *horizontal(t_general *info, double beta)
+t_casted_ray *horizontal(t_general *info, double beta)
 {
 	t_casted_ray *h;
 	h = malloc(sizeof(t_casted_ray));
 	double x_steps;
 	double y_steps;
-	step_rays(info,&x_steps,&y_steps,beta);
+	step_rays(info, &x_steps, &y_steps, beta);
 	if (beta == 0 || beta == 180)
 	{
 		h->lenght = INT_MAX;
@@ -279,13 +277,12 @@ t_casted_ray  *horizontal(t_general *info, double beta)
 		info->end->i += x_steps;
 		info->end->j += y_steps;
 	}
-	if (info->end->j > INT_MAX || info->end->i > INT_MAX 
-	|| info->end->j < INT_MIN || info->end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX || info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		h->lenght = INT_MAX;
 		return h;
 	}
-	set_len(info,h);
+	set_len(info, h);
 	return h;
 }
 
@@ -299,15 +296,15 @@ void step_rays_v(t_general *info, double *x_steps, double *y_steps, double beta)
 	{
 		info->end->i = ((int)(info->start->i / 45) * 45) - 0.0001;
 		info->end->j = info->start->j + (info->start->i - info->end->i) * atan;
-		(*x_steps )= -45;
-		(*y_steps) = -(*x_steps )* atan;
+		(*x_steps) = -45;
+		(*y_steps) = -(*x_steps) * atan;
 	}
 	if (beta < 90 || beta > 270)
 	{
 		info->end->i = ((int)(info->start->i / 45) * 45) + 45;
 		info->end->j = info->start->j + (info->start->i - info->end->i) * atan;
-		(*x_steps )= 45;
-		(*y_steps) = -(*x_steps )* atan;
+		(*x_steps) = 45;
+		(*y_steps) = -(*x_steps) * atan;
 	}
 }
 
@@ -317,7 +314,7 @@ t_casted_ray *vertecal(t_general *info, double beta)
 	v = malloc(sizeof(t_casted_ray));
 	double x_steps;
 	double y_steps;
-	step_rays_v(info,&x_steps,&y_steps,beta);
+	step_rays_v(info, &x_steps, &y_steps, beta);
 	if (beta == 90 || beta == 270)
 	{
 		v->lenght = INT_MAX;
@@ -330,13 +327,12 @@ t_casted_ray *vertecal(t_general *info, double beta)
 		info->end->i += x_steps;
 		info->end->j += y_steps;
 	}
-	if (info->end->j > INT_MAX || info->end->i > INT_MAX 
-	|| info->end->j < INT_MIN || info->end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX || info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		v->lenght = INT_MAX;
 		return v;
 	}
-	set_len(info,v);
+	set_len(info, v);
 	return v;
 }
 
@@ -350,7 +346,7 @@ t_data *get_side_texteur(t_general *info, char *str)
 {
 	int i = 0;
 
-	while(i < 4)
+	while (i < 4)
 	{
 		if (!ft_strncmp(str, info->info_texteur[i].direction, 2))
 			return info->info_texteur[i].texteur;
@@ -359,7 +355,7 @@ t_data *get_side_texteur(t_general *info, char *str)
 	return info->info_texteur[0].texteur;
 }
 
-void calcule_of_wall(t_general *info,int i,t_coordinates *start)
+void calcule_of_wall(t_general *info, int i, t_coordinates *start)
 {
 	double projec;
 	info->v = vertecal(info, info->bita_ray);
@@ -367,7 +363,7 @@ void calcule_of_wall(t_general *info,int i,t_coordinates *start)
 	projec = calcule_projection(info);
 	start->i = i;
 	info->end->i = i;
-	info->wall_hight = ((projec * 45) / (fmin(info->v->lenght,info->h->lenght) * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+	info->wall_hight = ((projec * 45) / (fmin(info->v->lenght, info->h->lenght) * cos(((info->bita_ray - info->alpha) * PI) / 180)));
 	start->j = (HEIGHT / 2) - info->wall_hight / 2;
 	start->j *= start->j > 0;
 	info->end->j = (HEIGHT / 2) + info->wall_hight / 2;
@@ -379,17 +375,17 @@ void draw_texteur(t_general *info)
 {
 	if (info->h->lenght > info->v->lenght)
 	{
-		if (cos((info->bita_ray * PI)/180) > 0)
-			sub_draw_line(info,info->v->end.j , get_side_texteur(info, "EA"));
-		else if(cos((info->bita_ray * PI)/180) < 0)
-			sub_draw_line(info,info->v->end.j , get_side_texteur(info, "WE"));
+		if (cos((info->bita_ray * PI) / 180) > 0)
+			sub_draw_line(info, info->v->end.j, get_side_texteur(info, "EA"));
+		else if (cos((info->bita_ray * PI) / 180) < 0)
+			sub_draw_line(info, info->v->end.j, get_side_texteur(info, "WE"));
 	}
 	else
 	{
-		if (sin(((info->bita_ray * PI)/180)) > 0)
-			sub_draw_line(info,info->h->end.i ,get_side_texteur(info, "SO"));
-		else if (sin(((info->bita_ray * PI)/180)) < 0)
-			sub_draw_line(info,info->h->end.i , get_side_texteur(info, "NO"));
+		if (sin(((info->bita_ray * PI) / 180)) > 0)
+			sub_draw_line(info, info->h->end.i, get_side_texteur(info, "SO"));
+		else if (sin(((info->bita_ray * PI) / 180)) < 0)
+			sub_draw_line(info, info->h->end.i, get_side_texteur(info, "NO"));
 	}
 }
 
@@ -402,7 +398,7 @@ int draw_line(t_general *info)
 	double temp = 60 / ((double)WIDTH);
 	while (i < WIDTH)
 	{
-		calcule_of_wall(info,i,info->start);
+		calcule_of_wall(info, i, info->start);
 		draw_texteur(info);
 		info->bita_ray += temp;
 		if (info->bita_ray >= 360)
@@ -420,7 +416,7 @@ void calcule_bite_ray(t_general *info)
 {
 	info->bita_ray = info->alpha;
 	int i = 0;
-	double temp = 60 / ((double)WIDTH );
+	double temp = 60 / ((double)WIDTH);
 	while (i < (WIDTH) / 2)
 	{
 		if (info->bita_ray <= 0)
@@ -448,7 +444,7 @@ int key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-	
+
 	draw_line(info);
 	return (0);
 }
@@ -464,13 +460,13 @@ double get_alpha_player(t_general info)
 		return 180;
 	return 0;
 }
-void		get_texters(t_general *info)
+void get_texters(t_general *info)
 {
 	int i = 0;
-	while(i < 4)
+	while (i < 4)
 	{
 		info->info_texteur[i].texteur = malloc(sizeof(t_data));
-		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx,info->info_texteur[i].path , &info->info_texteur[i].texteur->width, &info->info_texteur[i].texteur->height);
+		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx, info->info_texteur[i].path, &info->info_texteur[i].texteur->width, &info->info_texteur[i].texteur->height);
 		if (!info->info_texteur[i].texteur->img)
 		{
 			printf("image not found!");
@@ -487,11 +483,11 @@ void display_pixel(t_general info)
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "cub3d");
-	
+
 	info.info_img = malloc(sizeof(t_data));
 	info.info_img->img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
-	
+
 	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);

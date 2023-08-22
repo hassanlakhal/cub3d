@@ -6,18 +6,18 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 22:03:59 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 00:42:40 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void utils_reaplace(char *result, char *text,int number, char c)
+void utils_reaplace(char *result, char *text, int number, char c)
 {
 	int i;
 	int j;
 	int index;
-	
+
 	index = 0;
 	j = 0;
 	i = 0;
@@ -39,12 +39,12 @@ void utils_reaplace(char *result, char *text,int number, char c)
 	result[index] = '\0';
 }
 
-char	*reaplace(char *text, int number, char c)
+char *reaplace(char *text, int number, char c)
 {
-	char	*result;
+	char *result;
 
 	result = malloc(ft_strlen(text) * number + 1);
-	utils_reaplace(result,text,number,c);
+	utils_reaplace(result, text, number, c);
 	if (text)
 	{
 		free(text);
@@ -59,7 +59,7 @@ void check_dup(t_bloc *data_of_texture)
 {
 	int i;
 	int j;
-	
+
 	i = 0;
 	j = 0;
 	while (i < 6)
@@ -78,9 +78,9 @@ void check_dup(t_bloc *data_of_texture)
 	}
 }
 
-void	check_direction(t_bloc *data_of_texture)
+void check_direction(t_bloc *data_of_texture)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < 6)
@@ -95,9 +95,9 @@ void	check_direction(t_bloc *data_of_texture)
 		i++;
 	}
 }
-int	ft_strlen_2d(char **tab)
+int ft_strlen_2d(char **tab)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!tab)
@@ -107,9 +107,9 @@ int	ft_strlen_2d(char **tab)
 	return (i);
 }
 
-void	check_line(char **tab,int a)
+void check_line(char **tab, int a)
 {
-	int	i;
+	int i;
 
 	i = ft_strlen_2d(tab);
 	if ((i != 1 && a == PATH) || (i != 3 && a == RGB))
