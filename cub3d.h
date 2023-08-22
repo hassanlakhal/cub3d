@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/21 16:29:18 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/22 00:37:43 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ typedef struct s_general
 	t_bloc		*bloc_s;
 	t_data		*info_img;
 	t_data 		*texteur;
+	t_casted_ray 	*v;
+	t_casted_ray 	*h;
+	t_coordinates *start;
+	t_coordinates *end;
 	char		**valid_map;
 	int			dimensions[2];
 	char		*bloc;
@@ -108,6 +112,7 @@ typedef struct s_general
 	void		*mlx_win;
 	double		alpha;
 	double		bita_ray;
+	double wall_hight;
 }				t_general;
 
 void			free_2d(char **tab);
