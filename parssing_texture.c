@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/21 17:32:16 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/22 19:59:51 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,30 @@ void	type_of_bloc(t_bloc *lines)
 	}
 }
 
-void	ft_fill_info(t_bloc *line, t_general *info_bloc)
+void ft_fill_info_1(t_bloc *line, t_general *info_bloc)
 {
-	int	i;
-	int	j;
-
-	i = 0;
+	int i;
+	int j;
+	
 	j = 0;
-	info_bloc->info_texteur = malloc(sizeof(t_texteur)
-			* line->bloc_size_texteur);
-	info_bloc->info_rgb = malloc(sizeof(t_rgb_info) * line->bloc_size_rgb);
+	i = 0;
 	while (i < 6)
 	{
 		if (line[i].type == PATH && j < line->bloc_size_texteur)
 		{
 			info_bloc->info_texteur[j].direction = ft_strdup(line[i].val_1);
 			info_bloc->info_texteur[j].path = ft_strdup(line[i].val_2);
-			free(line[i].val_2);
-			free(line[i].val_1);
+			(free(line[i].val_2), free(line[i].val_1));
 			j++;
 		}
 		i++;
 	}
+}
+void ft_fill_info_2(t_bloc *line, t_general *info_bloc)
+{
+	int i;
+	int j;
+	
 	i = 0;
 	j = 0;
 	while (i < 6)
@@ -67,13 +69,20 @@ void	ft_fill_info(t_bloc *line, t_general *info_bloc)
 		{
 			info_bloc->info_rgb[j].type_color = ft_strdup(line[i].val_1);
 			info_bloc->info_rgb[j].rgb_value = ft_strdup(line[i].val_2);
-			free(line[i].val_2);
-			free(line[i].val_1);
+			(free(line[i].val_2), free(line[i].val_1));
 			j++;
 		}
 		i++;
 	}
-	//free(line);
+}
+
+void	ft_fill_info(t_bloc *line, t_general *info_bloc)
+{
+	info_bloc->info_texteur = malloc(sizeof(t_texteur)
+			* line->bloc_size_texteur);
+	info_bloc->info_rgb = malloc(sizeof(t_rgb_info) * line->bloc_size_rgb);
+	ft_fill_info_1(line,info_bloc);
+	ft_fill_info_2(line,info_bloc);
 }
 
 void	ft_bloc(t_general *data, t_bloc *data_of_texture)
@@ -122,6 +131,23 @@ int	ft_block_rgb(t_rgb_info *bloc_2)
 		return (1);
 }
 
+void	valid_format_1(char c, bool * intoken, int *digit)
+{
+	if (c >= '0' && c <= '9')
+	{
+		(*intoken) = true;
+		(*digit)++;
+	}
+}
+
+void	valid_format_2(int intoken, int *digit, int *token)
+{
+	if (intoken)
+	{
+		(*digit)++;
+		(*token)++;
+	}	
+}
 bool	valid_format(const char *input)
 {
 	int		token;
@@ -129,11 +155,11 @@ bool	valid_format(const char *input)
 	bool	intoken;
 	int		i;
 
-	i = 0;
+	i = -1;
 	token = 0;
 	digit = 0;
 	intoken = false;
-	while (input[i] != '\0')
+	while (input[++i] != '\0')
 	{
 		if (input[i] == ',')
 		{
@@ -143,22 +169,11 @@ bool	valid_format(const char *input)
 			token++;
 		}
 		else if (input[i] == ' ' || (input[i] >= '0' && input[i] <= '9'))
-		{
-			if (input[i] >= '0' && input[i] <= '9')
-			{
-				intoken = true;
-				digit++;
-			}
-		}
+			valid_format_1(input[i], &intoken, &digit);
 		else
 			return (false);
-		i++;
 	}
-	if (intoken)
-	{
-		digit++;
-		token++;
-	}
+	valid_format_2(intoken, &digit, &token);
 	return (token == 3 && digit >= 3);
 }
 
@@ -213,20 +228,14 @@ void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 	free_2d(rgb_val);
 }
 
-t_general	*ft_parssing(void)
+void	sub_parsing_1(t_general *info, t_bloc *data)
 {
-	t_general	*info;
-	t_bloc		*data;
+	int i;
+	int cont;
 	char		**valid_path;
-	char		**valid_value_rgb;
-	static int	cont;
-	int			i;
 
-	info = malloc(sizeof(t_general));
-	data = malloc(sizeof(t_bloc) * 6);
-	read_lines_texter(info);
-	ft_bloc(info, data);
 	i = 0;
+	cont = 0;
 	while (i < data->bloc_size_texteur)
 	{
 		if (ft_block_texteurs(&info->info_texteur[i]) == 0)
@@ -244,6 +253,13 @@ t_general	*ft_parssing(void)
 		printf("7:ERROR\n");
 		exit(0);
 	}
+}
+void	sub_parsing_2(t_general *info, t_bloc *data)
+{
+	int i;
+	int cont;
+	char **valid_value_rgb;
+
 	i = 0;
 	cont = 0;
 	while (i < data->bloc_size_rgb)
@@ -264,6 +280,18 @@ t_general	*ft_parssing(void)
 		printf("7:ERROR\n");
 		exit(0);
 	}
+}
+t_general	*ft_parssing(void)
+{
+	t_general	*info;
+	t_bloc		*data;
+
+	info = malloc(sizeof(t_general));
+	data = malloc(sizeof(t_bloc) * 6);
+	read_lines_texter(info);
+	ft_bloc(info, data);
+	sub_parsing_1(info, data);
+	sub_parsing_2(info, data);
 	free(data);
 	return (info);
 	//clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
