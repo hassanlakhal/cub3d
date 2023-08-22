@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/22 02:23:11 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/22 03:01:43 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,8 @@ t_casted_ray  *horizontal(t_general *info, double beta)
 	if (beta == 0 || beta == 180)
 	{
 		h->lenght = INT_MAX;
+		h->end.i = info->end->i;
+		h->end.j = info->end->j;
 		return h;
 	}
 	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
@@ -275,62 +277,54 @@ t_casted_ray  *horizontal(t_general *info, double beta)
 	return h;
 }
 
-t_casted_ray *vertecal(t_general *info, double beta, t_coordinates *end)
+void step_rays_v(t_general *info, double *x_steps, double *y_steps, double beta)
 {
-	t_coordinates start;
-	t_casted_ray *v;
-	v = malloc(sizeof(t_casted_ray));
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
-	double x_steps;
-	double y_steps;
+
 	double atan = -tan(((beta)*PI) / 180);
-	start.i = info->info_player->pos_x * 45;
-	start.j = info->info_player->pos_y * 45;
+	info->start->i = info->info_player->pos_x * 45;
+	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 90 && beta < 270)
 	{
-		end->i = ((int)(start.i / 45) * 45) - 0.0001;
-		end->j = start.j + (start.i - end->i) * atan;
-		x_steps = -45;
-		y_steps = -x_steps * atan;
+		info->end->i = ((int)(info->start->i / 45) * 45) - 0.0001;
+		info->end->j = info->start->j + (info->start->i - info->end->i) * atan;
+		(*x_steps )= -45;
+		(*y_steps) = -(*x_steps )* atan;
 	}
 	if (beta < 90 || beta > 270)
 	{
-		end->i = ((int)(start.i / 45) * 45) + 45;
-		end->j = start.j + (start.i - end->i) * atan;
-		x_steps = 45;
-		y_steps = -x_steps * atan;
+		info->end->i = ((int)(info->start->i / 45) * 45) + 45;
+		info->end->j = info->start->j + (info->start->i - info->end->i) * atan;
+		(*x_steps )= 45;
+		(*y_steps) = -(*x_steps )* atan;
 	}
+}
+
+t_casted_ray *vertecal(t_general *info, double beta)
+{
+	t_casted_ray *v;
+	v = malloc(sizeof(t_casted_ray));
+	double x_steps;
+	double y_steps;
+	step_rays_v(info,&x_steps,&y_steps,beta);
 	if (beta == 90 || beta == 270)
 	{
 		v->lenght = INT_MAX;
-		v->end.i = end->i;
-		v->end.j = end->j;
+		v->end.i = info->end->i;
+		v->end.j = info->end->j;
 		return v;
 	}
-	while (break_wall(info, (int)end->i / 45, (int)end->j / 45))
+	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
 	{
-		end->i += x_steps;
-		end->j += y_steps;
+		info->end->i += x_steps;
+		info->end->j += y_steps;
 	}
-	if (end->j > INT_MAX || end->i > INT_MAX)
-	{
-		v->lenght = INT_MAX;
-		v->end.i = end->i;
-		v->end.j = end->j;
-		return v;
-	}
-	if (end->j < INT_MIN || end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX 
+	|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		v->lenght = INT_MAX;
-		v->end.i = end->i;
-		v->end.j = end->j;
 		return v;
 	}
-	double l = sqrt(pow(end->i - start.i, 2) + pow(end->j - start.j, 2));
-	v->lenght = l;
-	v->end.i = end->i;
-	v->end.j = end->j;
+	set_len(info,v);
 	return v;
 }
 
@@ -356,8 +350,7 @@ t_data *get_side_texteur(t_general *info, char *str)
 void calcule_of_wall(t_general *info,int i,t_coordinates *start)
 {
 	double projec;
-	t_coordinates end;
-	info->v = vertecal(info, info->bita_ray, &end);
+	info->v = vertecal(info, info->bita_ray);
 	info->h = horizontal(info, info->bita_ray);
 	projec = calcule_projection(info);
 	start->i = i;
@@ -487,9 +480,6 @@ void display_pixel(t_general info)
 	info.info_img->img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
 	
-	info.texteur = malloc(sizeof(t_data));
-	info.texteur->img = mlx_xpm_file_to_image(info.mlx, "texture/wall.xpm", &info.texteur->width, &info.texteur->height);
-	info.texteur->addr = mlx_get_data_addr(info.texteur->img, &info.texteur->bits_per_pixel, &info.texteur->line_length, &info.texteur->endian);
 	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
