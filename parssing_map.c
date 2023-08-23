@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 15:56:06 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:56:35 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	utils_get_map(char *str, int fd)
 {
 	int	i;
-
+ 
 	i = 0;
 	while (str && i < 6)
 	{
