@@ -6,29 +6,32 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 00:43:03 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 16:05:40 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void my_mlx_pixel_put(t_general *info, int x, int y, int color)
+void	my_mlx_pixel_put(t_general *info, int x, int y, int color)
 {
-	char *dst;
-	dst = info->info_img->addr + (y * info->info_img->line_length + x * (info->info_img->bits_per_pixel / 8));
+	char	*dst;
+
+	dst = info->info_img->addr + (y * info->info_img->line_length + x
+			* (info->info_img->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
 
-int my_mlx_get_pixel(t_data *texteur, int x, int y)
+int	my_mlx_get_pixel(t_data *texteur, int x, int y)
 {
-	char *dst;
-	dst = texteur->addr + (y * texteur->line_length + x * (texteur->bits_per_pixel / 8));
-	return *(unsigned int *)dst;
+	char	*dst;
+
+	dst = texteur->addr + (y * texteur->line_length + x
+			* (texteur->bits_per_pixel / 8));
+	return (*(unsigned int *)dst);
 }
 
-void draw_help_1(t_general *info, double *i, double *d)
+void	draw_help_1(t_general *info, double *i, double *d)
 {
-
 	if (info->wall_hight > (double)HEIGHT)
 	{
 		(*i) = fabs((info->wall_hight / 2) - ((double)HEIGHT / 2));
@@ -41,9 +44,9 @@ void draw_help_1(t_general *info, double *i, double *d)
 	}
 }
 
-void draw_help(t_general *info, t_data *texteur, int steps, double img_x)
+void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 {
-	t_drawing draw;
+	t_drawing	draw;
 
 	draw.k = 0;
 	draw.i = 0;
@@ -54,46 +57,50 @@ void draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 	draw_help_1(info, &draw.i, &draw.d);
 	while (draw.i < draw.d)
 	{
-		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y, my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
+		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y,
+				my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
 		draw.k = draw.i / info->wall_hight * texteur->height;
 		draw.x += draw.x_crement;
 		draw.y += draw.y_crement;
 		if (draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
-			break;
+			break ;
 		draw.i++;
 	}
 }
 
-void sub_draw_line(t_general *info, double endi, t_data *texteur)
+void	sub_draw_line(t_general *info, double endi, t_data *texteur)
 {
-	int steps;
-	if (abs((int)(info->end->i - info->start->i)) > abs((int)(info->end->j - info->start->j)))
+	int		steps;
+	double	img_x;
+
+	if (abs((int)(info->end->i - info->start->i)) > abs((int)(info->end->j
+				- info->start->j)))
 		steps = abs((int)(info->end->i - info->start->i));
 	else
 		steps = abs((int)(info->end->j - info->start->j));
-	double img_x = ((int)texteur->width * (endi / 45 - floor(endi / 45)));
+	img_x = ((int)texteur->width * (endi / 45 - floor(endi / 45)));
 	draw_help(info, texteur, steps, img_x);
 }
 
-int get_color(t_general *info, char c)
+int	get_color(t_general *info, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 2)
 	{
 		if (info->info_rgb[i].type_color[0] == c)
-			return rgbToHex(info->info_rgb[i]._R, info->info_rgb[i]._G, info->info_rgb[i]._B);
+			return (rgbToHex(info->info_rgb[i]._R, info->info_rgb[i]._G,
+					info->info_rgb[i]._B));
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-void display_floor(t_general *info, t_data *img, int j, int i)
+void	display_floor(t_general *info, t_data *img, int j, int i)
 {
-
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
@@ -112,17 +119,16 @@ void display_floor(t_general *info, t_data *img, int j, int i)
 	}
 }
 
-void display_sky(t_general *info, t_data *img, int j, int i)
+void	display_sky(t_general *info, t_data *img, int j, int i)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = 0;
 	y = 0;
 	(void)img;
 	(void)i;
 	(void)j;
-
 	while (x < WIDTH)
 	{
 		y = 0;
@@ -134,22 +140,24 @@ void display_sky(t_general *info, t_data *img, int j, int i)
 		x++;
 	}
 }
-void ft_dislay(t_general *info, void *mlx, void *mlx_win)
+void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 {
-	int i;
-	int j = 0;
+	int	i;
+	int	j;
+
+	j = 0;
 	i = 0;
 	display_floor(info, info->info_img->img, j, i);
 	display_sky(info, info->info_img->img, j, i);
 	mlx_put_image_to_window(mlx, mlx_win, info->info_img->img, 0, 0);
 }
 
-void move_up(t_general *info, t_data *img)
+void	move_up(t_general *info, t_data *img)
 {
-	double pos_x;
-	double pos_y;
-	(void)img;
+	double	pos_x;
+	double	pos_y;
 
+	(void)img;
 	pos_x = info->info_player->pos_x + cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y + sin((info->alpha * PI) / 180) * SPEED;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
@@ -159,12 +167,12 @@ void move_up(t_general *info, t_data *img)
 	}
 }
 
-void move_down(t_general *info, t_data *img)
+void	move_down(t_general *info, t_data *img)
 {
-	double pos_x;
-	double pos_y;
-	(void)img;
+	double	pos_x;
+	double	pos_y;
 
+	(void)img;
 	pos_x = info->info_player->pos_x - cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y - sin((info->alpha * PI) / 180) * SPEED;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
@@ -174,14 +182,16 @@ void move_down(t_general *info, t_data *img)
 	}
 }
 
-void move_left(t_general *info, t_data *img)
+void	move_left(t_general *info, t_data *img)
 {
-	double pos_x;
-	double pos_y;
-	(void)img;
+	double	pos_x;
+	double	pos_y;
 
-	pos_x = info->info_player->pos_x + cos(((info->alpha - 270) * PI) / 180) * (SPEED - 0.05);
-	pos_y = info->info_player->pos_y + sin(((info->alpha - 270) * PI) / 180) * (SPEED - 0.05);
+	(void)img;
+	pos_x = info->info_player->pos_x + cos(((info->alpha - 270) * PI) / 180)
+		* (SPEED - 0.05);
+	pos_y = info->info_player->pos_y + sin(((info->alpha - 270) * PI) / 180)
+		* (SPEED - 0.05);
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
 		info->info_player->pos_x = pos_x;
@@ -189,14 +199,16 @@ void move_left(t_general *info, t_data *img)
 	}
 }
 
-void move_right(t_general *info, t_data *img)
+void	move_right(t_general *info, t_data *img)
 {
-	double pos_x;
-	double pos_y;
-	(void)img;
+	double	pos_x;
+	double	pos_y;
 
-	pos_x = info->info_player->pos_x - cos(((info->alpha + 90) * PI) / 180) * (SPEED - 0.05);
-	pos_y = info->info_player->pos_y - sin(((info->alpha + 90) * PI) / 180) * (SPEED - 0.05);
+	(void)img;
+	pos_x = info->info_player->pos_x - cos(((info->alpha + 90) * PI) / 180)
+		* (SPEED - 0.05);
+	pos_y = info->info_player->pos_y - sin(((info->alpha + 90) * PI) / 180)
+		* (SPEED - 0.05);
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
 	{
 		info->info_player->pos_x = pos_x;
@@ -204,34 +216,37 @@ void move_right(t_general *info, t_data *img)
 	}
 }
 
-void rotate_right(t_general *info)
+void	rotate_right(t_general *info)
 {
 	info->alpha += SPEEDALPHA;
 	if (info->alpha >= 360)
 		info->alpha = 0;
 }
 
-void rotate_left(t_general *info)
+void	rotate_left(t_general *info)
 {
 	info->alpha -= SPEEDALPHA;
 	if (info->alpha < 0)
 		info->alpha = 359;
 }
 
-bool break_wall(t_general *info, int x, int y)
+bool	break_wall(t_general *info, int x, int y)
 {
 	if (x < 0 || x >= info->dimensions[0])
-		return false;
+		return (false);
 	if (y < 0 || y >= info->dimensions[1])
-		return false;
+		return (false);
 	if (info->valid_map[y][x] == '1')
-		return false;
-	return true;
+		return (false);
+	return (true);
 }
 
-void step_rays(t_general *info, double *x_steps, double *y_steps, double beta)
+void	step_rays(t_general *info, double *x_steps, double *y_steps,
+		double beta)
 {
-	double atan = -1 / tan(((beta)*PI) / 180);
+	double	atan;
+
+	atan = -1 / tan(((beta)*PI) / 180);
 	info->start->i = info->info_player->pos_x * 45;
 	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 180)
@@ -250,46 +265,52 @@ void step_rays(t_general *info, double *x_steps, double *y_steps, double beta)
 	}
 }
 
-void set_len(t_general *info, t_casted_ray *h)
+void	set_len(t_general *info, t_casted_ray *h)
 {
-	double l = sqrt(pow(info->end->i - info->start->i, 2) + pow(info->end->j - info->start->j, 2));
+	double	l;
+
+	l = sqrt(pow(info->end->i - info->start->i, 2) + pow(info->end->j
+				- info->start->j, 2));
 	h->lenght = l;
 	h->end.i = info->end->i;
 	h->end.j = info->end->j;
 }
 
-t_casted_ray *horizontal(t_general *info, double beta)
+t_casted_ray	*horizontal(t_general *info, double beta)
 {
-	t_casted_ray *h;
+	t_casted_ray	*h;
+	double			x_steps;
+	double			y_steps;
+
 	h = malloc(sizeof(t_casted_ray));
-	double x_steps;
-	double y_steps;
 	step_rays(info, &x_steps, &y_steps, beta);
 	if (beta == 0 || beta == 180)
 	{
 		h->lenght = INT_MAX;
 		h->end.i = info->end->i;
 		h->end.j = info->end->j;
-		return h;
+		return (h);
 	}
 	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
 	{
 		info->end->i += x_steps;
 		info->end->j += y_steps;
 	}
-	if (info->end->j > INT_MAX || info->end->i > INT_MAX || info->end->j < INT_MIN || info->end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX
+		|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		h->lenght = INT_MAX;
-		return h;
+		return (h);
 	}
-	set_len(info, h);
-	return h;
+	return (set_len(info, h), h);
 }
 
-void step_rays_v(t_general *info, double *x_steps, double *y_steps, double beta)
+void	step_rays_v(t_general *info, double *x_steps, double *y_steps,
+		double beta)
 {
+	double	atan;
 
-	double atan = -tan(((beta)*PI) / 180);
+	atan = -tan(((beta)*PI) / 180);
 	info->start->i = info->info_player->pos_x * 45;
 	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 90 && beta < 270)
@@ -308,62 +329,68 @@ void step_rays_v(t_general *info, double *x_steps, double *y_steps, double beta)
 	}
 }
 
-t_casted_ray *vertecal(t_general *info, double beta)
+t_casted_ray	*vertecal(t_general *info, double beta)
 {
-	t_casted_ray *v;
+	t_casted_ray	*v;
+	double			x_steps;
+	double			y_steps;
+
 	v = malloc(sizeof(t_casted_ray));
-	double x_steps;
-	double y_steps;
 	step_rays_v(info, &x_steps, &y_steps, beta);
 	if (beta == 90 || beta == 270)
 	{
 		v->lenght = INT_MAX;
 		v->end.i = info->end->i;
 		v->end.j = info->end->j;
-		return v;
+		return (v);
 	}
 	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
 	{
 		info->end->i += x_steps;
 		info->end->j += y_steps;
 	}
-	if (info->end->j > INT_MAX || info->end->i > INT_MAX || info->end->j < INT_MIN || info->end->i < INT_MIN)
+	if (info->end->j > INT_MAX || info->end->i > INT_MAX
+		|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
 		v->lenght = INT_MAX;
-		return v;
+		return (v);
 	}
-	set_len(info, v);
-	return v;
+	return (set_len(info, v), v);
 }
 
-double calcule_projection(t_general *info)
+double	calcule_projection(t_general *info)
 {
+	int	half_width;
+
 	(void)info;
-	int half_width = WIDTH / 2;
+	half_width = WIDTH / 2;
 	return (half_width / tan((30 * PI) / 180));
 }
-t_data *get_side_texteur(t_general *info, char *str)
+t_data	*get_side_texteur(t_general *info, char *str)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (i < 4)
 	{
 		if (!ft_strncmp(str, info->info_texteur[i].direction, 2))
-			return info->info_texteur[i].texteur;
+			return (info->info_texteur[i].texteur);
 		i++;
 	}
-	return info->info_texteur[0].texteur;
+	return (info->info_texteur[0].texteur);
 }
 
-void calcule_of_wall(t_general *info, int i, t_coordinates *start)
+void	calcule_of_wall(t_general *info, int i, t_coordinates *start)
 {
-	double projec;
+	double	projec;
+
 	info->v = vertecal(info, info->bita_ray);
 	info->h = horizontal(info, info->bita_ray);
 	projec = calcule_projection(info);
 	start->i = i;
 	info->end->i = i;
-	info->wall_hight = ((projec * 45) / (fmin(info->v->lenght, info->h->lenght) * cos(((info->bita_ray - info->alpha) * PI) / 180)));
+	info->wall_hight = ((projec * 45) / (fmin(info->v->lenght, info->h->lenght)
+				* cos(((info->bita_ray - info->alpha) * PI) / 180)));
 	start->j = (HEIGHT / 2) - info->wall_hight / 2;
 	start->j *= start->j > 0;
 	info->end->j = (HEIGHT / 2) + info->wall_hight / 2;
@@ -371,7 +398,7 @@ void calcule_of_wall(t_general *info, int i, t_coordinates *start)
 		info->end->j = HEIGHT;
 }
 
-void draw_texteur(t_general *info)
+void	draw_texteur(t_general *info)
 {
 	if (info->h->lenght > info->v->lenght)
 	{
@@ -389,13 +416,15 @@ void draw_texteur(t_general *info)
 	}
 }
 
-int draw_line(t_general *info)
+int	draw_line(t_general *info)
 {
+	int		i;
+	double	temp;
+
 	info->end = malloc(sizeof(t_coordinates));
 	info->start = malloc(sizeof(t_coordinates));
-	int i;
 	i = 0;
-	double temp = 60 / ((double)WIDTH);
+	temp = 60 / ((double)WIDTH);
 	while (i < WIDTH)
 	{
 		calcule_of_wall(info, i, info->start);
@@ -409,14 +438,17 @@ int draw_line(t_general *info)
 	}
 	free(info->end);
 	free(info->start);
-	return 0;
+	return (0);
 }
 
-void calcule_bite_ray(t_general *info)
+void	calcule_bite_ray(t_general *info)
 {
+	int		i;
+	double	temp;
+
 	info->bita_ray = info->alpha;
-	int i = 0;
-	double temp = 60 / ((double)WIDTH);
+	i = 0;
+	temp = 60 / ((double)WIDTH);
 	while (i < (WIDTH) / 2)
 	{
 		if (info->bita_ray <= 0)
@@ -426,7 +458,7 @@ void calcule_bite_ray(t_general *info)
 	}
 }
 
-int key_hook(int key, t_general *info)
+int	key_hook(int key, t_general *info)
 {
 	ft_dislay(info, info->mlx, info->mlx_win);
 	calcule_bite_ray(info);
@@ -444,50 +476,58 @@ int key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-
 	draw_line(info);
 	return (0);
 }
-double get_alpha_player(t_general info)
+
+double	get_alpha_player(t_general info)
 {
 	if (info.info_player->direction == 'N')
-		return 270;
+		return (270);
 	if (info.info_player->direction == 'E')
-		return 0;
+		return (0);
 	if (info.info_player->direction == 'S')
-		return 90;
+		return (90);
 	if (info.info_player->direction == 'W')
-		return 180;
-	return 0;
+		return (180);
+	return (0);
 }
-void get_texters(t_general *info)
+void	get_texters(t_general *info)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < 4)
 	{
 		info->info_texteur[i].texteur = malloc(sizeof(t_data));
-		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx, info->info_texteur[i].path, &info->info_texteur[i].texteur->width, &info->info_texteur[i].texteur->height);
+		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx,
+				info->info_texteur[i].path,
+				&info->info_texteur[i].texteur->width,
+				&info->info_texteur[i].texteur->height);
 		if (!info->info_texteur[i].texteur->img)
 		{
 			printf("image not found!");
 			exit(2);
 		}
-		info->info_texteur[i].texteur->addr = mlx_get_data_addr(info->info_texteur[i].texteur->img, &info->info_texteur[i].texteur->bits_per_pixel, &info->info_texteur[i].texteur->line_length, &info->info_texteur[i].texteur->endian);
+		info->info_texteur[i].texteur->addr = mlx_get_data_addr(
+				info->info_texteur[i].texteur->img,
+				&info->info_texteur[i].texteur->bits_per_pixel,
+				&info->info_texteur[i].texteur->line_length,
+				&info->info_texteur[i].texteur->endian);
 		i++;
 	}
 }
-void display_pixel(t_general info)
+void	display_pixel(t_general info)
 {
-
 	info.alpha = get_alpha_player(info);
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "cub3d");
-
 	info.info_img = malloc(sizeof(t_data));
 	info.info_img->img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
-	info.info_img->addr = mlx_get_data_addr(info.info_img->img, &info.info_img->bits_per_pixel, &info.info_img->line_length, &info.info_img->endian);
-
+	info.info_img->addr = mlx_get_data_addr(info.info_img->img,
+			&info.info_img->bits_per_pixel, &info.info_img->line_length,
+			&info.info_img->endian);
 	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);

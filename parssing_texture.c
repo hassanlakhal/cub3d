@@ -6,15 +6,15 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 00:42:23 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:56:19 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void type_of_bloc(t_bloc *lines)
+void	type_of_bloc(t_bloc *lines)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	lines->bloc_size_texteur = 0;
@@ -37,10 +37,10 @@ void type_of_bloc(t_bloc *lines)
 	}
 }
 
-void ft_fill_info_1(t_bloc *line, t_general *info_bloc)
+void	ft_fill_info_1(t_bloc *line, t_general *info_bloc)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	j = 0;
 	i = 0;
@@ -56,10 +56,10 @@ void ft_fill_info_1(t_bloc *line, t_general *info_bloc)
 		i++;
 	}
 }
-void ft_fill_info_2(t_bloc *line, t_general *info_bloc)
+void	ft_fill_info_2(t_bloc *line, t_general *info_bloc)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -76,19 +76,20 @@ void ft_fill_info_2(t_bloc *line, t_general *info_bloc)
 	}
 }
 
-void ft_fill_info(t_bloc *line, t_general *info_bloc)
+void	ft_fill_info(t_bloc *line, t_general *info_bloc)
 {
-	info_bloc->info_texteur = malloc(sizeof(t_texteur) * line->bloc_size_texteur);
+	info_bloc->info_texteur = malloc(sizeof(t_texteur)
+			* line->bloc_size_texteur);
 	info_bloc->info_rgb = malloc(sizeof(t_rgb_info) * line->bloc_size_rgb);
 	ft_fill_info_1(line, info_bloc);
 	ft_fill_info_2(line, info_bloc);
 }
 
-void ft_bloc(t_general *data, t_bloc *data_of_texture)
+void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 {
-	int i;
-	char **textures;
-	char **info;
+	int		i;
+	char	**textures;
+	char	**info;
 
 	if (data->number_of_line != 6)
 		(free(data->bloc), printf("4:ERROR\n"), exit(0));
@@ -110,23 +111,27 @@ void ft_bloc(t_general *data, t_bloc *data_of_texture)
 	free_2d(textures);
 }
 
-int ft_block_texteurs(t_texteur *bloc_1)
+int	ft_block_texteurs(t_texteur *bloc_1)
 {
-	if (bloc_1->direction && (!ft_strncmp(bloc_1->direction, "NO", 2) || !ft_strncmp(bloc_1->direction, "SO", 2) || !ft_strncmp(bloc_1->direction, "WE", 2) || !ft_strncmp(bloc_1->direction, "EA", 2)))
+	if (bloc_1->direction && (!ft_strncmp(bloc_1->direction, "NO", 2)
+			|| !ft_strncmp(bloc_1->direction, "SO", 2)
+			|| !ft_strncmp(bloc_1->direction, "WE", 2)
+			|| !ft_strncmp(bloc_1->direction, "EA", 2)))
 		return (0);
 	else
 		return (1);
 }
 
-int ft_block_rgb(t_rgb_info *bloc_2)
+int	ft_block_rgb(t_rgb_info *bloc_2)
 {
-	if (bloc_2->type_color && (!ft_strncmp(bloc_2->type_color, "C", 2) || !ft_strncmp(bloc_2->type_color, "F", 2)))
+	if (bloc_2->type_color && (!ft_strncmp(bloc_2->type_color, "C", 2)
+			|| !ft_strncmp(bloc_2->type_color, "F", 2)))
 		return (0);
 	else
 		return (1);
 }
 
-void valid_format_1(char c, bool *intoken, int *digit)
+void	valid_format_1(char c, bool *intoken, int *digit)
 {
 	if (c >= '0' && c <= '9')
 	{
@@ -135,7 +140,7 @@ void valid_format_1(char c, bool *intoken, int *digit)
 	}
 }
 
-void valid_format_2(int intoken, int *digit, int *token)
+void	valid_format_2(int intoken, int *digit, int *token)
 {
 	if (intoken)
 	{
@@ -143,12 +148,12 @@ void valid_format_2(int intoken, int *digit, int *token)
 		(*token)++;
 	}
 }
-bool valid_format(const char *input)
+bool	valid_format(const char *input)
 {
-	int token;
-	int digit;
-	bool intoken;
-	int i;
+	int		token;
+	int		digit;
+	bool	intoken;
+	int		i;
 
 	i = -1;
 	token = 0;
@@ -172,10 +177,10 @@ bool valid_format(const char *input)
 	return (token == 3 && digit >= 3);
 }
 
-void cont_of_coma(char *rgb)
+void	cont_of_coma(char *rgb)
 {
-	int i;
-	int cont;
+	int	i;
+	int	cont;
 
 	cont = 0;
 	i = 0;
@@ -202,9 +207,9 @@ void cont_of_coma(char *rgb)
 	}
 }
 
-void fill_rgb_val(char **rgb_val, t_general *info, int index)
+void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (rgb_val[i])
@@ -223,11 +228,11 @@ void fill_rgb_val(char **rgb_val, t_general *info, int index)
 	free_2d(rgb_val);
 }
 
-void sub_parsing_1(t_general *info, t_bloc *data)
+void	sub_parsing_1(t_general *info, t_bloc *data)
 {
-	int i;
-	int cont;
-	char **valid_path;
+	int		i;
+	int		cont;
+	char	**valid_path;
 
 	i = 0;
 	cont = 0;
@@ -249,11 +254,11 @@ void sub_parsing_1(t_general *info, t_bloc *data)
 		exit(0);
 	}
 }
-void sub_parsing_2(t_general *info, t_bloc *data)
+void	sub_parsing_2(t_general *info, t_bloc *data)
 {
-	int i;
-	int cont;
-	char **valid_value_rgb;
+	int		i;
+	int		cont;
+	char	**valid_value_rgb;
 
 	i = 0;
 	cont = 0;
@@ -263,7 +268,7 @@ void sub_parsing_2(t_general *info, t_bloc *data)
 			cont++;
 		cont_of_coma(info->info_rgb[i].rgb_value);
 		info->info_rgb[i].rgb_value = reaplace(info->info_rgb[i].rgb_value, 1,
-											   ',');
+				',');
 		valid_value_rgb = ft_split(info->info_rgb[i].rgb_value, ' ');
 		check_line(valid_value_rgb, RGB);
 		fill_rgb_val(valid_value_rgb, info, i);
@@ -276,10 +281,10 @@ void sub_parsing_2(t_general *info, t_bloc *data)
 		exit(0);
 	}
 }
-t_general *ft_parssing(void)
+t_general	*ft_parssing(void)
 {
-	t_general *info;
-	t_bloc *data;
+	t_general	*info;
+	t_bloc		*data;
 
 	info = malloc(sizeof(t_general));
 	data = malloc(sizeof(t_bloc) * 6);

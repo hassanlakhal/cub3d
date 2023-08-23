@@ -6,29 +6,29 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 00:42:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 15:58:24 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void init_list(t_general *info)
+void	init_list(t_general *info)
 {
 	info->map = NULL;
 	info->bloc = NULL;
 	info->number_of_line = 0;
 }
 
-char *skip_line(int fd)
+char	*skip_line(int fd)
 {
-	char *str;
-	char *temp;
+	char	*str;
+	char	*temp;
 
 	str = get_next_line(fd);
 	while (str)
 	{
 		if (str && ft_strlen(str) > 1)
-			break;
+			break ;
 		free(str);
 		str = get_next_line(fd);
 	}
@@ -41,16 +41,17 @@ char *skip_line(int fd)
 	return (temp);
 }
 
-void ft_utils_read_lines_texter(t_general *info, char *str, char *file, int fd)
+void	ft_utils_read_lines_texter(t_general *info, char *str, char *file,
+		int fd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str)
 	{
 		file = ft_strjoin(file, str);
 		if (info->number_of_line >= 6)
-			break;
+			break ;
 		if (ft_strlen(str) > 1)
 			info->number_of_line++;
 		free(str);
@@ -70,12 +71,12 @@ void ft_utils_read_lines_texter(t_general *info, char *str, char *file, int fd)
 	(free(file), free(str));
 }
 
-void read_lines_texter(t_general *info)
+void	read_lines_texter(t_general *info)
 {
-	int i;
-	char *str;
-	char *file;
-	int fd;
+	int		i;
+	char	*str;
+	char	*file;
+	int		fd;
 
 	i = 0;
 	fd = open("map/map.cub", O_RDWR);
