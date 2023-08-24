@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+         #
+#    By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/07 16:31:00 by hlakhal-          #+#    #+#              #
-#    Updated: 2023/08/20 17:12:31 by rlarabi          ###   ########.fr        #
+#    Updated: 2023/08/23 18:30:45 by hlakhal-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 SRCS = main.c parssing_texture.c  parssing_utils.c free_list.c get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
-		parssing_map.c parssing_utils1.c parssing_utils2.c path_of_player.c raycatsing.c rgb_to_hexa.c
+		parssing_map.c parssing_utils1.c parssing_utils2.c path_of_player.c raycatsing.c rgb_to_hexa.c mini_map.c
 
 CLANG		=  clang
 

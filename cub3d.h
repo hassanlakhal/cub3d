@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 00:41:25 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:28:31 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct s_general
 	t_bloc *bloc_s;
 	t_data *info_img;
 	t_data *texteur;
+	t_data *mini_map;
 	t_casted_ray *v;
 	t_casted_ray *h;
 	t_coordinates *start;
@@ -146,5 +147,7 @@ int rgbToHex(int red, int green, int blue);
 /* raycasting */
 void display_pixel(t_general info);
 int draw_rays(t_general *info);
+void ft_mini_map(t_general *info, void *mlx, void *mlx_win);
+void	my_mlx_pixel_put(t_general *info, int x, int y, int color);
 
 #endif

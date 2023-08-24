@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 16:05:40 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 04:41:54 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,8 @@ void	move_up(t_general *info, t_data *img)
 	(void)img;
 	pos_x = info->info_player->pos_x + cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y + sin((info->alpha * PI) / 180) * SPEED;
-	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1'
+		&& info->valid_map[(int)pos_y][(int)pos_x] != 32)
 	{
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
@@ -175,7 +176,8 @@ void	move_down(t_general *info, t_data *img)
 	(void)img;
 	pos_x = info->info_player->pos_x - cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y - sin((info->alpha * PI) / 180) * SPEED;
-	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1'
+		&& info->valid_map[(int)pos_y][(int)pos_x] != 32)
 	{
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
@@ -192,7 +194,8 @@ void	move_left(t_general *info, t_data *img)
 		* (SPEED - 0.05);
 	pos_y = info->info_player->pos_y + sin(((info->alpha - 270) * PI) / 180)
 		* (SPEED - 0.05);
-	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1'
+		&& info->valid_map[(int)pos_y][(int)pos_x] != 32)
 	{
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
@@ -209,7 +212,8 @@ void	move_right(t_general *info, t_data *img)
 		* (SPEED - 0.05);
 	pos_y = info->info_player->pos_y - sin(((info->alpha + 90) * PI) / 180)
 		* (SPEED - 0.05);
-	if (info->valid_map[(int)pos_y][(int)pos_x] != '1')
+	if (info->valid_map[(int)pos_y][(int)pos_x] != '1'
+		&& info->valid_map[(int)pos_y][(int)pos_x] != 32)
 	{
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
@@ -236,7 +240,7 @@ bool	break_wall(t_general *info, int x, int y)
 		return (false);
 	if (y < 0 || y >= info->dimensions[1])
 		return (false);
-	if (info->valid_map[y][x] == '1')
+	if (info->valid_map[y][x] == '1' || info->valid_map[y][x] == 32)
 		return (false);
 	return (true);
 }
@@ -477,6 +481,7 @@ int	key_hook(int key, t_general *info)
 	else if (key == 65363)
 		rotate_right(info);
 	draw_line(info);
+	ft_mini_map(info, info->mlx, info->mlx_win);
 	return (0);
 }
 
@@ -517,6 +522,7 @@ void	get_texters(t_general *info)
 		i++;
 	}
 }
+
 void	display_pixel(t_general info)
 {
 	info.alpha = get_alpha_player(info);
@@ -528,8 +534,13 @@ void	display_pixel(t_general info)
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img,
 			&info.info_img->bits_per_pixel, &info.info_img->line_length,
 			&info.info_img->endian);
+	info.mini_map = malloc(sizeof(t_data));
+	info.mini_map->img = mlx_new_image(info.mlx, 300, 100);
+	info.mini_map->addr = mlx_get_data_addr(info.mini_map->img,
+			&info.mini_map->bits_per_pixel, &info.mini_map->line_length,
+			&info.mini_map->endian);
 	get_texters(&info);
-	ft_dislay(&info, info.mlx, info.mlx_win);
+	ft_dislay(&info, info.mlx, info.mlx_win);	
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop(info.mlx);
 }
