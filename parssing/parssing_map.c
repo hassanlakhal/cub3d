@@ -6,11 +6,11 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:12:07 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 void	utils_get_map(char *str, int fd)
 {

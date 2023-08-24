@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   ../include/cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -13,11 +13,11 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
-#include "./get_next_line/get_next_line.h"
-#include "./libft/libft.h"
+#include "../get_next_line/get_next_line.h"
+#include "../libft/libft.h"
 #include <errno.h>
 #include <fcntl.h>
-#include "./mlx_Linux/mlx.h"
+#include "../mlx_Linux/mlx.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

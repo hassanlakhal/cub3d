@@ -6,11 +6,11 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:08 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:17:18 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 void	ft_display_player(t_general *info, int x, int y)
 {

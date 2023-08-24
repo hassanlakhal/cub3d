@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rgb_to_hexa.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 12:10:32 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/23 15:58:35 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 int	rgbToHex(int red, int green, int blue)
 {

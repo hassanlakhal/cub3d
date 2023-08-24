@@ -6,11 +6,11 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:14:43 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:41 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 void	type_of_bloc(t_bloc *lines)
 {

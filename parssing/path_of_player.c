@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   path_of_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 15:58:28 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
 int	get_max_of_line(char **map)
 {

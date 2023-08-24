@@ -1,7 +1,7 @@
 NAME = cub3D
 
-SRCS = main.c parssing_texture.c  parssing_utils.c free_list.c get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
-		parssing_map.c parssing_utils1.c parssing_utils2.c path_of_player.c raycatsing.c rgb_to_hexa.c mini_map.c
+SRCS = main.c parssing/parssing_texture.c  parssing/parssing_utils.c utils/free_list.c get_next_line/get_next_line.c  get_next_line/get_next_line_utils.c\
+		parssing/parssing_map.c parssing/parssing_utils1.c parssing/parssing_utils2.c parssing/path_of_player.c raycasting/raycasting.c raycasting/rgb_to_hexa.c raycasting/mini_map.c
 
 CLANG		=  clang
 
