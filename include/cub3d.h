@@ -132,7 +132,7 @@ void free_2d(char **tab);
 void get_map(t_general *info);
 /* parssing */
 void	utils_get_map(char *str, int fd); 
-void	get_map(t_general *info)
+void	get_map(t_general *info);
 void	check_dobule_new_line(char *str);
 void	check_wall(char **str, int y);
 t_general *ft_parssing_map(t_general *data);
