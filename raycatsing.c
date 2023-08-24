@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycatsing.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 08:25:26 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 13:02:12 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,6 +524,22 @@ void	get_texters(t_general *info)
 	}
 }
 
+int	mouse_hook(int keycode, t_general *info)
+{
+	(void)info;
+	int a,b;
+	(void)keycode;
+	printf("Hello from key_hook! %d\n", mlx_mouse_get_pos(info->mlx, info->mlx_win, &a, &b));
+	return (0);
+}
+int	close_win(int keycode, t_general *info)
+{
+	(void)info;
+	(void)keycode;
+	printf("closed by ESC! \n");
+	exit(0);
+}
+
 void	display_pixel(t_general info)
 {
 	info.alpha = get_alpha_player(info);
@@ -543,5 +559,8 @@ void	display_pixel(t_general info)
 	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);	
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
+	// mlx_hook(info.mlx_win, 6, 3, mouse_hook, &info);
+	mlx_mouse_hook(info.mlx_win, mouse_hook, &info);
+	mlx_hook(info.mlx_win, 17, 0, close_win, &info);
 	mlx_loop(info.mlx);
 }

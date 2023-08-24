@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:08 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 07:36:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:34:00 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,22 @@ void	ft_display_player(t_general *info, int x, int y)
 		i++;
 	}
 }
+
 void	ft_display_mini(t_general *info, int i, int j)
 {
 	double	x;
 	double	y;
-	double	x_scale;
-	double	y_scale;
 	int		original_map_x;
 	int		original_map_y;
 
-	x_scale = (double)info->dimensions[0] / 200.00;
-	y_scale = (double)info->dimensions[1] / 100.00;
-	y = 0;
-	while (y < 100)
+	y = -1;
+	while (++y < 100)
 	{
 		x = 0;
 		while (x < 200)
 		{
-			original_map_x = (int)(x * x_scale);
-			original_map_y = (int)(y * y_scale);
+			original_map_x = (int)(x * (double)info->dimensions[0] / 200.00);
+			original_map_y = (int)(y * (double)info->dimensions[1] / 100.00);
 			if (original_map_x < info->dimensions[0]
 				&& original_map_y < info->dimensions[1])
 			{
@@ -59,7 +56,6 @@ void	ft_display_mini(t_general *info, int i, int j)
 			}
 			x++;
 		}
-		y++;
 	}
 }
 
