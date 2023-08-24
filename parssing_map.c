@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 16:56:35 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:12:07 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_map(t_general *info)
 	char	*str;
 	char	*map;
 
-	fd = open("map/map.cub", O_RDWR);
+	fd = open(info->name_map, O_RDWR);
 	str = get_next_line(fd);
 	map = NULL;
 	utils_get_map(str, fd);

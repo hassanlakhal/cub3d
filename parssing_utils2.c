@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 15:58:24 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:11:59 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	read_lines_texter(t_general *info)
 	int		fd;
 
 	i = 0;
-	fd = open("map/map.cub", O_RDWR);
+	fd = open(info->name_map, O_RDWR);
 	init_list(info);
 	str = skip_line(fd);
 	file = NULL;

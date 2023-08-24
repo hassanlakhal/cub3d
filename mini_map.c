@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:08 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 12:34:00 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:17:18 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_display_player(t_general *info, int x, int y)
 		j = 0;
 		while (j < 2.5)
 		{
-			my_mlx_pixel_put(info, x + j, y + i, 0xFF3333FF);
+			my_mlx_pixel_put(info, x + j, y + i, 0xFF0000);
 			j++;
 		}
 		i++;
@@ -50,9 +50,9 @@ void	ft_display_mini(t_general *info, int i, int j)
 			{
 				if (info->valid_map[original_map_y][original_map_x] == '1'
 					|| info->valid_map[original_map_y][original_map_x] == 32)
-					my_mlx_pixel_put(info, x + j, y + i, 0x455545);
+					my_mlx_pixel_put(info, x + j, y + i, 0x000000);
 				else
-					my_mlx_pixel_put(info, x + j, y + i, 0x195545);
+					my_mlx_pixel_put(info, x + j, y + i, 0xFFFFFF);
 			}
 			x++;
 		}

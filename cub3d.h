@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 08:24:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:12:57 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_general
 	t_casted_ray *h;
 	t_coordinates *start;
 	t_coordinates *end;
+	char *name_map;
 	char **valid_map;
 	int dimensions[2];
 	char *bloc;
@@ -134,7 +135,7 @@ t_general *ft_parssing_map(t_general *data);
 void read_lines_texter(t_general *info);
 void ft_bloc(t_general *data, t_bloc *data_of_texture);
 int ft_strlen_2d(char **tab);
-t_general *ft_parssing(void);
+t_general *ft_parssing(int ac, char **av);
 void clear_all(t_general *data, int a, int b);
 char **ft_split_pos(char *str, char c, int pos);
 char *skip_line(int fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 15:56:19 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:14:43 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,13 +281,23 @@ void	sub_parsing_2(t_general *info, t_bloc *data)
 		exit(0);
 	}
 }
-t_general	*ft_parssing(void)
+char *get_name_map(int ac, char **av)
+{
+	if (ac != 2)
+	{
+		printf("Invalid Arguments\n");
+		exit(1);
+	}
+	return ft_strdup(av[1]);
+}
+t_general	*ft_parssing(int ac, char **av)
 {
 	t_general	*info;
 	t_bloc		*data;
 
 	info = malloc(sizeof(t_general));
 	data = malloc(sizeof(t_bloc) * 6);
+	info->name_map = get_name_map(ac, av);
 	read_lines_texter(info);
 	ft_bloc(info, data);
 	sub_parsing_1(info, data);
