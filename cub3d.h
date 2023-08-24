@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/23 18:28:31 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 08:24:48 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,5 +149,6 @@ void display_pixel(t_general info);
 int draw_rays(t_general *info);
 void ft_mini_map(t_general *info, void *mlx, void *mlx_win);
 void	my_mlx_pixel_put(t_general *info, int x, int y, int color);
-
+int	draw_line(t_general *info);
+void	calcule_bite_ray(t_general *info);
 #endif

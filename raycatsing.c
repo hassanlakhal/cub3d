@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 04:41:54 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/24 08:25:26 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 	i = 0;
 	display_floor(info, info->info_img->img, j, i);
 	display_sky(info, info->info_img->img, j, i);
+	calcule_bite_ray(info);
+	draw_line(info);
 	mlx_put_image_to_window(mlx, mlx_win, info->info_img->img, 0, 0);
 }
 
@@ -464,8 +466,8 @@ void	calcule_bite_ray(t_general *info)
 
 int	key_hook(int key, t_general *info)
 {
-	ft_dislay(info, info->mlx, info->mlx_win);
 	calcule_bite_ray(info);
+	ft_dislay(info, info->mlx, info->mlx_win);
 	if (key == 65307)
 		exit(0);
 	else if (key == 65362 || key == 119)
@@ -480,7 +482,6 @@ int	key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-	draw_line(info);
 	ft_mini_map(info, info->mlx, info->mlx_win);
 	return (0);
 }
