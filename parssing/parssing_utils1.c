@@ -6,38 +6,11 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/25 12:54:39 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
-void	utils_reaplace(char *result, char *text, int number, char c)
-{
-	int	i;
-	int	j;
-	int	index;
-
-	index = 0;
-	j = 0;
-	i = 0;
-	while (i < (int)ft_strlen(text))
-	{
-		if (text[i] == c)
-		{
-			j = 0;
-			while (j < number)
-			{
-				result[index++] = ' ';
-				j++;
-			}
-		}
-		else
-			result[index++] = text[i];
-		i++;
-	}
-	result[index] = '\0';
-}
 
 char	*reaplace(char *text, int number, char c)
 {
@@ -96,6 +69,7 @@ void	check_direction(t_bloc *data_of_texture)
 		i++;
 	}
 }
+
 int	ft_strlen_2d(char **tab)
 {
 	int	i;

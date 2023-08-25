@@ -135,6 +135,21 @@ void	utils_get_map(char *str, int fd);
 void	get_map(t_general *info);
 void	check_dobule_new_line(char *str);
 void	check_wall(char **str, int y);
+
+int	ft_block_rgb(t_rgb_info *bloc_2);
+void	valid_format_1(char c, bool *intoken, int *digit);
+void	valid_format_2(int intoken, int *digit, int *token);
+bool	valid_format(const char *input);
+void	cont_of_coma(char *rgb);
+void	ft_fill_info_1(t_bloc *line, t_general *info_bloc);
+void	ft_fill_info_2(t_bloc *line, t_general *info_bloc);
+void	ft_fill_info(t_bloc *line, t_general *info_bloc);
+void	ft_bloc(t_general *data, t_bloc *data_of_texture);
+int	ft_block_texteurs(t_texteur *bloc_1);
+void	type_of_bloc(t_bloc *lines);
+void	utils_reaplace(char *result, char *text, int number, char c);
+int	get_max_of_line(char **map);
+
 t_general *ft_parssing_map(t_general *data);
 void read_lines_texter(t_general *info);
 void ft_bloc(t_general *data, t_bloc *data_of_texture);
@@ -156,4 +171,42 @@ void ft_mini_map(t_general *info, void *mlx, void *mlx_win);
 void	my_mlx_pixel_put(t_general *info, int x, int y, int color);
 int	draw_line(t_general *info);
 void	calcule_bite_ray(t_general *info);
+
+void	my_mlx_pixel_put(t_general *info, int x, int y, int color);
+int	my_mlx_get_pixel(t_data *texteur, int x, int y);
+void	move_up(t_general *info, t_data *img);
+void	move_down(t_general *info, t_data *img);
+void	move_left(t_general *info, t_data *img);
+void	move_right(t_general *info, t_data *img);
+
+void	draw_help_1(t_general *info, double *i, double *d);
+void	draw_help(t_general *info, t_data *texteur, int steps, double img_x);
+void	sub_draw_line(t_general *info, double endi, t_data *texteur);
+
+void	display_floor(t_general *info, t_data *img, int j, int i);
+void	display_sky(t_general *info, t_data *img, int j, int i);
+void	ft_dislay(t_general *info, void *mlx, void *mlx_win);
+int	draw_line(t_general *info);
+void	draw_texteur(t_general *info);
+
+void	rotate_right(t_general *info);
+void	rotate_left(t_general *info);
+
+t_casted_ray	*horizontal(t_general *info, double beta);
+t_casted_ray	*vertecal(t_general *info, double beta);
+
+bool	break_wall(t_general *info, int x, int y);
+void	step_rays(t_general *info, double *x_steps, double *y_steps,
+		double beta);
+void	set_len(t_general *info, t_casted_ray *h);
+void	step_rays_v(t_general *info, double *x_steps, double *y_steps,
+		double beta);
+double	calcule_projection(t_general *info);
+void	calcule_of_wall(t_general *info, int i, t_coordinates *start);
+t_data	*get_side_texteur(t_general *info, char *str);
+int	get_color(t_general *info, char c);
+void	calcule_bite_ray(t_general *info);
+double	get_alpha_player(t_general info);
+void	get_texters(t_general *info);
+
 #endif

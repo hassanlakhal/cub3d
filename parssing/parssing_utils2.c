@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/25 12:56:15 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,20 @@ void	read_lines_texter(t_general *info)
 	info->bloc = NULL;
 	ft_utils_read_lines_texter(info, str, file, fd);
 	close(fd);
+}
+
+int	get_max_of_line(char **map)
+{
+	int	i;
+	int	max_len;
+
+	i = 0;
+	max_len = ft_strlen(map[0]);
+	while (map[i])
+	{
+		if (max_len < (int)ft_strlen(map[i]))
+			max_len = (int)ft_strlen(map[i]);
+		i++;
+	}
+	return (max_len);
 }

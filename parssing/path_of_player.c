@@ -6,27 +6,13 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/25 12:54:58 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	get_max_of_line(char **map)
-{
-	int	i;
-	int	max_len;
 
-	i = 0;
-	max_len = ft_strlen(map[0]);
-	while (map[i])
-	{
-		if (max_len < (int)ft_strlen(map[i]))
-			max_len = (int)ft_strlen(map[i]);
-		i++;
-	}
-	return (max_len);
-}
 char	*dupchar(char c)
 {
 	char	*_dupchar;

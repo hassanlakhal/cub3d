@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/25 12:54:26 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,31 @@ char	**ft_split_pos(char *str, char c, int pos)
 	tab[2] = NULL;
 	return (tab);
 }
+
+void	utils_reaplace(char *result, char *text, int number, char c)
+{
+	int	i;
+	int	j;
+	int	index;
+
+	index = 0;
+	j = 0;
+	i = 0;
+	while (i < (int)ft_strlen(text))
+	{
+		if (text[i] == c)
+		{
+			j = 0;
+			while (j < number)
+			{
+				result[index++] = ' ';
+				j++;
+			}
+		}
+		else
+			result[index++] = text[i];
+		i++;
+	}
+	result[index] = '\0';
+}
+
