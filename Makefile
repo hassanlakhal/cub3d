@@ -31,7 +31,7 @@ SRCS = main.c \
 
 CLANG		=  clang
 
-CFLAGS = -Wall -Wextra -Werror # -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 OBJ = $(SRCS:.c=.o)
 
@@ -44,7 +44,7 @@ all:cub3D
 cub3D:$(OBJ)
 
 		@make -sC libft/
-		@$(CLANG) $(CFLAGS) $(OBJ) -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+		@$(CLANG) $(CFLAGS) $(OBJ) -pedantic  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 clean:
 		@make -sC libft/ clean

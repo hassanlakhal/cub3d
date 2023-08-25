@@ -115,6 +115,7 @@ typedef struct s_general
 	t_casted_ray *h;
 	t_coordinates *start;
 	t_coordinates *end;
+	int mouse_x;
 	char *name_map;
 	char **valid_map;
 	int dimensions[2];
