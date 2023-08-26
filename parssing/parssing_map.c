@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:33:39 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:38:03 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	**dup_str_2d(char **tab)
 
 	i = 0;
 	new_tab = malloc(sizeof(char *) * (ft_strlen_2d(tab) + 1));
+	if (!new_tab)
+		return (NULL);
 	while (tab[i])
 	{
 		new_tab[i] = ft_strdup(tab[i]);
@@ -107,6 +109,8 @@ t_general	*ft_parssing_map(t_general *data)
 	char	**dup_map;
 
 	data->info_player = malloc(sizeof(t_player));
+	if (!data->info_player)
+		return (NULL);
 	get_map(data);
 	check_dobule_new_line(data->map);
 	map = ft_split(data->map, '\n');

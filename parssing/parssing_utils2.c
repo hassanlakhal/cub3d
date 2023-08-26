@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/25 12:56:15 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:32:02 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ void	read_lines_texter(t_general *info)
 
 	i = 0;
 	fd = open(info->name_map, O_RDWR);
+	if (fd == -1)
+	{
+		perror(info->name_map);
+		exit(1);
+	}
 	init_list(info);
 	str = skip_line(fd);
 	file = NULL;

@@ -31,7 +31,7 @@ SRCS = main.c \
 
 CLANG		=  clang
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -fsanitize=leak
 
 OBJ = $(SRCS:.c=.o)
 

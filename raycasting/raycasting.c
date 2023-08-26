@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/25 19:14:22 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/26 11:41:11 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	display_pixel(t_general info)
 	info.mlx = mlx_init();
 	info.mlx_win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "cub3d");
 	info.info_img = malloc(sizeof(t_data));
+	if (!info.info_img)
+		return ;
 	info.info_img->img = mlx_new_image(info.mlx, WIDTH, HEIGHT);
 	info.info_img->addr = mlx_get_data_addr(info.info_img->img,
 			&info.info_img->bits_per_pixel, &info.info_img->line_length,

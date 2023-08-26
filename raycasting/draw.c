@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_line.c                                        :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:02:17 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 13:06:00 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:40:53 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ int	draw_line(t_general *info)
 	double	temp;
 
 	info->end = malloc(sizeof(t_coordinates));
+	if (!info->end)	
+		return 0;
 	info->start = malloc(sizeof(t_coordinates));
+	if (!info->start)	
+		return 0;
 	i = 0;
 	temp = 60 / ((double)WIDTH);
 	while (i < WIDTH)

@@ -6,11 +6,21 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:07:48 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 13:11:55 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:46:27 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+
+void	sub_ray(t_general *info, double x_steps, double y_steps)
+{
+	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
+	{
+		info->end->i += x_steps;
+		info->end->j += y_steps;
+	}
+}
 
 t_casted_ray	*horizontal(t_general *info, double beta)
 {
@@ -19,6 +29,8 @@ t_casted_ray	*horizontal(t_general *info, double beta)
 	double			y_steps;
 
 	h = malloc(sizeof(t_casted_ray));
+	if (!h)
+		return (NULL);
 	step_rays(info, &x_steps, &y_steps, beta);
 	if (beta == 0 || beta == 180)
 	{
@@ -27,11 +39,7 @@ t_casted_ray	*horizontal(t_general *info, double beta)
 		h->end.j = info->end->j;
 		return (h);
 	}
-	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
-	{
-		info->end->i += x_steps;
-		info->end->j += y_steps;
-	}
+	sub_ray(info, x_steps, y_steps);
 	if (info->end->j > INT_MAX || info->end->i > INT_MAX
 		|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{
@@ -48,6 +56,8 @@ t_casted_ray	*vertecal(t_general *info, double beta)
 	double			y_steps;
 
 	v = malloc(sizeof(t_casted_ray));
+	if (!v)
+		return (NULL);
 	step_rays_v(info, &x_steps, &y_steps, beta);
 	if (beta == 90 || beta == 270)
 	{
@@ -56,11 +66,7 @@ t_casted_ray	*vertecal(t_general *info, double beta)
 		v->end.j = info->end->j;
 		return (v);
 	}
-	while (break_wall(info, (int)info->end->i / 45, (int)info->end->j / 45))
-	{
-		info->end->i += x_steps;
-		info->end->j += y_steps;
-	}
+	sub_ray(info, x_steps, y_steps);
 	if (info->end->j > INT_MAX || info->end->i > INT_MAX
 		|| info->end->j < INT_MIN || info->end->i < INT_MIN)
 	{

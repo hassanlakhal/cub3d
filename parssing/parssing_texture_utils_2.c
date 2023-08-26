@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:38:04 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 11:38:54 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:38:40 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ void	ft_fill_info(t_bloc *line, t_general *info_bloc)
 {
 	info_bloc->info_texteur = malloc(sizeof(t_texteur)
 			* line->bloc_size_texteur);
+	if (!info_bloc->info_texteur)
+		return ;
 	info_bloc->info_rgb = malloc(sizeof(t_rgb_info) * line->bloc_size_rgb);
+	if (!info_bloc->info_rgb)
+		return ;
 	ft_fill_info_1(line, info_bloc);
 	ft_fill_info_2(line, info_bloc);
 }

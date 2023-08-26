@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/25 12:54:58 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:40:17 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*dupchar(char c)
 	char	*_dupchar;
 
 	_dupchar = malloc(2);
+	if (!_dupchar)
+		return (NULL);
 	_dupchar[0] = c;
 	_dupchar[1] = '\0';
 	return (_dupchar);

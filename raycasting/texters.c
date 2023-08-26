@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:21:49 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 13:22:06 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:42:10 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	get_texters(t_general *info)
 	while (i < 4)
 	{
 		info->info_texteur[i].texteur = malloc(sizeof(t_data));
+		if (!info->info_texteur[i].texteur)
+		return ;
 		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx,
 				info->info_texteur[i].path,
 				&info->info_texteur[i].texteur->width,

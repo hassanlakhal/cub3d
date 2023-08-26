@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/25 12:54:26 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:39:34 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	**ft_split_pos(char *str, char c, int pos)
 
 	ft_strlen(str);
 	tab = (char **)malloc(3 * sizeof(char *));
+	if (!tab)
+		return (NULL);
 	delimiter_pos = -1;
 	ft_utils(str, pos, &delimiter_pos, c);
 	if (delimiter_pos == -1)

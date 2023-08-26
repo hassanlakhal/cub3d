@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/25 12:54:39 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:39:54 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*reaplace(char *text, int number, char c)
 	char	*result;
 
 	result = malloc(ft_strlen(text) * number + 1);
+	if (!result)
+		return (NULL);
 	utils_reaplace(result, text, number, c);
 	if (text)
 	{

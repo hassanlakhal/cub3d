@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parssing_map_1.c                                   :+:      :+:    :+:   */
+/*   parssing_map_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 14:32:18 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/24 14:33:23 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 11:32:35 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ void	get_map(t_general *info)
 	char	*map;
 
 	fd = open(info->name_map, O_RDWR);
+	if (fd == -1)
+	{
+		perror(info->name_map);
+		exit(1);
+	}
 	str = get_next_line(fd);
 	map = NULL;
 	utils_get_map(str, fd);
