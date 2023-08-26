@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 12:59:27 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 13:00:01 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 12:14:12 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	move_up(t_general *info, t_data *img)
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
+	ft_dislay(info, info->mlx, info->mlx_win);
+
 }
 
 void	move_down(t_general *info, t_data *img)
@@ -42,6 +44,8 @@ void	move_down(t_general *info, t_data *img)
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
+	ft_dislay(info, info->mlx, info->mlx_win);
+
 }
 
 void	move_left(t_general *info, t_data *img)
@@ -60,6 +64,8 @@ void	move_left(t_general *info, t_data *img)
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
+	ft_dislay(info, info->mlx, info->mlx_win);
+
 }
 
 void	move_right(t_general *info, t_data *img)
@@ -78,4 +84,6 @@ void	move_right(t_general *info, t_data *img)
 		info->info_player->pos_x = pos_x;
 		info->info_player->pos_y = pos_y;
 	}
+	ft_dislay(info, info->mlx, info->mlx_win);
+
 }

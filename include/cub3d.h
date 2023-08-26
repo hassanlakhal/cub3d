@@ -184,8 +184,8 @@ void	draw_help_1(t_general *info, double *i, double *d);
 void	draw_help(t_general *info, t_data *texteur, int steps, double img_x);
 void	sub_draw_line(t_general *info, double endi, t_data *texteur);
 
-void	display_floor(t_general *info, t_data *img, int j, int i);
-void	display_sky(t_general *info, t_data *img, int j, int i);
+void	display_floor(t_general *info);
+void	display_sky(t_general *info);
 void	ft_dislay(t_general *info, void *mlx, void *mlx_win);
 int	draw_line(t_general *info);
 void	draw_texteur(t_general *info);

@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:41:11 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 12:23:17 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	mouse_hook_1(int x, int y, t_general *info)
 
 int	key_hook(int key, t_general *info)
 {
-	calcule_bite_ray(info);
-	ft_dislay(info, info->mlx, info->mlx_win);
 	if (key == 65307)
 		exit(0);
 	else if (key == 65362 || key == 119)
@@ -56,12 +54,10 @@ int	key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-	ft_mini_map(info, info->mlx, info->mlx_win);
+	// ft_dislay(info, info->mlx, info->mlx_win);
+	// ft_mini_map(info, info->mlx, info->mlx_win);
 	return (0);
 }
-
-
-// int	mouse_hook(int key_code, t_fractal *fractal)
 
 int	mouse_hook(int key,  int x, int y, t_general *info)
 {
@@ -69,7 +65,6 @@ int	mouse_hook(int key,  int x, int y, t_general *info)
 	ft_dislay(info, info->mlx, info->mlx_win);
 	(void)x;
 	(void)y;
-	// printf("Hello from key_hook! %d %d %d\n", x, y, key);
 	if (key == 5)
 		move_up(info, info->info_img);
 	else if (key == 4)
