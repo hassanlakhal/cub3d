@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:02:17 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/26 13:42:03 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:03:08 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 		if (draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
 			break ;
 		draw.i++;
+	}
+	int p = 0;
+	
+	while(p < info->start->j)
+	{
+		my_mlx_pixel_put(info, (int)draw.x, p, get_color(info, 'C'));
+		p++;
+	}
+	p = info->end->j;
+	while(p < HEIGHT)
+	{
+		my_mlx_pixel_put(info, (int)draw.x, p, get_color(info, 'F'));
+		p++;
 	}
 }
 
@@ -99,7 +112,6 @@ void	draw_texteur(t_general *info)
 {
 	if (info->h->lenght > info->v->lenght)
 	{
-		// printf("%f\n", info->bita_ray);
 		if (cos((info->bita_ray * PI) / 180) > 0)
 			sub_draw_line(info, info->v->end.j, get_side_texteur(info, "EA"));
 		else if (cos((info->bita_ray * PI) / 180) < 0)

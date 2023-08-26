@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:15 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:34 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:07:12 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,4 @@ int	main(int ac, char **av)
 	info = ft_parssing(ac, av);
 	info = ft_parssing_map(info);
 	display_pixel(*info);
-
-	// while(1){};
-	// system("leaks cub3D");
 }

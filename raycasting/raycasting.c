@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 12:23:17 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:07:32 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	mouse_hook_1(int x, int y, t_general *info)
 {
-	// int old_x;
-	// int old_y;
 	if (info->mouse_x == x || x < 0 || x > WIDTH || y < 0 || y > HEIGHT)
 		return 0;
 	calcule_bite_ray(info);
@@ -54,8 +52,6 @@ int	key_hook(int key, t_general *info)
 		rotate_left(info);
 	else if (key == 65363)
 		rotate_right(info);
-	// ft_dislay(info, info->mlx, info->mlx_win);
-	// ft_mini_map(info, info->mlx, info->mlx_win);
 	return (0);
 }
 

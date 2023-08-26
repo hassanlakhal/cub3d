@@ -6,53 +6,21 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:04:08 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/26 15:08:54 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/26 19:07:25 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	display_floor(t_general *info)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (x < WIDTH)
-	{
-		y = (int)HEIGHT / 2;
-		while (y < HEIGHT)
-		{
-			my_mlx_pixel_put(info, x, y, get_color(info, 'F'));
-			y++;
-		}
-		x++;
-	}
-}
-
-void	display_sky(t_general *info)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	y = 0;
-	while (x < WIDTH)
-	{
-		y = 0;
-		while (y < HEIGHT / 2)
-		{
-			my_mlx_pixel_put(info, x, y, get_color(info, 'C'));
-			y++;
-		}
-		x++;
-	}
-}
 void	ft_dislay(t_general *info, void *mlx, void *mlx_win)
 {
-	display_floor(info);
-	display_sky(info);
+	(void)mlx;
+	(void)mlx_win;
+	mlx_destroy_image(info->mlx, info->info_img->img);
+	info->info_img->img = mlx_new_image(info->mlx, WIDTH, HEIGHT);
+	info->info_img->addr = mlx_get_data_addr(info->info_img->img,
+			&info->info_img->bits_per_pixel, &info->info_img->line_length,
+			&info->info_img->endian);
 	calcule_bite_ray(info);
 	draw_line(info);
 	ft_mini_map(info, info->mlx, info->mlx_win);
