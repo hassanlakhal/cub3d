@@ -6,7 +6,7 @@
 #    By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/15 21:22:26 by hlakhal-          #+#    #+#              #
-#    Updated: 2022/11/01 15:00:11 by hlakhal-         ###   ########.fr        #
+#    Updated: 2023/08/27 05:43:58 by hlakhal-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ ft_isascii.o ft_memmove.o ft_strdup.o ft_toupper.o ft_strnstr.o ft_islpha.o
 
 
 
-CC		= clang
+CC		= cc
 
 CFLAGS = -Wall -Wextra -Werror
 

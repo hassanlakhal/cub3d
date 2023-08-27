@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:21:49 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/26 11:42:10 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 03:11:43 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	get_texters(t_general *info)
 	{
 		info->info_texteur[i].texteur = malloc(sizeof(t_data));
 		if (!info->info_texteur[i].texteur)
-		return ;
+			return ;
 		info->info_texteur[i].texteur->img = mlx_xpm_file_to_image(info->mlx,
 				info->info_texteur[i].path,
 				&info->info_texteur[i].texteur->width,
@@ -42,6 +42,7 @@ void	get_texters(t_general *info)
 		if (!info->info_texteur[i].texteur->img)
 		{
 			printf("image not found!");
+			free(info->info_texteur[i].texteur);
 			exit(2);
 		}
 		info->info_texteur[i].texteur->addr = mlx_get_data_addr(

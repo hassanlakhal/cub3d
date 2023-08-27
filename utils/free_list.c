@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 00:37:46 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:34:49 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 06:04:48 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,41 @@ void	free_2d(char **tab)
 	free(tab);
 }
 
-void	clear_all(t_general *data, int a, int b)
+void	clear_all(t_general *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < a)
+	while (i < data->bloc_s->bloc_size_texteur)
 	{
 		free(data->info_texteur[i].path);
+		data->info_texteur[i].path = NULL;
 		free(data->info_texteur[i].direction);
+		data->info_texteur[i].direction = NULL;
+		free(data->info_texteur[i].texteur);
+		data->info_texteur[i].texteur = NULL;
 		i++;
 	}
 	i = 0;
-	while (i < b)
+	while (i < data->bloc_s->bloc_size_rgb)
 	{
 		free(data->info_rgb[i].type_color);
-		free(data->info_rgb[i].rgb_value);
+		data->info_rgb[i].type_color = NULL;
 		i++;
 	}
 	free(data->info_texteur);
+	data->info_texteur = NULL;
 	free(data->info_rgb);
-	free(data->bloc);
-	free(data);
+	data->info_rgb = NULL;
+	free(data->bloc_s);
+	data->bloc_s = NULL;
 	free(data->name_map);
+	data->name_map = NULL;
+	free_2d(data->valid_map);
+	data->valid_map =NULL;
+	free(data->bloc);
+	free(data->info_player);
+	free(data->info_img);
+	// free(data);
+	//free(data->name_map);
 }

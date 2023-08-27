@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_of_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:40:17 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 03:10:13 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 char	*dupchar(char c)
 {
-	char	*_dupchar;
+	char	*f_dupchar;
 
-	_dupchar = malloc(2);
-	if (!_dupchar)
+	f_dupchar = malloc(2);
+	if (!f_dupchar)
 		return (NULL);
-	_dupchar[0] = c;
-	_dupchar[1] = '\0';
-	return (_dupchar);
+	f_dupchar[0] = c;
+	f_dupchar[1] = '\0';
+	return (f_dupchar);
 }
 
 char	*ft_charjoin(char *str, char c, int number, int max_len)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:38:04 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/26 11:38:40 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 02:24:35 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 	char	**textures;
 	char	**info;
 
+	data->bloc_s = malloc(sizeof(t_bloc));
 	if (data->number_of_line != 6)
 		(free(data->bloc), printf("4:ERROR\n"), exit(0));
 	textures = ft_split(data->bloc, '\n');
@@ -87,6 +88,8 @@ void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 	}
 	check_direction(data_of_texture);
 	type_of_bloc(data_of_texture);
+	data->bloc_s->bloc_size_rgb = data_of_texture->bloc_size_rgb;
+	data->bloc_s->bloc_size_texteur = data_of_texture->bloc_size_texteur;
 	ft_fill_info(data_of_texture, data);
 	free_2d(textures);
 }

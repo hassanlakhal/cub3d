@@ -17,7 +17,8 @@
 #include "../libft/libft.h"
 #include <errno.h>
 #include <fcntl.h>
-#include "../mlx_Linux/mlx.h"
+// #include "../mlx_Linux/mlx.h"
+# include <mlx.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -156,7 +157,7 @@ void read_lines_texter(t_general *info);
 void ft_bloc(t_general *data, t_bloc *data_of_texture);
 int ft_strlen_2d(char **tab);
 t_general *ft_parssing(int ac, char **av);
-void clear_all(t_general *data, int a, int b);
+void clear_all(t_general *data);
 char **ft_split_pos(char *str, char c, int pos);
 char *skip_line(int fd);
 char *reaplace(char *text, int number, char c);

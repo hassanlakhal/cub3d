@@ -29,22 +29,28 @@ SRCS = main.c \
 
 
 
-CLANG		=  clang
+CLANG		=  cc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror  #-fsanitize=address -g3#-fsanitize=leak
+
+MLX = -lmlx -lXext -lX11 -lm 
 
 OBJ = $(SRCS:.c=.o)
 
 all:cub3D
 
 %.o: %.c
-	$(CLANG) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CLANG) -Wall -Wextra -Werror -g $(MLX) -c $< -o $@
 
+# $(CLANG) -Wall -Wextra -Werror -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 cub3D:$(OBJ)
 
 		@make -sC libft/
-		@$(CLANG) $(CFLAGS) $(OBJ) -pedantic  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+		@$(CLANG) $(CFLAGS) $(OBJ) $(MLX) libft/libft.a -o cub3D
+
+# @$(CLANG) $(CFLAGS) $(OBJ) -pedantic  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+
 
 clean:
 		@make -sC libft/ clean

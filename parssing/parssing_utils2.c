@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:32:02 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 04:11:59 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,10 @@ void	ft_utils_read_lines_texter(t_general *info, char *str, char *file,
 
 void	read_lines_texter(t_general *info)
 {
-	int		i;
 	char	*str;
 	char	*file;
 	int		fd;
 
-	i = 0;
 	fd = open(info->name_map, O_RDWR);
 	if (fd == -1)
 	{
