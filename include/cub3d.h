@@ -209,4 +209,10 @@ void	calcule_bite_ray(t_general *info);
 double	get_alpha_player(t_general info);
 void	get_texters(t_general *info);
 
+int	mouse_hook_1(int x, int y, t_general *info);
+int	key_hook(int key, t_general *info);
+int	mouse_hook(int key,  int x, int y, t_general *info);
+int	close_win(int keycode, t_general *info);
+int mouse(void *param);
+
 #endif

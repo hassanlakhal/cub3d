@@ -25,6 +25,7 @@ SRCS = main.c \
 		raycasting/rays.c \
 		raycasting/texters.c \
 		raycasting/rays_utils.c \
+		raycasting/key_hooks.c \
 		raycasting/raycasting_utils.c \
 
 
