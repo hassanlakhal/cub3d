@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:47:09 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 04:11:59 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:28:19 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_utils_read_lines_texter(t_general *info, char *str, char *file,
 		i++;
 	}
 	if (i == 0)
-		exit(1);
+		(printf("ERROR\ninvalid format of file\n"), exit(1));
 	info->bloc = ft_substr(file, 0, ft_strlen(file));
 	(free(file), free(str));
 }

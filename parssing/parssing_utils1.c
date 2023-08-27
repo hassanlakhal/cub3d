@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:39:54 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 22:28:36 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	check_dup(t_bloc *data_of_texture)
 			if (!ft_strncmp(data_of_texture[i].val_1, data_of_texture[j].val_1,
 					2))
 			{
-				printf("3:ERROR\n");
+				printf("ERROR\nthere is a duplicate line\n");
 				exit(0);
 			}
 			j++;
@@ -63,7 +63,7 @@ void	check_direction(t_bloc *data_of_texture)
 	{
 		if (ft_strlen(data_of_texture[i].val_1) > 2)
 		{
-			printf("2:ERROR\n");
+			printf("ERROR\nThere is an error in the format bloc one\n");
 			exit(0);
 		}
 		else
@@ -92,7 +92,7 @@ void	check_line(char **tab, int a)
 	if ((i != 1 && a == PATH) || (i != 3 && a == RGB))
 	{
 		free_2d(tab);
-		printf("1:ERROR\n");
+		printf("ERROR\nproblem in PATH or RGB\n");
 		exit(0);
 	}
 }

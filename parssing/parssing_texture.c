@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 04:56:51 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:44:24 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 	{
 		if (ft_strlen(rgb_val[i]) > 3 || ft_atoi(rgb_val[i]) > 255)
 		{
-			printf("15:ERROR\n");
+			printf("ERROR\nEnter a bound 3 values between 0 - 255");
 			free_2d(rgb_val);
 			exit(0);
 		}
@@ -55,7 +55,7 @@ void	sub_parsing_1(t_general *info, t_bloc *data)
 	}
 	if (cont != data->bloc_size_texteur)
 	{
-		printf("7:ERROR\n");
+		printf("ERROR\nInvalide direction\n");
 		exit(0);
 	}
 }
@@ -82,7 +82,7 @@ void	sub_parsing_2(t_general *info, t_bloc *data)
 	}
 	if (cont != data->bloc_size_rgb)
 	{
-		printf("7:ERROR\n");
+		printf("ERROR\nlines of RGB more 2 lines\n");
 		exit(0);
 	}
 }
@@ -97,7 +97,7 @@ void check_name_map(char *name)
 	if (name[--i] != 'b' || name[--i] != 'u' || name[--i] != 'c'
 		|| name[--i] != '.')
 	{
-		printf("Must be a .cub file\n");
+		printf("ERROR\nMust be a .cub file\n");
 		exit(1);
 	}
 }
@@ -106,7 +106,7 @@ char *get_name_map(int ac, char **av)
 {
 	if (ac != 2)
 	{
-		printf("Invalid Arguments\n");
+		printf("ERROR\nInvalid Arguments\n");
 		exit(1);
 	}
 	check_name_map(av[1]);
@@ -131,5 +131,4 @@ t_general	*ft_parssing(int ac, char **av)
 	sub_parsing_2(info, data);
 	free(data);
 	return (info);
-	// clear_all(info, data->bloc_size_texteur, data->bloc_size_rgb);
 }

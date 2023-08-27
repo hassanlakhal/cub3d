@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 05:02:42 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:28:08 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_top_buttom_wall(char **map, int y)
 	}
 	if ((int)ft_strlen(map[y - 1]) != cont_buttom
 		|| (int)ft_strlen(map[0]) != cont_top)
-		(printf("18:ERROR wall\n"), exit(0));
+		(printf("ERROR\nProblem in wall\n"), exit(0));
 }
 
 void	check_side_wall(char **map, int y)
@@ -53,7 +53,7 @@ void	check_side_wall(char **map, int y)
 		i++;
 	}
 	if (cont_side != y - 1)
-		(printf("20:ERROR\n"), exit(0));
+		(printf("ERROR\nProblem in wall\n"), exit(0));
 }
 
 void	postion_of_player(char **map, t_general *data)
@@ -82,7 +82,7 @@ void	postion_of_player(char **map, t_general *data)
 		i++;
 	}
 	if (cont != 1)
-		(printf("17:ERROR pos\n"), exit(0));
+		(printf("ERROR\nproblem in palyer\n"), exit(0));
 }
 
 char	**dup_str_2d(char **tab)

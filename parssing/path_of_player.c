@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 03:10:13 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/27 22:28:14 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	flood(char **map, t_general info, int x, int y)
 		return ;
 	if (map[y][x] == ' ')
 	{
-		printf("Error\n");
+		printf("ERROR\nmap is open to empty space\n");
 		exit(0);
 	}
 	if (map[y][x] == '1' || map[y][x] == 'x')

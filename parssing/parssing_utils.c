@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/26 11:39:34 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 22:24:27 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ char	**ft_split_pos(char *str, char c, int pos)
 	char	**tab;
 	int		delimiter_pos;
 
-	ft_strlen(str);
+	while (*str && (*str == ' ' || *str == '\t'))
+		str++;
 	tab = (char **)malloc(3 * sizeof(char *));
 	if (!tab)
 		return (NULL);
@@ -47,7 +48,7 @@ char	**ft_split_pos(char *str, char c, int pos)
 	ft_utils(str, pos, &delimiter_pos, c);
 	if (delimiter_pos == -1)
 	{
-		printf("14:ERROR\n");
+		printf("ERROR\nThere is an error in the format bloc one\n");
 		exit(1);
 	}
 	tab[0] = ft_substr(str, 0, delimiter_pos);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parssing_texture_utile_1.c                         :+:      :+:    :+:   */
+/*   parssing_texture_utils_1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:37:11 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 11:37:37 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/27 22:14:57 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,14 @@ void	cont_of_coma(char *rgb)
 	}
 	if (cont != 2)
 	{
-		printf("11:ERROR\n");
-		exit(1);
+		printf("ERROR\ninvalid form rgb");
+		exit(0);
 	}
 	else
 	{
 		if (!valid_format(rgb))
 		{
-			printf("12:ERROR\n");
-			exit(0);
+			(printf("ERROR\ninvalid form rgb"), exit(0));
 		}
 	}
 }
