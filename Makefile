@@ -32,7 +32,7 @@ SRCS = main.c \
 
 CLANG		=  cc
 
-CFLAGS = -Wall -Wextra -Werror  #-fsanitize=address -g3#-fsanitize=leak
+CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g3#-fsanitize=leak
 
 MLX = -lmlx -lXext -lX11 -lm 
 

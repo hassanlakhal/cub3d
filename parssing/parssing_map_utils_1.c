@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 14:32:18 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:22:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 23:59:46 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ void	check_dobule_new_line(char *str)
 	int	len;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '\n' && str[i + 1] == '\n')
 			break ;
 		i++;
 	}
-	while (str[i] && str[i] == '\n')
+	while (str && str[i] && str[i] == '\n')
 		i++;
 	len = ft_strlen(str);
-	if (len != i)
+	if (len == 0 || len != i)
 	{
-		printf("ERROR\npuls new line");
+		printf("ERROR\npuls new line or missing map\n");
 		exit(1);
 	}
 }
