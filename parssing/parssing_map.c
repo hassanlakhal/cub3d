@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 20:33:48 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:11:25 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ void	postion_of_player(char **map, t_general *data)
 		{
 			if (ft_strchr("NEWS", map[i][j]))
 			{
-				data->info_player->pos_x = j;
-				data->info_player->pos_y = i;
+				data->info_player->pos_x = j + 0.5;
+				data->info_player->pos_y = i + 0.5;
 				data->info_player->direction = map[i][j];
 				cont++;
 			}
