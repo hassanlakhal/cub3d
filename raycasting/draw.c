@@ -6,12 +6,11 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:02:17 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/27 03:03:56 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void	draw_help_1(t_general *info, double *i, double *d)
 {
@@ -41,7 +40,7 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 	while (draw.i < draw.d)
 	{
 		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y,
-				my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
+			my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
 		draw.k = draw.i / info->wall_hight * texteur->height;
 		draw.x += draw.x_crement;
 		draw.y += draw.y_crement;
@@ -49,19 +48,7 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 			break ;
 		draw.i++;
 	}
-	int p = 0;
-	
-	while(p < info->start->j)
-	{
-		my_mlx_pixel_put(info, (int)draw.x, p, get_color(info, 'C'));
-		p++;
-	}
-	p = info->end->j;
-	while(p < HEIGHT)
-	{
-		my_mlx_pixel_put(info, (int)draw.x, p, get_color(info, 'F'));
-		p++;
-	}
+	ft_draw(info, draw);
 }
 
 void	sub_draw_line(t_general *info, double endi, t_data *texteur)
@@ -78,18 +65,17 @@ void	sub_draw_line(t_general *info, double endi, t_data *texteur)
 	draw_help(info, texteur, steps, img_x);
 }
 
-
 int	draw_line(t_general *info)
 {
 	int		i;
 	double	temp;
 
 	info->end = malloc(sizeof(t_coordinates));
-	if (!info->end)	
-		return 0;
+	if (!info->end)
+		return (0);
 	info->start = malloc(sizeof(t_coordinates));
-	if (!info->start)	
-		return 0;
+	if (!info->start)
+		return (0);
 	i = 0;
 	temp = 60 / ((double)WIDTH);
 	while (i < WIDTH)

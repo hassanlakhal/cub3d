@@ -6,15 +6,15 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:43:31 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/14 03:12:10 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:42:54 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include<stdint.h>
 
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:07:48 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/26 11:46:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void	sub_ray(t_general *info, double x_steps, double y_steps)
 {

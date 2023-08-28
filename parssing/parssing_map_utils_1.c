@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 14:32:18 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 00:11:05 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:22:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	utils_get_map(char *str, int fd)
 {
 	int	i;
- 
+
 	i = 0;
 	while (str && i < 6)
 	{
@@ -89,7 +89,8 @@ void	check_wall(char **str, int y)
 		j = 0;
 		while (str[i][j])
 		{
-			if (str[i][ft_strlen(str[i]) - 1] != '1' && str[i][ft_strlen(str[i]) - 1] != ' ')
+			if (str[i][ft_strlen(str[i]) - 1] != '1' && str[i][ft_strlen(str[i])
+				- 1] != ' ')
 			{
 				printf("ERROR\nproblem in wall");
 				exit(0);

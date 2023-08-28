@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:17:29 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/27 06:17:57 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	get_color(t_general *info, char c)
 	while (i < 2)
 	{
 		if (info->info_rgb[i].type_color[0] == c)
-			return (rgbToHex(info->info_rgb[i]._R, info->info_rgb[i]._G,
-					info->info_rgb[i]._B));
+			return (rgb_to_hex(info->info_rgb[i]._r, info->info_rgb[i]._g,
+					info->info_rgb[i]._b));
 		i++;
 	}
 	return (0);

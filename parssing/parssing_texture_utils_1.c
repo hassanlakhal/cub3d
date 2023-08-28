@@ -6,12 +6,11 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:37:11 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/27 22:14:57 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 int	ft_block_rgb(t_rgb_info *bloc_2)
 {
@@ -39,6 +38,7 @@ void	valid_format_2(int intoken, int *digit, int *token)
 		(*token)++;
 	}
 }
+
 bool	valid_format(const char *input)
 {
 	int		token;

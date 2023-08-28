@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:39:20 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/27 01:50:09 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	type_of_bloc(t_bloc *lines)
 {
 	int	i;
-	int cont_1;
-	int cont_2;
+	int	cont_1;
+	int	cont_2;
 
 	i = 0;
 	cont_1 = 0;

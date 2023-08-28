@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 22:44:24 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 		}
 		i++;
 	}
-	info->info_rgb[index]._R = ft_atoi(rgb_val[0]);
-	info->info_rgb[index]._G = ft_atoi(rgb_val[1]);
-	info->info_rgb[index]._B = ft_atoi(rgb_val[2]);
+	info->info_rgb[index]._r = ft_atoi(rgb_val[0]);
+	info->info_rgb[index]._g = ft_atoi(rgb_val[1]);
+	info->info_rgb[index]._b = ft_atoi(rgb_val[2]);
 	free_2d(rgb_val);
 }
 
@@ -59,6 +59,7 @@ void	sub_parsing_1(t_general *info, t_bloc *data)
 		exit(0);
 	}
 }
+
 void	sub_parsing_2(t_general *info, t_bloc *data)
 {
 	int		i;
@@ -87,22 +88,7 @@ void	sub_parsing_2(t_general *info, t_bloc *data)
 	}
 }
 
-void check_name_map(char *name)
-{
-	int	i;
-
-	i = 0;
-	while (name[i])
-		i++;
-	if (name[--i] != 'b' || name[--i] != 'u' || name[--i] != 'c'
-		|| name[--i] != '.')
-	{
-		printf("ERROR\nMust be a .cub file\n");
-		exit(1);
-	}
-}
-
-char *get_name_map(int ac, char **av)
+char	*get_name_map(int ac, char **av)
 {
 	if (ac != 2)
 	{
@@ -110,7 +96,7 @@ char *get_name_map(int ac, char **av)
 		exit(1);
 	}
 	check_name_map(av[1]);
-	return ft_strdup(av[1]);
+	return (ft_strdup(av[1]));
 }
 
 t_general	*ft_parssing(int ac, char **av)

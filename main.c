@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:15 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 06:08:02 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 int	main(int ac, char **av)
 {
 	t_general	*info;
-	
+
 	info = ft_parssing(ac, av);
 	info = ft_parssing_map(info);
 	display_pixel(*info);
 	clear_all(info);
 	free(info);
 	info = NULL;
-	return 0;
+	return (0);
 }

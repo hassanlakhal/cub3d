@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 00:37:46 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 06:04:48 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:48 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ void	free_2d(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+void	clear_all_utils(t_general *data)
+{
+	free(data->info_texteur);
+	data->info_texteur = NULL;
+	free(data->info_rgb);
+	data->info_rgb = NULL;
+	free(data->bloc_s);
+	data->bloc_s = NULL;
+	free(data->name_map);
+	data->name_map = NULL;
+	free_2d(data->valid_map);
+	data->valid_map = NULL;
+	free(data->bloc);
+	data->bloc = NULL;
+	free(data->info_player);
+	data->info_player = NULL;
+	free(data->info_img);
+	data->info_img = NULL;
 }
 
 void	clear_all(t_general *data)
@@ -47,19 +67,4 @@ void	clear_all(t_general *data)
 		data->info_rgb[i].type_color = NULL;
 		i++;
 	}
-	free(data->info_texteur);
-	data->info_texteur = NULL;
-	free(data->info_rgb);
-	data->info_rgb = NULL;
-	free(data->bloc_s);
-	data->bloc_s = NULL;
-	free(data->name_map);
-	data->name_map = NULL;
-	free_2d(data->valid_map);
-	data->valid_map =NULL;
-	free(data->bloc);
-	free(data->info_player);
-	free(data->info_img);
-	// free(data);
-	//free(data->name_map);
 }

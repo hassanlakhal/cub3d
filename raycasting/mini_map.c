@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 16:23:08 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:27 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void	ft_display_mini(t_general *info, int i, int j)
 
 void	ft_mini_map(t_general *info, void *mlx, void *mlx_win)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
+
 	(void)mlx;
 	(void)mlx_win;
-
 	i = 0;
 	while (i < 2)
 	{
@@ -78,6 +78,6 @@ void	ft_mini_map(t_general *info, void *mlx, void *mlx_win)
 		i++;
 	}
 	ft_display_player(info, (info->info_player->pos_x * (200.00
-					/ info->dimensions[0])), (info->info_player->pos_y * (100.00
-					/ info->dimensions[1])));
+				/ info->dimensions[0])), (info->info_player->pos_y * (100.00
+				/ info->dimensions[1])));
 }

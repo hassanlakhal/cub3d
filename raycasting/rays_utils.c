@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rays_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:09:32 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/25 13:10:20 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 bool	break_wall(t_general *info, int x, int y)
 {
@@ -29,7 +28,7 @@ void	step_rays(t_general *info, double *x_steps, double *y_steps,
 {
 	double	atan;
 
-	atan = -1 / tan(((beta)*PI) / 180);
+	atan = -1 / tan(((beta) * PI) / 180);
 	info->start->i = info->info_player->pos_x * 45;
 	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 180)
@@ -59,14 +58,12 @@ void	set_len(t_general *info, t_casted_ray *h)
 	h->end.j = info->end->j;
 }
 
-
-
 void	step_rays_v(t_general *info, double *x_steps, double *y_steps,
 		double beta)
 {
 	double	atan;
 
-	atan = -tan(((beta)*PI) / 180);
+	atan = -tan(((beta) * PI) / 180);
 	info->start->i = info->info_player->pos_x * 45;
 	info->start->j = info->info_player->pos_y * 45;
 	if (beta > 90 && beta < 270)
@@ -84,8 +81,6 @@ void	step_rays_v(t_general *info, double *x_steps, double *y_steps,
 		(*y_steps) = -(*x_steps) * atan;
 	}
 }
-
-
 
 double	calcule_projection(t_general *info)
 {

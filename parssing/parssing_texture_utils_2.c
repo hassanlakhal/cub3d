@@ -6,12 +6,11 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:38:04 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/27 02:24:35 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void	ft_fill_info_1(t_bloc *line, t_general *info_bloc)
 {
@@ -32,6 +31,7 @@ void	ft_fill_info_1(t_bloc *line, t_general *info_bloc)
 		i++;
 	}
 }
+
 void	ft_fill_info_2(t_bloc *line, t_general *info_bloc)
 {
 	int	i;

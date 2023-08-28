@@ -6,11 +6,26 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 03:53:53 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/27 22:24:27 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 01:19:49 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+void	check_name_map(char *name)
+{
+	int	i;
+
+	i = 0;
+	while (name[i])
+		i++;
+	if (name[--i] != 'b' || name[--i] != 'u' || name[--i] != 'c'
+		|| name[--i] != '.')
+	{
+		printf("ERROR\nMust be a .cub file\n");
+		exit(1);
+	}
+}
 
 void	ft_utils(char *str, int pos, int *delimiter_pos, char c)
 {
@@ -83,4 +98,3 @@ void	utils_reaplace(char *result, char *text, int number, char c)
 	}
 	result[index] = '\0';
 }
-
