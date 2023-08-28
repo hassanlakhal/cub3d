@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/28 22:05:53 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,12 @@ typedef struct s_drawing
 
 }					t_drawing;
 
+typedef struct s_direction 
+{
+	int y;
+	int x;
+}					t_direction;
+
 typedef struct s_general
 {
 	t_rgb_info		*info_rgb;
@@ -115,6 +121,7 @@ typedef struct s_general
 	t_casted_ray	*h;
 	t_coordinates	*start;
 	t_coordinates	*end;
+	t_direction		*direction_palyer;
 	int				mouse_x;
 	char			*name_map;
 	char			**valid_map;
@@ -126,7 +133,7 @@ typedef struct s_general
 	void			*mlx_win;
 	double			alpha;
 	double			bita_ray;
-	double			wall_hight;
+	double			wall_hight;			
 }					t_general;
 
 void				free_2d(char **tab);
