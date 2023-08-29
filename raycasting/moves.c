@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 12:59:27 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/29 12:16:52 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/29 12:46:39 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	move_up(t_general *info, t_data *img)
 		&& info->valid_map[(int)info->info_player->pos_y][(int)pos_x] == '1')
 		return ;
 	if (info->valid_map[(int)pos_y][(int)pos_x] != '1'
-		&& info->valid_map[(int)pos_y][(int)pos_x] != 32 
-		&& fmin(info->h->lenght, info->h->lenght) >= 8)
+		&& info->valid_map[(int)pos_y][(int)pos_x] != 32)
 	{
 		// if (fmin(info->h->lenght, info->h->lenght) <= 15)
 		// {
