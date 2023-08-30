@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/30 15:51:24 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/30 17:54:21 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,7 @@ void				move_left(t_general *info, t_data *img);
 void				move_right(t_general *info, t_data *img);
 
 void				draw_help_1(t_general *info, double *i, double *d);
-void				draw_help(t_general *info, t_data *texteur, int steps,
-						double img_x);
+void				draw_help(t_general *info, t_data *texteur, double img_x);
 void				sub_draw_line(t_general *info, double endi,
 						t_data *texteur);
 

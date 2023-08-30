@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 12:59:27 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/30 15:59:42 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/30 17:57:52 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	move_up(t_general *info, t_data *img)
 	(void)img;
 	pos_x = info->info_player->pos_x + cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y + sin((info->alpha * PI) / 180) * SPEED;
-	if (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
+	if ((info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
 		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == '1')
+		|| (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == ' '
+		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == ' '))
 		return ;
 	if (info->valid_map[(int)(pos_y)][(int)(pos_x)] != '1'
 		&& info->valid_map[(int)(pos_y)][(int)(pos_x)] != 32)
@@ -40,8 +42,10 @@ void	move_down(t_general *info, t_data *img)
 	(void)img;
 	pos_x = info->info_player->pos_x - cos((info->alpha * PI) / 180) * SPEED;
 	pos_y = info->info_player->pos_y - sin((info->alpha * PI) / 180) * SPEED;
-	if (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
+	if ((info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
 		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == '1')
+		|| (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == ' '
+		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == ' '))
 		return ;
 	if (info->valid_map[(int)(pos_y)][(int)(pos_x)] != '1'
 		&& info->valid_map[(int)(pos_y)][(int)(pos_x)] != 32)
@@ -62,8 +66,10 @@ void	move_left(t_general *info, t_data *img)
 		* (SPEED - 0.05);
 	pos_y = info->info_player->pos_y + sin(((info->alpha - 270) * PI) / 180)
 		* (SPEED - 0.05);
-	if (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
+	if ((info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
 		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == '1')
+		|| (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == ' '
+		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == ' '))
 		return ;
 	if (info->valid_map[(int)(pos_y)][(int)(pos_x)] != '1'
 		&& info->valid_map[(int)(pos_y)][(int)(pos_x)] != 32)
@@ -84,8 +90,10 @@ void	move_right(t_general *info, t_data *img)
 		* (SPEED - 0.05);
 	pos_y = info->info_player->pos_y - sin(((info->alpha + 90) * PI) / 180)
 		* (SPEED - 0.05);
-	if (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
+	if ((info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == '1'
 		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == '1')
+		|| (info->valid_map[(int)(pos_y)][(int)info->info_player->pos_x] == ' '
+		&& info->valid_map[(int)info->info_player->pos_y][(int)(pos_x)] == ' '))
 		return ;
 	if (info->valid_map[(int)(pos_y)][(int)(pos_x)] != '1'
 		&& info->valid_map[(int)(pos_y)][(int)(pos_x)] != 32)

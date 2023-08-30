@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture_utils_2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:38:04 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 17:05:29 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_bloc(t_general *data, t_bloc *data_of_texture)
 
 	data->bloc_s = malloc(sizeof(t_bloc));
 	if (data->number_of_line != 6)
-		(free(data->bloc), printf("4:ERROR\n"), exit(0));
+		(free(data->bloc), printf("ERROR\nInvalid file\n"), exit(1));
 	textures = ft_split(data->bloc, '\n');
 	i = 0;
 	while (i < data->number_of_line)

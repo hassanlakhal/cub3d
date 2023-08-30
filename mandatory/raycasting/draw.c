@@ -6,7 +6,7 @@
 /*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:02:17 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/30 15:07:07 by rlarabi          ###   ########.fr       */
+/*   Updated: 2023/08/30 17:53:29 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ void	draw_help_1(t_general *info, double *i, double *d)
 	}
 }
 
-void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
+void	draw_help(t_general *info, t_data *texteur, double img_x)
 {
 	t_drawing	draw;
 
 	draw.k = 0;
 	draw.i = 0;
-	draw.x_crement = (float)(int)(info->end->i - info->start->i) / (float)steps;
-	draw.y_crement = (float)(int)(info->end->j - info->start->j) / (float)steps;
 	draw.x = info->start->i;
 	draw.y = info->start->j;
 	draw_help_1(info, &draw.i, &draw.d);
@@ -42,8 +40,7 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 		my_mlx_pixel_put(info, (int)draw.x, (int)draw.y,
 			my_mlx_get_pixel(texteur, (int)img_x, (int)draw.k));
 		draw.k = draw.i / info->wall_hight * texteur->height;
-		draw.x += draw.x_crement;
-		draw.y += draw.y_crement;
+		draw.y++;
 		if (draw.x > WIDTH || draw.y > HEIGHT || draw.k > texteur->height)
 			break ;
 		draw.i++;
@@ -53,16 +50,10 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 
 void	sub_draw_line(t_general *info, double endi, t_data *texteur)
 {
-	int		steps;
 	double	img_x;
 
-	if (abs((int)(info->end->i - info->start->i)) > abs((int)(info->end->j
-				- info->start->j)))
-		steps = abs((int)(info->end->i - info->start->i));
-	else
-		steps = abs((int)(info->end->j - info->start->j));
 	img_x = ((int)texteur->width * (endi / 45 - floor(endi / 45)));
-	draw_help(info, texteur, steps, img_x);
+	draw_help(info, texteur, img_x);
 }
 
 int	draw_line(t_general *info)
