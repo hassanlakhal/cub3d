@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:02:17 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:07:07 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	draw_help(t_general *info, t_data *texteur, int steps, double img_x)
 			break ;
 		draw.i++;
 	}
-	ft_draw(info, draw);
+	ft_draw_floor_sky(info, draw);
 }
 
 void	sub_draw_line(t_general *info, double endi, t_data *texteur)

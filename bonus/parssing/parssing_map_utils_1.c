@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_map_utils_1.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 14:32:18 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 23:59:46 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:50:54 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	check_dobule_new_line(char *str)
 	len = ft_strlen(str);
 	if (len == 0 || len != i)
 	{
-		printf("ERROR\npuls new line or missing map\n");
+		printf("ERROR\nplus new line or missing map\n");
 		exit(1);
 	}
 }
@@ -93,12 +93,12 @@ void	check_wall(char **str, int y)
 				- 1] != ' ')
 			{
 				printf("ERROR\nproblem in wall");
-				exit(0);
+				exit(1);
 			}
 			else if (!ft_strchr("NEWS10 ", str[i][j]))
 			{
 				printf("ERROR\ninvalid carecters");
-				exit(0);
+				exit(1);
 			}
 			j++;
 		}

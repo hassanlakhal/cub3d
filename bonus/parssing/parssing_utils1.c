@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:38:57 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:44:44 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_dup(t_bloc *data_of_texture)
 					2))
 			{
 				printf("ERROR\nthere is a duplicate line\n");
-				exit(0);
+				exit(1);
 			}
 			j++;
 		}
@@ -64,7 +64,7 @@ void	check_direction(t_bloc *data_of_texture)
 		if (ft_strlen(data_of_texture[i].val_1) > 2)
 		{
 			printf("ERROR\nThere is an error in the format bloc one\n");
-			exit(0);
+			exit(1);
 		}
 		else
 			check_dup(data_of_texture);
@@ -93,6 +93,6 @@ void	check_line(char **tab, int a)
 	{
 		free_2d(tab);
 		printf("ERROR\nproblem in PATH or RGB\n");
-		exit(0);
+		exit(1);
 	}
 }

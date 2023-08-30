@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:04:08 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:07:23 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void	ft_draw(t_general *info, t_drawing draw)
+void	ft_draw_floor_sky(t_general *info, t_drawing draw)
 {
 	int	p;
 

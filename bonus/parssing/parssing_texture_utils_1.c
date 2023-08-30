@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture_utils_1.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:37:11 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:44:26 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	cont_of_coma(char *rgb)
 	if (cont != 2)
 	{
 		printf("ERROR\ninvalid form rgb");
-		exit(0);
+		exit(1);
 	}
 	else
 	{
 		if (!valid_format(rgb))
 		{
-			(printf("ERROR\ninvalid form rgb"), exit(0));
+			(printf("ERROR\ninvalid form rgb"), exit(1));
 		}
 	}
 }

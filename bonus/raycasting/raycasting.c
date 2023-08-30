@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 04:21:17 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:37:19 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	display_pixel(t_general info)
 	info.alpha = get_alpha_player(info);
 	info.bita_ray = info.alpha;
 	info.mlx = mlx_init();
+	get_texters(&info);
 	info.mlx_win = mlx_new_window(info.mlx, WIDTH, HEIGHT, "cub3d");
 	info.info_img = malloc(sizeof(t_data));
 	if (!info.info_img)
@@ -29,8 +30,8 @@ void	display_pixel(t_general info)
 			&info.info_img->line_length,
 			&info.info_img->endian);
 	a = 0;
+	mlx_mouse_move(info.mlx, info.mlx_win, WIDTH / 2, HEIGHT / 2);
 	mlx_mouse_get_pos(info.mlx, info.mlx_win, &info.mouse_x, &a);
-	get_texters(&info);
 	ft_dislay(&info, info.mlx, info.mlx_win);
 	mlx_hook(info.mlx_win, 2, 3, key_hook, &info);
 	mlx_loop_hook(info.mlx, mouse, (void *)&info);

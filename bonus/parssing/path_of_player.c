@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_of_player.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:07:32 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:44:50 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	flood(char **map, t_general info, int x, int y)
 	if (map[y][x] == ' ')
 	{
 		printf("ERROR\nmap is open to empty space\n");
-		exit(0);
+		exit(1);
 	}
 	if (map[y][x] == '1' || map[y][x] == 'x')
 		return ;

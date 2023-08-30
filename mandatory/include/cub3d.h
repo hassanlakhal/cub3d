@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/30 02:03:22 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 15:51:24 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../get_next_line/get_next_line.h"
-# include "../libft/libft.h"
+# include "../../get_next_line/get_next_line.h"
+# include "../../libft/libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -102,10 +102,10 @@ typedef struct s_drawing
 
 }					t_drawing;
 
-typedef struct s_direction 
+typedef struct s_direction
 {
-	int y;
-	int x;
+	int				y;
+	int				x;
 }					t_direction;
 
 typedef struct s_general
@@ -133,7 +133,7 @@ typedef struct s_general
 	void			*mlx_win;
 	double			alpha;
 	double			bita_ray;
-	double			wall_hight;			
+	double			wall_hight;
 }					t_general;
 
 void				free_2d(char **tab);
@@ -197,7 +197,7 @@ void				sub_draw_line(t_general *info, double endi,
 void				ft_dislay(t_general *info, void *mlx, void *mlx_win);
 int					draw_line(t_general *info);
 void				draw_texteur(t_general *info);
-void				ft_draw(t_general *info, t_drawing draw);
+void				ft_draw_floor_sky(t_general *info, t_drawing draw);
 
 void				rotate_right(t_general *info);
 void				rotate_left(t_general *info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parssing_texture.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:00:03 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:44:34 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	fill_rgb_val(char **rgb_val, t_general *info, int index)
 		{
 			printf("ERROR\nEnter a bound 3 values between 0 - 255");
 			free_2d(rgb_val);
-			exit(0);
+			exit(1);
 		}
 		i++;
 	}
@@ -56,7 +56,7 @@ void	sub_parsing_1(t_general *info, t_bloc *data)
 	if (cont != data->bloc_size_texteur)
 	{
 		printf("ERROR\nInvalide direction\n");
-		exit(0);
+		exit(1);
 	}
 }
 
@@ -84,7 +84,7 @@ void	sub_parsing_2(t_general *info, t_bloc *data)
 	if (cont != data->bloc_size_rgb)
 	{
 		printf("ERROR\nlines of RGB more 2 lines\n");
-		exit(0);
+		exit(1);
 	}
 }
 

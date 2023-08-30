@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   texters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 13:21:49 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:21:04 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 14:33:48 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	get_texters(t_general *info)
 				&info->info_texteur[i].texteur->height);
 		if (!info->info_texteur[i].texteur->img)
 		{
-			printf("image not found!");
+			printf("ERROR\nImage not found!\n");
 			free(info->info_texteur[i].texteur);
 			exit(2);
 		}
