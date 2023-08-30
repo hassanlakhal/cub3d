@@ -6,7 +6,7 @@
 /*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:31:28 by hlakhal-          #+#    #+#             */
-/*   Updated: 2023/08/28 22:05:53 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/30 02:03:22 by hlakhal-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define RAD 0.0174533
 # define HEIGHT 700
 # define WIDTH 1500
-# define SPEED 0.1
+# define SPEED 0.15
 # define SPEEDALPHA 2
 
 typedef struct s_coordinates
@@ -121,7 +121,7 @@ typedef struct s_general
 	t_casted_ray	*h;
 	t_coordinates	*start;
 	t_coordinates	*end;
-	t_direction		*direction_palyer;
+	t_direction		direction_palyer;
 	int				mouse_x;
 	char			*name_map;
 	char			**valid_map;
