@@ -65,11 +65,11 @@ OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 all:cub3D
 
 %.o: %.c
-		$(CLANG) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	$(CLANG) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 cub3D:$(OBJ)
-		@make -sC libft/
-		@$(CLANG) $(CFLAGS) $(OBJ)  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+	@make -sC libft/
+	@$(CLANG) $(CFLAGS) $(OBJ)  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 
 bonus:$(OBJ_BONUS)
@@ -77,12 +77,12 @@ bonus:$(OBJ_BONUS)
 	@$(CLANG) $(CFLAGS) $(OBJ_BONUS)  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 clean:
-		@make -sC libft/ clean
-		@rm -f  $(OBJ)
-		@rm -f  $(OBJ_BONUS)
+	@make -sC libft/ clean
+	@rm -f  $(OBJ)
+	@rm -f  $(OBJ_BONUS)
 
-fclean:    clean
-		@make -sC libft/ fclean
-		@rm -f $(NAME)
+fclean:clean
+	@make -sC libft/ fclean
+	@rm -f $(NAME)
 
 re:        fclean all

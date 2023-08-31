@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlakhal- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rlarabi <rlarabi@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 11:35:01 by rlarabi           #+#    #+#             */
-/*   Updated: 2023/08/28 01:23:30 by hlakhal-         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:23:51 by rlarabi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,13 @@ int	mouse_hook_1(int x, int y, t_general *info)
 int	key_hook(int key, t_general *info)
 {
 	if (key == 65307)
+	{
+		printf("closed by ESC!\n");
 		exit(0);
-	else if (key == 65362 || key == 119)
+	}
+	else if (key == 119)
 		move_up(info, info->info_img);
-	else if (key == 65364 || key == 115)
+	else if (key == 115)
 		move_down(info, info->info_img);
 	else if (key == 97)
 		move_right(info, info->info_img);
@@ -76,7 +79,7 @@ int	close_win(int keycode, t_general *info)
 {
 	(void)info;
 	(void)keycode;
-	printf("closed by ESC! \n");
+	printf("closed !\n");
 	exit(0);
 }
 
