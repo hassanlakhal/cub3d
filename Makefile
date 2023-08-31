@@ -58,8 +58,6 @@ SRCS_BONUS =  bonus/main.c \
 CLANG        = cc
 CFLAGS = -Wall -Wextra -Werror
 
-MLX = -lmlx -lXext -lX11 -lm 
-
 OBJ = $(SRCS:.c=.o)
 
 OBJ_BONUS = $(SRCS_BONUS:.c=.o)
@@ -67,16 +65,16 @@ OBJ_BONUS = $(SRCS_BONUS:.c=.o)
 all:cub3D
 
 %.o: %.c
-		$(CLANG) $(CFLAGS) -g -I/usr/include -Imlx_linux -O3 -c $< -o $@
+		$(CLANG) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 cub3D:$(OBJ)
 		@make -sC libft/
-		@$(CLANG) $(CFLAGS) $(OBJ) -pedantic  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+		@$(CLANG) $(CFLAGS) $(OBJ)  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 
 bonus:$(OBJ_BONUS)
 	@make -sC libft/
-	@$(CLANG) $(CFLAGS) $(OBJ_BONUS) -pedantic  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
+	@$(CLANG) $(CFLAGS) $(OBJ_BONUS)  -Lmlx_Linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz libft/libft.a  -o cub3D
 
 clean:
 		@make -sC libft/ clean
